@@ -3,17 +3,50 @@
   padding: 0;
 }
 
-header,
-main,
-footer,
-nav,
-aside,
-section,
-article,
-div {
+header,main,footer,nav,aside,section,article,div {
   display: block;
 }
 
+.adlam-display-regular {
+  font-family: "ADLaM Display", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "ADLaM Display";
+}
+
+header {
+  height: 340px;
+  background-color: #FFE5D0;;
+}
+
+.navbar {
+  height: 140px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.nav-item {
+  color: rgba(0, 0, 0, 0.50);
+  text-align: center;
+  font-family: "ADLaM Display";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-item:not(:last-child) {
+  margin-right: 164px;
+}
+
+.navbar-nav {
+  margin-left: 265px;
 }
