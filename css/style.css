@@ -19,21 +19,77 @@ body {
 
 header {
   height: 340px;
-  background-color: #FFE5D0;;
+  width: 100%;
+  background-color: #FFE5D0;
+  /* display: flex; */
+}
+ 
+#top-header {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: flex-end;
+  /* justify-content: space-between; */
+}
+
+#low-header h1 {
+  /* display: flex; */
+  height: 95px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(0, 0, 0, 0.70);
+  text-align: center;
+  font-family: "ADLaM Display";
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 53px;
+}
+
+#step1 {
+  position: absolute;
+  top: 220px;
+  left: 410px;
+  background-image: url("../images/icons/dogStep.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  transform: rotate(-23.108deg);
+  flex-shrink: 0;
+}
+
+#step2 {
+  position: absolute;
+  top: 170px;
+  left: 350px;
+  background-image: url("../images/icons/dogStep.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  transform: rotate(-9.322deg);
+  flex-shrink: 0;
 }
 
 .navbar {
   height: 140px;
   width: 100%;
-  background-color: #ffffff;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* align-content: center; */
+  /* align-content: center; */
 }
 
-.navbar-brand {
-  width: 85px;
-  height: 81.634px;
+#logo {
+  position: absolute;
+  z-index: 1;
+  width: 128px;
+  height: 121px;
   flex-shrink: 0;
   border-radius: 100px;
   background-image: url(../images/logoAndUsers/logo.jpg);
+  margin-right: 32px;
+  margin-top: 12px;
 }
 
 .nav-item {
@@ -55,6 +111,51 @@ header {
   margin-right: 164px;
 }
 
-.navbar-nav {
-  margin-left: 265px;
+.container-fluid .navbar-collapse {
+  text-align: center;
+  justify-content: center;
+}
+
+#header-left {
+  display: flex;
+  /* columns:auto; */
+  /* grid-column: auto; */
+  /* justify-content: ; */
+  /* position: absolute; */
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.navbar-toggler {
+  /* display: none; */
+  /* height: 30px; */
+  /* border: ; */
+  /* margin-top: 100px; */
+  border-width: 0px;
+
+}
+
+#top-header img {
+  width: 85px;
+  height: 81.634px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  /* margin-left: 31px; */
+  /* margin-top: 18px; */
+}
+
+#top-header p {
+  color: #000;
+  text-align: center;
+  font-family: "ADLaM Display";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  /* display: flex; */
+}
+
+.navbar-toggler-icon {
+    /* margin-top: 100px; */
+    /* z-index: 1; */
 }
