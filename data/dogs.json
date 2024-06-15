@@ -1,6 +1,6 @@
 {
   "Title": "Dogs",
-  "products": [
+  "dogs": [
     {
       "id": "1",
       "artist": "Snoopy",
