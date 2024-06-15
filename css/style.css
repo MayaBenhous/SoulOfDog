@@ -28,6 +28,14 @@ header {
   background-color: #ffffff;
 }
 
+.navbar-brand {
+  width: 85px;
+  height: 81.634px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background-image: url(../images/logoAndUsers/logo.jpg);
+}
+
 .nav-item {
   color: rgba(0, 0, 0, 0.50);
   text-align: center;
