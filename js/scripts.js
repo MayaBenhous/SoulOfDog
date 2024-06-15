@@ -20,24 +20,18 @@ function createTrip(trip) {
   tripTitle.classList.add("card-title");
   tripTitle.textContent = "Trip with";
   cardTrip.appendChild(tripTitle);
-  // document.querySelector("h5").innerHTML = `Trip with`;
   const tripDogs = document.createElement("h6");
   tripDogs.classList.add("card-subtitle" ,"mb-2", "text-body-secondary");
   const dogsList = trip.dogs.join(", ");
   tripDogs.textContent = dogsList;
   cardTrip.appendChild(tripDogs);
   const tripDetails = document.createElement("ul");
-  // tripDetails.classList.add("card-text");
+  tripDetails.classList.add("list-group", "list-group-flush");
   cardTrip.appendChild(tripDetails);
-
   const details = `
-  <li>Type: ${trip.type}</li>
-  <li>Implement: ${trip.implement}</li>
-  <li>Date: ${trip.date}</li>
-  <li>Start Time: ${trip.start_time}</li>
-  <li>End Time: ${trip.end_time}</li>
-  <li>Distance: ${trip.distance} km</li>`;
+  <li>${trip.date}</li>
+  <li>${trip.start_time}</li>
+  <li>${trip.end_time}</li>
+  <li>${trip.distance} km</li>`;
   tripDetails.innerHTML = details;
-  // document.querySelector("h6").innerHTML = `${dogsList}`;
-  // cardTrip.appendChild(ulFrag);
 }

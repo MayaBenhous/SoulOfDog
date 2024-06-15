@@ -154,9 +154,30 @@ header {
 
 #top-header h1 {
   display: none;
+  margin: 1% 20% 0% 5%;
 }
 
-@media only screen and (max-width: 1420px) {
+.list_trips {
+  width: 90%;
+  height: 100%;
+  margin: 1% auto 5%;
+  justify-content: center;
+  /* align-self: center; */
+}
+
+.card {
+  margin-bottom: 10px;
+}
+
+.list_trips ul {
+  display: ruby-text;
+}
+
+.list_trips li {
+  list-style: none;
+}
+
+@media only screen and (max-width: 991px) {
   #top-header img {
     width: 60px;
     height: 60px;
