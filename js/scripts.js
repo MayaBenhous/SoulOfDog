@@ -1,37 +1,43 @@
 window.onload = () => {
-  initTripsList();
+  fetch("data/Trips.json")
+    .then((response) => response.json())
+    .then((data) => initTripsList(data));
 };
 
-function initTripsList() {
-  pageRect = true;
-  for (let i = 0; i < characters.length; i++) {
-    createTrip();
+function initTripsList(data) {
+  const secListTrips = document.getElementById("list_trips");
+  for (let i = 0; i < data.trips.length; i++) {
+    createTrip(data.songs[i]);
   }
 }
 
-function createTrip() {
+function createTrip(trip) {
   const secListTrips = document.getElementById("list_trips");
-  const tripTitle = document.createElement("h2");
-  secListTrips.appendChild(tripTitle);
-  document.querySelector("h2").innerHTML = `Trip with`;
-
-  const tripDogs = document.createElement("h3");
-  tripTitle.appendChild(tripDogs);
-  let dogsList;
-  const ulFrag = document.createDocumentFragment();
+  const cardTrip = document.createElement("div");
+  cardTrip.classList.add("card-body");
+  secListTrips.appendChild(cardTrip);
+  const tripTitle = document.createElement("h5");
+  tripTitle.classList.add("card-title");
+  tripTitle.textContent = "Trip with";
+  cardTrip.appendChild(tripTitle);
+  // document.querySelector("h5").innerHTML = `Trip with`;
+  const tripDogs = document.createElement("h6");
+  tripDogs.classList.add("card-subtitle" ,"mb-2", "text-body-secondary");
+  const dogsList = trip.dogs.join(", ");
+  tripDogs.textContent = dogsList;
+  cardTrip.appendChild(tripDogs);
   const tripDetails = document.createElement("ul");
-  ulFrag.appendChild(tripDetails);
-  for (const t in data.trips) {
-    const tripItem = createElement("li");
-    const trip = data.trips[t];
-    const tripStr = `${trip.date}   ${trip.start_time}  ${trip.end_time}    ${trip.distance}`;
-    tripItem.innerHTML = tripStr;
-    tripDetails.appendChild(tripItem);
-    for (const d in trip.dogs) {
-      const nameDog = trip.dogs[d];
-    }
-    dogsList = `${nameDog}, `;
-  }
-  document.querySelector("h3").innerHTML = `${dogsList}`;
-  contSong.appendChild(ulFrag);
+  // tripDetails.classList.add("card-text");
+  cardTrip.appendChild(tripDetails);
+
+  const details = `
+  <li>Type: ${trip.type}</li>
+  <li>Implement: ${trip.implement}</li>
+  <li>Date: ${trip.date}</li>
+  <li>Start Time: ${trip.start_time}</li>
+  <li>End Time: ${trip.end_time}</li>
+  <li>Distance: ${trip.distance} km</li>`;
+  tripDetails.innerHTML = details;
+  // document.querySelector("h6").innerHTML = `${dogsList}`;
+  // cardTrip.appendChild(ulFrag);
 }

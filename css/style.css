@@ -160,7 +160,11 @@ header {
   display: none;
 }
 
-@media only screen and (max-width: 1420px) {
+#top-header ul {
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 991px) {
   #top-header img {
     width: 60px;
     height: 60px;
