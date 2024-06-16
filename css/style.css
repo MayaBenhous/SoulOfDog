@@ -171,7 +171,12 @@ header {
 
 .card {
   margin-bottom: 10px;
+  width: 100%;
 }
+
+/* .card-body {
+  width: 90%;
+} */
 
 .listTrips-Container ul {
   display: ruby-text;
@@ -195,6 +200,7 @@ main {
   /* margin-top: 400px; */
   /* width: 1200px; */
   margin: 0 auto;
+  width: 90%;
   /* min-height: calc(100vh - 100px); */
 }
 
