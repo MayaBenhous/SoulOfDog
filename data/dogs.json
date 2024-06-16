@@ -9,58 +9,58 @@
     {
       "id": "2",
       "dogName": "Timon",
-      "img_dog": "../images/dogs/5-Poogy.png"
+      "img_dog": "images/dogs/2-Timon.png"
     },
     {
       "id": "3",
       "dogName": "Pomba",
-      "img_dog": "../images/dogs/3-Pomba.png"
+      "img_dog": "images/dogs/3-Pomba.png"
     },
     {
       "id": "4",
       "dogName": "Lichi",
-      "img_dog": "../images/dogs/4-Lichi.png"
+      "img_dog": "images/dogs/4-Lichi.png"
     },
     {
       "id": "5",
       "dogName": "Poogy",
-      "img_dog": "../images/dogs/5-Poogy.png"
+      "img_dog": "images/dogs/5-Poggy.png"
     },
     {
       "id": "6",
       "dogName": "Bamba",
-      "img_dog": "../images/dogs/6-Bamba.png"
+      "img_dog": "images/dogs/bamba.jpg"
     
     },
     {
       "id": "7",
       "dogName": "Roby",
-      "img_dog": "../images/dogs/7-Roby.png"
+      "img_dog": "images/dogs/7-Roby.png"
     },
     {
       "id": "8",
       "dogName": "Richard",
-      "img_dog": "../images/dogs/8-Richard.png"
+      "img_dog": "images/dogs/8-Richard.jpeg"
     },
     {
       "id": "9",
       "dogName": "Joy",
-      "img_dog": "../images/dogs/9-Joy.png"
+      "img_dog": "images/dogs/9-Joy.png"
     },
     {
       "id": "10",
       "dogName": "Boss",
-      "img_dog": "../images/dogs/10-Boss.png"
+      "img_dog": "images/dogs/10-Boss.png"
     },
     {
       "id": "11",
       "dogName": "Bella",
-      "img_dog": "../images/dogs/11-Bella.png"
+      "img_dog": "images/dogs/bella.png"
     },
     {
       "id": "12",
       "dogName": "Laki",
-      "img_dog": "../images/dogs/12-Laki.png"
+      "img_dog": "images/dogs/12-Laki.png"
     }
   ]
 }

@@ -11,17 +11,22 @@ window.onload = () => {
 // };
 
 function initDogsHomePage(data) {
+    console.log(data);
     const titleDogs = document.getElementById("title");
     titleDogs.textContent = data.title;
     const imgsCont = document.getElementById("dogsImgs-Container");
 
-    for (const dog in data.dogs) {
+    for (const dog of data.dogs) {
+        console.log(dog);
         const imgWrapper = document.createElement("div");
         imgWrapper.classList.add("imgWrapper");
         const img = document.createElement("img");
         img.src = dog.img_dog;
-
+        let dogName = document.createElement("h5");
+        dogName.classList.add("dogName");
+        dogName.textContent = dog.dogName;
         imgWrapper.appendChild(img);
+        imgWrapper.appendChild(dogName);
         imgsCont.appendChild(imgWrapper);
     }
 
@@ -37,6 +42,6 @@ function initDogsHomePage(data) {
     //     imgsCont.appendChild(imgWrapper);
     //   });
 
-    document.getElementsByTagName("main")[0].appendChild(imgsCont); 
+    // document.getElementsByTagName("main")[0].appendChild(imgsCont); 
 }
 
