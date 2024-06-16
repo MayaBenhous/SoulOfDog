@@ -1,66 +1,66 @@
 {
-  "Title": "Dogs",
+  "title": "My Dogs",
   "dogs": [
     {
       "id": "1",
-      "artist": "Snoopy",
-      "img_dog": "../images/dogs/1-Snoopy.png"
+      "dogName": "Snoopy",
+      "img_dog": "images/dogs/1-Snoopy.png"
     },
     {
       "id": "2",
-      "artist": "Timon",
-      "img_dog": "../images/dogs/2-Timon.png"
+      "dogName": "Timon",
+      "img_dog": "../images/dogs/5-Poogy.png"
     },
     {
       "id": "3",
-      "artist": "Pomba",
+      "dogName": "Pomba",
       "img_dog": "../images/dogs/3-Pomba.png"
     },
     {
       "id": "4",
-      "artist": "Lichi",
+      "dogName": "Lichi",
       "img_dog": "../images/dogs/4-Lichi.png"
     },
     {
       "id": "5",
-      "artist": "Poogy",
+      "dogName": "Poogy",
       "img_dog": "../images/dogs/5-Poogy.png"
     },
     {
       "id": "6",
-      "artist": "Bamba",
+      "dogName": "Bamba",
       "img_dog": "../images/dogs/6-Bamba.png"
     
     },
     {
       "id": "7",
-      "artist": "Roby",
+      "dogName": "Roby",
       "img_dog": "../images/dogs/7-Roby.png"
     },
     {
       "id": "8",
-      "artist": "Richard",
+      "dogName": "Richard",
       "img_dog": "../images/dogs/8-Richard.png"
     },
     {
       "id": "9",
-      "artist": "Joy",
+      "dogName": "Joy",
       "img_dog": "../images/dogs/9-Joy.png"
     },
     {
       "id": "10",
-      "artist": "Boss",
+      "dogName": "Boss",
       "img_dog": "../images/dogs/10-Boss.png"
     },
     {
       "id": "11",
-      "artist": "Bella",
+      "dogName": "Bella",
       "img_dog": "../images/dogs/11-Bella.png"
     },
     {
       "id": "12",
-      "artist": "Laki",
+      "dogName": "Laki",
       "img_dog": "../images/dogs/12-Laki.png"
     }
   ]
-  }
+}
