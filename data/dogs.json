@@ -2,6 +2,11 @@
   "title": "My Dogs",
   "dogs": [
     {
+      "id": 0,
+      "dogName": "empty",
+      "img_dog": "#"
+    },
+    {
       "id": 1,
       "dogName": "Snoopy",
       "img_dog": "images/dogs/Snoopy.jpg"

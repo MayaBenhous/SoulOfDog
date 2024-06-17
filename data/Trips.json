@@ -96,6 +96,22 @@
       "needs_pee": ["false", "false", "true", "false"],
       "needs_poop": ["false", "true", "false", "false"],
       "notes": "none"
+    },
+    {
+      "id": "7",
+      "type": "empty",
+      "implement": "Idan",
+      "dogs_id": [0],
+      "date": "24-02-2024",
+      "start_time": "15:30",
+      "end_time": "16:36",
+      "distance": "2.3",
+      "heartbeat": "null",
+      "steps": "null",
+      "avg_speed": "null",
+      "needs_pee": ["false"],
+      "needs_poop": ["false"],
+      "notes": "none"
     }
   ]
 }
