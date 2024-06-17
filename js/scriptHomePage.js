@@ -36,16 +36,34 @@ function initDogsHomePage(data) {
             } else {
               selectedDogs.delete(dog.id);
             }
-            startTripButton.style.display = selectedDogs.size > 0 ? "block" : "none";
-            deleteDogButton.style.display = selectedDogs.size > 0 ? "block" : "none";
 
+            updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
         });
 
         startTripButton.addEventListener("click", () => {
             const selectedIds = Array.from(selectedDogs).join(",");
             window.location.href = `groupTrip.html?selectedDogs=${selectedIds}`;
         });
+
+        deleteDogButton.addEventListener("click", () => {
+            selectedDogs.forEach(dogId => {
+              const dogToRemove = data.dogs.find(dog => dog.id === dogId);
+              if (dogToRemove) {
+                const imgWrapperToRemove = Array.from(imgsCont.children).find(wrapper => wrapper.querySelector("img").src.includes(dogToRemove.img_dog));
+                if (imgWrapperToRemove) {
+                  imgsCont.removeChild(imgWrapperToRemove);
+                }
+              }
+            });
+            selectedDogs.clear();
+            updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
+        });
     }
+}
+
+function updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton) {
+    startTripButton.style.display = selectedDogs.size > 0 ? "block" : "none";
+    deleteDogButton.style.display = selectedDogs.size > 0 ? "block" : "none";
 }
 
 
