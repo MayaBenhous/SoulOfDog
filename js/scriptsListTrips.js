@@ -15,9 +15,12 @@ function initTripsList(data) {
     cardTrip.classList.add("card");
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
+
+    const sectionTitles = document.createElement("section");
+    sectionTitles.classList.add("section-title");
     const tripTitle = document.createElement("h5");
     tripTitle.classList.add("card-title");
-    tripTitle.textContent = "Trip with";
+    tripTitle.textContent = "Trip with  ";
 
     const tripDogs = document.createElement("h6");
     tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
@@ -32,8 +35,11 @@ function initTripsList(data) {
     <li>${trip.distance}km</li>`;
     tripDetails.innerHTML = details;
 
-    cardBody.appendChild(tripTitle);
-    cardBody.appendChild(tripDogs);
+    // cardBody.appendChild(tripTitle);
+    // cardBody.appendChild(tripDogs);
+    sectionTitles.appendChild(tripTitle);
+    sectionTitles.appendChild(tripDogs);
+    cardBody.appendChild(sectionTitles);
     cardBody.appendChild(tripDetails);
     cardTrip.appendChild(cardBody);
     contListTrip.appendChild(cardTrip);

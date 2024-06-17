@@ -3,7 +3,14 @@
   padding: 0;
 }
 
-header,main,footer,nav,aside,section,article,div {
+header,
+main,
+footer,
+nav,
+aside,
+section,
+article,
+div {
   display: block;
 }
 
@@ -24,7 +31,7 @@ body {
 header {
   height: 340px;
   width: 100%;
-  background-color: #FFE5D0;
+  background-color: #ffe5d0;
   /* display: flex; */
   /* justify-content: space-between; */
 }
@@ -42,7 +49,7 @@ header {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  color: rgba(0, 0, 0, 0.70);
+  color: rgba(0, 0, 0, 0.7);
   text-align: center;
   font-family: "ADLaM Display";
   font-size: 80px;
@@ -95,7 +102,7 @@ header {
 }
 
 .nav-item {
-  color: rgba(0, 0, 0, 0.50);
+  color: rgba(0, 0, 0, 0.5);
   text-align: center;
   font-family: "ADLaM Display";
   font-size: 30px;
@@ -174,15 +181,21 @@ header {
   width: 100%;
 }
 
-/* .card-body {
-  width: 90%;
-} */
+.section-title {
+  /* position: absolute; */
+  display: ruby;
+  white-space: break-spaces;
+}
 
-.listTrips-Container ul {
+.section-title .card-title {
+  margin-left: 5px;
+}
+.card-body ul {
+  width: 90%;
   display: ruby-text;
 }
 
-.listTrips-Container li {
+.card-body li {
   list-style: none;
 }
 
@@ -196,7 +209,7 @@ main {
   /* width: 100%; */
 }
 
-#wrapper{
+#wrapper {
   /* margin-top: 400px; */
   /* width: 1200px; */
   margin: 0 auto;
@@ -208,7 +221,7 @@ main {
 
 #title {
   display: flex;
-  width: 224px ;
+  width: 224px;
   height: 70px;
   font-weight: 400;
   font-size: 48px;
@@ -223,7 +236,7 @@ main {
   margin-top: 40px;
   /* width: 800px; */
   justify-content: center;
-    /* flex-direction:row; */
+  /* flex-direction:row; */
   gap: 50px;
 }
 
@@ -254,22 +267,21 @@ img {
 
 .dogName {
   color: #000;
-text-align: center;
-font-family: "ADLaM Display";
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-display: flex;
-width: 60px;
-height: 28px;
-flex-direction: column;
-justify-content: center;
-flex-shrink: 0;
+  text-align: center;
+  font-family: "ADLaM Display";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  width: 60px;
+  height: 28px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 @media only screen and (max-width: 991px) {
-
   #top-header img {
     width: 60px;
     height: 60px;
@@ -282,12 +294,12 @@ flex-shrink: 0;
   header {
     height: 140px;
     /* width: 100%; */
-    background-color: #FFE5D0;
+    background-color: #ffe5d0;
     /* display: flex; */
   }
 
   #top-header {
-    background-color: #FFE5D0;
+    background-color: #ffe5d0;
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -307,7 +319,7 @@ flex-shrink: 0;
   }
 
   .nav-item {
-    color: rgba(0, 0, 0, 0.50);
+    color: rgba(0, 0, 0, 0.5);
     text-align: center;
     font-family: "ADLaM Display";
     font-size: 30px;
@@ -325,5 +337,4 @@ flex-shrink: 0;
     width: 180px;
     font-size: 40px;
   }
-
 }
