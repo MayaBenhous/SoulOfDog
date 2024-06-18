@@ -2,6 +2,10 @@ const dogIdTmp = 1;
 const tripIdTmp = 2;
 
 window.onload = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedDogId = urlParams.get("selectedDogId");
+  const selectedDogContainer = document.getElementById("selectedDogId");
+//   selectedDogsContainer.innerHTML = `Selected Dogs IDs: ${selectedDogs}`;
 //   const urlParams = new URLSearchParams(window.location.search);
 //   const selectedDogs = urlParams.get("selectedDogs");
 //   const selectedDogsContainer = document.getElementById("selectedDogs");
@@ -15,6 +19,9 @@ window.onload = () => {
       initTrip(dataTrips, dataDogs);
     })
 };
+
+// const dogIdTmp = selectedTripId;
+// const tripIdTmp = dataTrips.trips[selectedTripId].dog;
 
 function initTrip(dataTrips, dataDogs) {
     const contTripMainDetails = document.getElementById("TripMainDetails-container");

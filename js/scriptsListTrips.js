@@ -11,6 +11,8 @@ window.onload = () => {
     });
 };
 
+let selectedTripId;
+
 function listDogs(trip, dataDogs) {
   let dogsList = [];
   for (const dogId of trip.dogs_id) {
@@ -33,12 +35,15 @@ function findDog(dataDogs, id) {
 
 function initTripsList(dataTrips, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
+
   for (let t in dataTrips.trips) {
     const trip = dataTrips.trips[t];
-    // console.log(trip.type);
     if (trip.type != "empty") {
       const cardTrip = document.createElement("div");
       cardTrip.classList.add("card");
+
+      const tripId = trip.id;
+
       const cardBody = document.createElement("div");
       cardBody.classList.add("card-body");
 
@@ -68,6 +73,12 @@ function initTripsList(dataTrips, dataDogs) {
       cardBody.appendChild(tripDetails);
       cardTrip.appendChild(cardBody);
       contListTrip.appendChild(cardTrip);
+
+      cardTrip.addEventListener("click", function () {
+        selectedTripId = trip.id;
+        console.log(`Selected Trip ID: ${selectedTripId}`);
+        window.location.href = `oneDogTrip.html?selectedDogId=${selectedTripId}`;
+      });
     }
   }
 }
