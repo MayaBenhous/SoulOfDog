@@ -228,6 +228,64 @@ main {
   height: 100vh;
 }
 
+/* SINGLE TRIP */
+
+#TripMainDetails-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+#tripTitles {
+  /* display: flex; */
+  flex-grow: 1;
+  /* flex-direction: row; */
+}
+
+#dateTrip {
+  display: flex;
+  flex-direction: row;
+}
+
+.imgWrapperOneTrip {
+  width: 103px;
+  height: 103px;
+  flex-shrink: 0;
+  border-radius: 51.857px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#tripTitles h2{
+  color: rgba(0, 0, 0, 0.70);
+  font-family: "ADLaM Display";
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+#tripTitles h2 .ownerTrip {
+  margin-left: 70px; 
+  display: flex;
+}
+
+.editIconOneTrip {
+  background-image: url(../images/icons/edit.png);
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  margin-top: 5px;
+  /* border-radius: 20px; */
+  /* background-color: rgba(0, 0, 0, 0.05); */
+}
+
 /* ICONS */
 
 #titleAndIcons-container {
@@ -343,7 +401,7 @@ img {
   display: flex;
   width: 60px;
   height: 28px;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   flex-shrink: 0;
 }
