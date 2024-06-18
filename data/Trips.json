@@ -2,7 +2,7 @@
   "Title": "Trips_list",
   "trips": [
     {
-      "id": "1",
+      "id": 1,
       "type": "Group",
       "implement": "Idan",
       "dogs_id": [8, 5, 6],  
@@ -18,7 +18,7 @@
       "notes": "none"
     },
     {
-      "id": "2",
+      "id": 2,
       "type": "Single",
       "dogs_id": [11],
       "implement": "Idan",
@@ -34,7 +34,7 @@
       "notes": "none"
     },
     {
-      "id": "3",
+      "id": 3,
       "type": "Group",
       "implement": "Idan",
       "dogs_id": [3, 2, 1, 4],
@@ -50,7 +50,7 @@
       "notes": "none"
     },
     {
-      "id": "4",
+      "id": 4,
       "type": "Single",
       "dogs_id": [10],
       "implement": "Idan",
@@ -66,7 +66,7 @@
       "notes": "none"
     },
     {
-      "id": "5",
+      "id": 5,
       "type": "Group",
       "implement": "Idan",
       "dogs_id": [8, 6],
@@ -82,7 +82,7 @@
       "notes": "none"
     },
     {
-      "id": "6",
+      "id": 6,
       "type": "Group",
       "implement": "Idan",
       "dogs_id": [3, 2, 1, 4],
@@ -98,7 +98,7 @@
       "notes": "none"
     },
     {
-      "id": "7",
+      "id": 7,
       "type": "empty",
       "implement": "Idan",
       "dogs_id": [0],

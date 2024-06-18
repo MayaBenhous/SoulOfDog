@@ -5,7 +5,7 @@ window.onload = () => {
 };
 
 function initDogsHomePage(data) {
-  console.log(data);
+  // console.log(data);
   const titleDogs = document.getElementById("title");
   titleDogs.textContent = data.title;
   const imgsCont = document.getElementById("dogsImgs-Container");
@@ -23,7 +23,7 @@ function initDogsHomePage(data) {
       img.alt = dog.dogName;
       img.title = dog.dogName;
 
-      let dogName = document.createElement("h5");
+      let dogName = document.createElement("span");
       dogName.classList.add("dogName");
       dogName.textContent = dog.dogName;
       imgWrapper.appendChild(img);
