@@ -212,9 +212,6 @@ header {
   border-radius: 100px;
 }
 
-
-
-
 /* MAIN */
 
 main {
@@ -226,33 +223,58 @@ main {
 }
 
 #wrapper {
-  /* margin-top: 400px; */
-  /* width: 1200px; */
   margin: 0 auto;
   width: 90%;
   height: 100vh;
-  /* justify-content: center; */
-  /* min-height: calc(100vh - 100px); */
+}
+
+/* ICONS */
+
+#titleAndIcons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.icon {
+  width: 37px;
+  height: 37px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 16px;
+}
+
+.icon-plus {
+  background-image: url("../images/icons/plus.png");
+}
+
+.icon-search {
+  background-image: url("../images/icons/search.png");
+}
+
+.icon-sort {
+  background-image: url("../images/icons/sort.png");
 }
 
 #title {
-  display: flex;
   width: 224px;
   height: 70px;
   font-weight: 400;
   font-size: 48px;
   flex-shrink: 0;
-  margin-left: auto;
-  margin-right: auto;
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  margin-left: 150px;
 }
 
 #dogsImgs-Container {
   display: flex;
   flex-wrap: wrap;
   margin-top: 40px;
-  /* width: 800px; */
   justify-content: center;
-  /* flex-direction:row; */
   gap: 50px;
 }
 
@@ -303,14 +325,11 @@ img {
   background: #00000040;
   border-radius: 5px 5px 5px 5px;
   border-color: #00000040;
-  /* margin-top: 60px; */
-  /* margin-left: 500px; */
   color: #000000;
   font-family: "ADLaM Display";
   font-weight: 400;
   font-size: 24px;
   line-height: 1.5;
-  /* text-align: left; */
 }
 
 .dogName {
@@ -335,8 +354,6 @@ img {
     height: 60px;
     flex-shrink: 0;
     border-radius: 100px;
-    /* margin-left: 31px; */
-    /* margin-top: 18px; */
   }
 
   header {
@@ -371,9 +388,6 @@ img {
     width: 600px;
     height: 100vh;
     background-color: #ffffff;
-    /* border-style: solid; */
-    /* padding-left: 12px; */
-    /* width: 304px; */
   }
 
   .nav-item {
@@ -388,7 +402,6 @@ img {
   }
 
   #low-header {
-    /* position: absolute; */
     display: none;
   }
 
@@ -406,11 +419,6 @@ img {
     justify-content: center;
     flex-shrink: 0;
     margin-top: 40px;
-    /* border-radius: 3px; */
   }
 
-  #title {
-    width: 180px;
-    font-size: 40px;
-  }
 }
