@@ -44,9 +44,9 @@ header {
 }
 
 /* #navbarSupportedContent { */
-  /* background-color: aqua; */
-  /* border-radius: 1px; */
-  /* border-color: #000; */
+/* background-color: aqua; */
+/* border-radius: 1px; */
+/* border-color: #000; */
 /* } */
 
 #low-header h1 {
@@ -70,8 +70,8 @@ header {
   width: 100%;
 }
 
-.navbar-nav .nav-link.active{
-  color:black;
+.navbar-nav .nav-link.active {
+  color: black;
 }
 
 #logo {
@@ -124,7 +124,6 @@ header {
   border-width: 0px;
 }
 
-
 #top-header img {
   flex-shrink: 0;
   border-radius: 100px;
@@ -147,12 +146,12 @@ header {
   margin: 1% 20% 0% 5%;
 }
 
+/* List-Trips */
 .listTrips-Container {
   width: 90%;
   height: 100%;
   margin: 1% auto 5%;
   justify-content: center;
-  /* align-self: center; */
 }
 
 .card {
@@ -161,7 +160,6 @@ header {
 }
 
 .section-title {
-  /* position: absolute; */
   display: ruby;
   white-space: break-spaces;
 }
@@ -177,6 +175,45 @@ header {
 .card-body li {
   list-style: none;
 }
+
+/* group-trip */
+/* #groupTripCont_id {
+  justify-content: space-between;
+  display: ;
+} */
+
+#groupTripCont_id .card-body {
+  justify-content: space-between;
+}
+
+.sectNotesG_trip {
+  width: 240px;
+  height: 120px;
+  background-color: #D3D3D3;
+  border-radius: 10px;
+  align-content: center;
+}
+
+.sectNeedsG_trip {
+  justify-content: left;
+}
+
+.secImgNameG_trip {
+  display: flex;
+  text-align: center;
+  
+}
+
+.imgDogInTrip {
+  width: 100px;
+  /* width: 40%; */
+  height: 100px;
+  /* height: 80%; */
+  border-radius: 100px;
+}
+
+
+
 
 /* MAIN */
 
@@ -264,7 +301,7 @@ img {
   height: 50px;
   padding: 8px 8px 8px 8px;
   background: #00000040;
-  border-radius: 5px 5px 5px 5px; 
+  border-radius: 5px 5px 5px 5px;
   border-color: #00000040;
   /* margin-top: 60px; */
   /* margin-left: 500px; */
@@ -348,7 +385,7 @@ img {
     font-size: 16px;
     border-radius: 1px;
     left: 0;
-  } 
+  }
 
   #low-header {
     /* position: absolute; */
