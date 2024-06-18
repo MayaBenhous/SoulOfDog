@@ -44,16 +44,36 @@ function newGroupTrip(selectedDogs, dataDogs) {
         needsPeeCheckbox.type = "checkbox";
         needsPeeCheckbox.checked = false;
         // needsPeeCheckbox.checked = dog.needs_pee;
+        const imgPeeTop = document.createElement("img");
+        imgPeeTop.src="images/icons/pee.png";
+        imgPeeTop.alt =  "imgPeeTop";
+        imgPeeTop.title =  "imgPeeTop";
+        imgPeeTop.classList.add("imgPeeTop-G");
+        const imgPeeBot = document.createElement("img");
+        imgPeeBot.src="images/icons/pee.png";
+        imgPeeBot.alt =  "imgPeeBot";
+        imgPeeBot.title =  "imgPeeBot";
+        imgPeeBot.classList.add("imgPeeBot-G");
         sectPee.appendChild(needsPeeCheckbox);
         sectPee.appendChild(document.createTextNode("Pee"));
+        sectPee.appendChild(imgPeeBot);
+        sectPee.appendChild(imgPeeTop);
+
         const sectPoop = document.createElement("section");
         sectPoop.classList.add("sectPoop");
         const needsPoopCheckbox = document.createElement("input");
         needsPoopCheckbox.type = "checkbox";
         needsPoopCheckbox.checked = false;
         // needsPoopCheckbox.checked = dog.needs_poop;
+        const imgPoop = document.createElement("img");
+        imgPoop.src="images/icons/poop.png";
+        imgPoop.alt =  "imgPoop";
+        imgPoop.title =  "imgPoop";
+        imgPoop.classList.add("imgPoop-G");
         sectPoop.appendChild(needsPoopCheckbox);
         sectPoop.appendChild(document.createTextNode("Poop"));
+        sectPoop.appendChild(imgPoop);
+
         sectNeeds.appendChild(sectPee);
         sectNeeds.appendChild(sectPoop);
         cardBody.appendChild(sectNeeds);

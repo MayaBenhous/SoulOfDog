@@ -177,31 +177,79 @@ header {
 }
 
 /* group-trip */
-/* #groupTripCont_id {
-  justify-content: space-between;
-  display: ;
-} */
-
+#groupTripCont_id .card {
+  padding: 8px 8px 8px 8px;
+  background: #0000000D;
+  border-radius: 20px 20px 20px 20px;  
+}
 #groupTripCont_id .card-body {
   justify-content: space-between;
-}
 
+}
+/* note - part1 */
 .sectNotesG_trip {
-  width: 240px;
-  height: 120px;
-  background-color: #D3D3D3;
+  width: 50%;
   border-radius: 10px;
   align-content: center;
+  color: #000000;
+  font-family: "ADLaM Display";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: center;
+  background: #FFFFFF;
+  border-color: #000000B7;
+  border-width: 1.5px;
+  border-style: solid;
+  border-radius: 5px;
 }
 
+/* needs - part2 */
 .sectNeedsG_trip {
-  justify-content: left;
+  display: grid;
 }
 
+.sectPeeG_trip {
+  display: flex;
+  align-items: center;
+}
+
+.imgPeeTop-G {
+  width: 20px;
+  height: auto;
+  margin-top: 0px;
+}
+
+.imgPeeBot-G {
+  width: 20px;
+  height: auto;
+  margin-top: 10px;
+}
+
+.sectPoop {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.imgPoop-G {
+  width: 30px;
+  height: auto;
+  margin-left: 10px;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+  border-width: 2px;
+  border-color: #000000B7;
+}
+
+/* name&pic - part3 */
 .secImgNameG_trip {
   display: flex;
-  text-align: center;
-  
+  text-align: center; 
 }
 
 .imgDogInTrip {
