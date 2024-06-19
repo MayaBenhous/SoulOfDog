@@ -276,7 +276,7 @@ main {
   height: 100vh;
 }
 
-/* SINGLE TRIP */
+/* SINGLE TRIP PAGE*/
 
 #TripMainDetails-container {
   display: flex;
@@ -286,9 +286,7 @@ main {
 }
 
 #tripTitles {
-  /* display: flex; */
   flex-grow: 1;
-  /* flex-direction: row; */
 }
 
 #dateTrip {
@@ -330,8 +328,104 @@ main {
   flex-shrink: 0;
   margin-left: 10px;
   margin-top: 5px;
-  /* border-radius: 20px; */
-  /* background-color: rgba(0, 0, 0, 0.05); */
+}
+
+#singleTripCrads-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.cardsSingleTrip {
+  display: flex;
+  flex-direction: row;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.05);
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 30px;
+}
+
+.titlePart {
+  width: 350px;
+  height: 100px;
+  flex-shrink: 0;
+  margin-top: 35px;
+  margin-left: 80px;
+}
+
+/* .titlePartExtra {
+  margin-top: 35px;
+} */
+
+.iconImg {
+  background-image: url("../images/icons/clock.png");
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  flex-shrink: 0;
+}
+
+.titleCard {
+  width: 300px;
+  height: 40px;
+  flex-shrink: 0;
+  color: #000;
+  font-family: "ADLaM Display";
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 80px;
+}
+
+.detailsPart {
+  display: flex;
+  flex-direction: column;
+  padding-right: 30px;
+  padding-left: 30px;
+  width: 350px;
+  height: 100%;
+  margin-top: 35px;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.topDetailsPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: rgba(0, 0, 0, 0.80);
+  font-family: "ADLaM Display";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.lowDetailsPart {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  color: rgba(0, 0, 0, 0.80);
+  font-family: "ADLaM Display";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.total {
+  margin: 0;
+}
+
+.value {
+  font-size: 20px;
 }
 
 /* ICONS */

@@ -81,12 +81,8 @@ function initTripsList(dataTrips, dataDogs) {
 
       cardTrip.addEventListener("click", function () {
         selectedTripId = trip.id;
-        // console.log(trip.id);
         selectedDogId = listDogs(trip, dataDogs, 1);
         window.location.href = `oneDogTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
-        // window.location.href = `oneDogTrip.html?selectedDogId=${selectedDogId}`;
-        // window.location.href = `oneDogTrip.html?selectedTripId=${trip.id}`;
-
       });
     }
   }

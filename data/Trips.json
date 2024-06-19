@@ -57,10 +57,10 @@
       "date": "23-02-2024",
       "start_time": "07:30",
       "end_time": "07:50",
-      "distance": "0.5",
-      "heartbeat": "100",
+      "distance": "0.5 Km",
+      "heartbeat": "100 BPM",
       "steps": "160",
-      "avg_speed": "15",
+      "avg_speed": "15 km/h",
       "needs_pee": "true",
       "needs_poop": "true",
       "notes": "none"
