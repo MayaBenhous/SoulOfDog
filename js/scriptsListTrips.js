@@ -67,7 +67,7 @@ function initTripsList(dataTrips, dataDogs) {
       <li>${trip.date}</li>
       <li>${trip.start_time}</li>
       <li>${trip.end_time}</li>
-      <li>${trip.distance}km</li>`;
+      <li>${trip.distance}</li>`;
       tripDetails.innerHTML = details;
 
       console.log(trip.id);
@@ -82,7 +82,7 @@ function initTripsList(dataTrips, dataDogs) {
       cardTrip.addEventListener("click", function () {
         selectedTripId = trip.id;
         selectedDogId = listDogs(trip, dataDogs, 1);
-        window.location.href = `oneDogTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+        window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
       });
     }
   }

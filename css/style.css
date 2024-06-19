@@ -388,7 +388,7 @@ main {
   padding-left: 30px;
   width: 350px;
   height: 100%;
-  margin-top: 35px;
+  margin-top: 40px;
   margin-right: 10%;
   margin-left: 10%;
 }
@@ -399,7 +399,7 @@ main {
   justify-content: space-around;
   color: rgba(0, 0, 0, 0.80);
   font-family: "ADLaM Display";
-  font-size: 12px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -408,7 +408,6 @@ main {
 .lowDetailsPart {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   color: rgba(0, 0, 0, 0.80);
   font-family: "ADLaM Display";
@@ -425,7 +424,12 @@ main {
 }
 
 .value {
-  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 28px;
 }
 
 /* ICONS */

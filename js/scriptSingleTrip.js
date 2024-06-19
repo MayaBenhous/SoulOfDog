@@ -14,6 +14,36 @@ window.onload = () => {
     })
 };
 
+function calculateTripDuration(hourStart,hourEnd) {
+  const hourStartNum = hourStart.textContent;
+  const hourEndNum = hourEnd.textContent;
+  const timePartsStart = hourStartNum.split(":");
+  const startHour = parseInt(timePartsStart[0], 10); 
+  console.log(startHour);
+  const startMinutes = parseInt(timePartsStart[1], 10); 
+  console.log(startMinutes);
+
+  const timePartsEnd = hourEndNum.split(":");
+  const endHour = parseInt(timePartsEnd[0], 10); 
+  console.log(endHour);
+  const endMinutes = parseInt(timePartsEnd[1], 10); 
+  console.log(endMinutes);
+
+  const totalHour = endHour - startHour;
+  console.log(totalHour);
+
+  const totalMinutes = endMinutes - startMinutes;
+  console.log(totalMinutes);
+
+  return { totalHour, totalMinutes };
+}
+
+function convertNumbersToTimeString(hours, minutes) {
+  const hoursStr = hours.toString().padStart(2, '0');
+  const minutesStr = minutes.toString().padStart(2, '0');
+  return `${hoursStr}:${minutesStr}`;
+}
+
 function initTrip(dataTrips, dataDogs, dogId, tripId) {
     const contTripMainDetails = document.getElementById("TripMainDetails-container");
     const singleTripCardsCont = document.getElementById("singleTripCrads-container");
@@ -65,7 +95,6 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                     iconImg.appendChild(titleCard);
                     titlePart.appendChild(iconImg);
                     card.appendChild(titlePart);
-                    // singleTripCardsCont.appendChild(card);
 
                     const detailsPart = document.createElement("div");
                     detailsPart.classList.add("detailsPart");
@@ -89,8 +118,10 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       total.textContent = `Total`;
                       const totalNum = document.createElement("p");
                       totalNum.classList.add("value");
-                      // totalNum = calculateTripDuration();
-                      totalNum.textContent = `00:20:00`;
+                      let calculate = calculateTripDuration(hourStart,hourEnd);
+                      const totalString = convertNumbersToTimeString(calculate.totalHour, calculate.totalMinutes)
+                      console.log(totalString);
+                      totalNum.textContent = totalString;
 
                       start.appendChild(hourStart);
                       end.appendChild(hourEnd);
@@ -106,11 +137,10 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                     const value = document.createElement("p");
                     value.classList.add("value");
                     for (const param in trip) {
-                      if (param === 'title')
-                        value.textContent = trip.param;
+                      if (param === title)
+                        value.textContent = trip[param];
                     }
 
-                    
                     detailsPart.appendChild(value);
                     card.appendChild(detailsPart);
                     singleTripCardsCont.appendChild(card);
