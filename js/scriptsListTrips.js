@@ -12,11 +12,14 @@ window.onload = () => {
 };
 
 let selectedTripId;
+let selectedDogId;
 
-function listDogs(trip, dataDogs) {
+function listDogs(trip, dataDogs, check) {
   let dogsList = [];
   for (const dogId of trip.dogs_id) {
     const dogName = findDog(dataDogs, dogId);
+    if(check == 1)
+      return dogId;
     if (dogName) {
       dogsList.push(dogName);
     }
@@ -55,17 +58,19 @@ function initTripsList(dataTrips, dataDogs) {
 
       const tripDogs = document.createElement("h6");
       tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
-      const dogsList = listDogs(trip, dataDogs);
+      const dogsList = listDogs(trip, dataDogs, 0);
       tripDogs.textContent = dogsList;
 
       const tripDetails = document.createElement("ul");
       tripDetails.classList.add("list-group", "list-group-flush");
       const details = `
-    <li>${trip.date}</li>
-    <li>${trip.start_time}</li>
-    <li>${trip.end_time}</li>
-    <li>${trip.distance}km</li>`;
+      <li>${trip.date}</li>
+      <li>${trip.start_time}</li>
+      <li>${trip.end_time}</li>
+      <li>${trip.distance}km</li>`;
       tripDetails.innerHTML = details;
+
+      console.log(trip.id);
 
       sectionTitles.appendChild(tripTitle);
       sectionTitles.appendChild(tripDogs);
@@ -76,8 +81,12 @@ function initTripsList(dataTrips, dataDogs) {
 
       cardTrip.addEventListener("click", function () {
         selectedTripId = trip.id;
-        console.log(`Selected Trip ID: ${selectedTripId}`);
-        window.location.href = `oneDogTrip.html?selectedDogId=${selectedTripId}`;
+        // console.log(trip.id);
+        selectedDogId = listDogs(trip, dataDogs, 1);
+        window.location.href = `oneDogTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+        // window.location.href = `oneDogTrip.html?selectedDogId=${selectedDogId}`;
+        // window.location.href = `oneDogTrip.html?selectedTripId=${trip.id}`;
+
       });
     }
   }

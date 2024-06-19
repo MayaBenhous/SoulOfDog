@@ -1,10 +1,16 @@
-const dogIdTmp = 1;
-const tripIdTmp = 2;
+let tripIdTmp = 2;
 
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const selectedDogId = urlParams.get("selectedDogId");
-  const selectedDogContainer = document.getElementById("selectedDogId");
+  const selectedTripId = urlParams.get("selectedTripId");
+  const dogId = urlParams.get("selectedDogId");
+  // const selectedTripId = urlParams.get("selectedTripId");
+  console.log(selectedTripId);
+  console.log(dogId);
+  // selectedDogsContainer.innerHTML = `Selected Dogs IDs: ${selectedDogId}`;
+
+  // const selectedDogContainer = document.getElementById("selectedDogId");
+
 //   selectedDogsContainer.innerHTML = `Selected Dogs IDs: ${selectedDogs}`;
 //   const urlParams = new URLSearchParams(window.location.search);
 //   const selectedDogs = urlParams.get("selectedDogs");
@@ -16,18 +22,18 @@ window.onload = () => {
     fetch("data/dogs.json").then((response) => response.json()),
   ])
     .then(([dataTrips, dataDogs]) => {
-      initTrip(dataTrips, dataDogs);
+      initTrip(dataTrips, dataDogs, dogId);
     })
 };
 
 // const dogIdTmp = selectedTripId;
 // const tripIdTmp = dataTrips.trips[selectedTripId].dog;
 
-function initTrip(dataTrips, dataDogs) {
+function initTrip(dataTrips, dataDogs, dogId) {
     const contTripMainDetails = document.getElementById("TripMainDetails-container");
     
     dataDogs.dogs.forEach(dog => {   
-        if (dog.id === dogIdTmp) {
+        if (dog.id == dogId) {
             const tripTitle = document.getElementById("titleTrip");
             tripTitle.textContent = `Trip with ${dog.dogName}`;
             const imgWrapper = document.createElement("div");
