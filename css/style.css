@@ -434,7 +434,7 @@ main {
 
 /* ICONS */
 
-#titleAndIcons-container {
+.titleAndIcons-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -459,6 +459,14 @@ main {
 }
 
 .icon-sort {
+  background-image: url("../images/icons/sort.png");
+}
+
+.icon-filter {
+  background-image: url("../images/icons/search.png");
+}
+
+.icon-select {
   background-image: url("../images/icons/sort.png");
 }
 
