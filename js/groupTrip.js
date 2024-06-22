@@ -262,12 +262,10 @@ function finishTrip() {
     finalTrip_lp[3] = hourStart[0];
 
     let calculate = calculateTripDuration(hourStart[0], hourEnd[0]);
-    // console.log(calculate);
     const totalString = convertNumbersToTimeString(
       calculate.totalHour,
       calculate.totalMinutes
     );
-    // console.log(totalString);
     const total = document.getElementsByClassName("totalValue");
     total[0].textContent = totalString;
     const distance = document.getElementsByClassName("disValue");
