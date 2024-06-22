@@ -145,6 +145,20 @@ header {
 }
 
 /* List-Trips */
+
+#container-topMain {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.headOfListPage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .listTrips-Container {
   width: 90%;
   height: 100%;
@@ -154,6 +168,7 @@ header {
 }
 
 .card {
+  cursor: pointer;
   margin-bottom: 10px;
   width: 100%;
 }
@@ -166,6 +181,7 @@ header {
 .section-title .card-title {
   margin-left: 5px;
 }
+
 .card-body ul {
   width: 90%;
   display: ruby-text;
@@ -208,7 +224,8 @@ header {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 30px;
+  /* margin-bottom: 20px; */
 }
 
 .sectPeeG_trip {
@@ -242,8 +259,8 @@ header {
 
 input[type="checkbox"] {
   margin-right: 10px;
-  width: 15px;
-  height: 15px;
+  width: 30px;
+  height: 30px;
   border-width: 2px;
   border-color: #000000b7;
 }
@@ -469,6 +486,8 @@ main {
 
 .icon-sort {
   background-image: url("../images/icons/sort.png");
+  width: 40px;
+  height: 40px;
 }
 
 .icon-filter {
@@ -476,7 +495,8 @@ main {
 }
 
 .icon-select {
-  background-image: url("../images/icons/sort.png");
+  background-image: url("../images/icons/select.png");
+  margin-left: 15px;
 }
 
 #title {

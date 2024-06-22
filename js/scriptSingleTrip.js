@@ -134,6 +134,47 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       card.appendChild(detailsPart);
                     }
 
+                    if(title === 'Needs') {
+                      const sectNeeds = document.createElement("section");
+                      sectNeeds.classList.add("sectNeedsG_trip");
+                      const sectPee = document.createElement("section");
+                      sectPee.classList.add("sectPeeG_trip");
+                      const needsPeeCheckbox = document.createElement("input");
+                      needsPeeCheckbox.type = "checkbox";
+                      needsPeeCheckbox.checked = false;
+                      const imgPeeTop = document.createElement("img");
+                      imgPeeTop.src="images/icons/pee.png";
+                      imgPeeTop.alt =  "imgPeeTop";
+                      imgPeeTop.title =  "imgPeeTop";
+                      imgPeeTop.classList.add("imgPeeTop-G");
+                      const imgPeeBot = document.createElement("img");
+                      imgPeeBot.src="images/icons/pee.png";
+                      imgPeeBot.alt =  "imgPeeBot";
+                      imgPeeBot.title =  "imgPeeBot";
+                      imgPeeBot.classList.add("imgPeeBot-G");
+                      sectPee.appendChild(needsPeeCheckbox);
+                      sectPee.appendChild(document.createTextNode("Pee"));
+                      sectPee.appendChild(imgPeeBot);
+                      sectPee.appendChild(imgPeeTop);
+
+                      const sectPoop = document.createElement("section");
+                      sectPoop.classList.add("sectPoop");
+                      const needsPoopCheckbox = document.createElement("input");
+                      needsPoopCheckbox.type = "checkbox";
+                      needsPoopCheckbox.checked = false;
+                      const imgPoop = document.createElement("img");
+                      imgPoop.src = "images/icons/poop.png";
+                      imgPoop.alt =  "imgPoop";
+                      imgPoop.title =  "imgPoop";
+                      imgPoop.classList.add("imgPoop-G");
+                      sectPoop.appendChild(needsPoopCheckbox);
+                      sectPoop.appendChild(document.createTextNode("Poop"));
+                      sectPoop.appendChild(imgPoop);
+                      sectNeeds.appendChild(sectPee);
+                      sectNeeds.appendChild(sectPoop);
+                      detailsPart.appendChild(sectNeeds);
+                    }
+
                     const value = document.createElement("p");
                     value.classList.add("value");
                     for (const param in trip) {
@@ -144,7 +185,6 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                     detailsPart.appendChild(value);
                     card.appendChild(detailsPart);
                     singleTripCardsCont.appendChild(card);
-
                   });
               }
             });
