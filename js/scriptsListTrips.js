@@ -9,6 +9,13 @@ window.onload = () => {
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
+
+  document.getElementById('selectButton').addEventListener('click', function() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.classList.toggle('show-delete');
+    });
+  });
 };
 
 let selectedTripId;
@@ -71,6 +78,17 @@ function initTripsList(dataTrips, dataDogs) {
       <li>${trip.distance}</li>`;
       tripDetails.innerHTML = details;
 
+      const deleteIcon = document.createElement("span");
+      deleteIcon.classList.add("delete-icon");
+      deleteIcon.classList.add("iconImg");
+
+      deleteIcon.style.backgroundImage = `url("images/icons/delete.png")`;
+
+      deleteIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent card click event
+        cardTrip.remove();
+      });
+
       console.log(trip.id);
 
       sectionTitles.appendChild(tripTitle);
@@ -78,6 +96,7 @@ function initTripsList(dataTrips, dataDogs) {
       cardBody.appendChild(sectionTitles);
       cardBody.appendChild(tripDetails);
       cardTrip.appendChild(cardBody);
+      cardTrip.appendChild(deleteIcon);
       contListTrip.appendChild(cardTrip);
 
       cardTrip.addEventListener("click", function () {
