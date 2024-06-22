@@ -228,12 +228,9 @@ function calculateTripDuration(hourStart, hourEnd) {
   const endMinutes = parseInt(timePartsEnd[1], 10);
 
   if (endMinutes < startMinutes) {
-    totalMinutes = 60 - startMinutes;
-    console.log(totalMinutes);
-    totalMinutes = totalMinutes - endMinutes;
-    console.log(totalMinutes);
-    totalHour = endHour - startHour - 1;
-    console.log(totalHour);
+    let totalMinutes = 60 - startMinutes;
+    totalMinutes = totalMinutes + endMinutes;
+    let totalHour = endHour - startHour - 1;
 
     return { totalHour, totalMinutes };
   }

@@ -16,34 +16,24 @@ window.onload = () => {
 function calculateTripDuration(hourStart,hourEnd) {
   const hourStartNum = hourStart.textContent;
   const hourEndNum = hourEnd.textContent;
+
   const timePartsStart = hourStartNum.split(":");
   const startHour = parseInt(timePartsStart[0], 10); 
-  // console.log(startHour);
   const startMinutes = parseInt(timePartsStart[1], 10); 
-  // console.log(startMinutes);
 
   const timePartsEnd = hourEndNum.split(":");
   const endHour = parseInt(timePartsEnd[0], 10); 
-  // console.log(endHour);
   const endMinutes = parseInt(timePartsEnd[1], 10); 
-  // console.log(endMinutes);
 
   if (endMinutes < startMinutes) {
     let totalMinutes = 60 - startMinutes;
-    console.log(totalMinutes);
     totalMinutes = totalMinutes + endMinutes;
-    console.log(totalMinutes);
     let totalHour = endHour - startHour - 1;
-    console.log(totalHour);
 
     return { totalHour, totalMinutes };
   }
   const totalHour = endHour - startHour;
-  // console.log(totalHour);
-
   const totalMinutes = endMinutes - startMinutes;
-  // console.log(totalMinutes);
-
   return { totalHour, totalMinutes };
 }
 
