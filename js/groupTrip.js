@@ -7,19 +7,23 @@ window.onload = () => {
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
-  ])
-    .then(([dataTrips, dataDogs]) => {
-      newGroupTrip(selectedDogs, dataDogs);
-      finishTrip();
-      createDateTrip();
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
+  ]).then(([dataTrips, dataDogs]) => {
+    // createDateTrip();
+    newGroupTrip(selectedDogs, dataDogs);
+    finishTrip();
+  });
 };
+
+// let dogsList_lp, dateTrip_lp, timeStart_lp, timeEnd_lp, distance_lp;
+// let finalTrip_lp = [dogsList_lp, dateTrip_lp, timeStart_lp, timeEnd_lp, distance_lp];
+let finalTrip_lp = [0, 1, 2, 3, 4];
 
 function newGroupTrip(selectedDogs, dataDogs) {
   const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
+
+  // finalTrip_lp.dogsList_lp = selectedDogsIdsArray;
+  finalTrip_lp[0] = selectedDogsIdsArray;
+
   // const conGroupList = document.getElementById("groupTripCont_id");
   const secDogsGroup = document.getElementById("dogs_cards");
   for (const s in selectedDogsIdsArray) {
@@ -108,7 +112,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
       }
     }
   }
-  
+
   const secDetailsTrip = document.getElementById("secDetailsTrip");
   const cardTime = document.createElement("div");
   cardTime.classList.add("cardsSingleTrip");
@@ -191,7 +195,6 @@ function newGroupTrip(selectedDogs, dataDogs) {
 
 function getCurrentTime() {
   let now = new Date();
-
   let hours = now.getHours().toString().padStart(2, "0");
   let minutes = now.getMinutes().toString().padStart(2, "0");
   return hours + ":" + minutes;
@@ -200,10 +203,8 @@ function getCurrentTime() {
 function setCurrentDate() {
   const currentDate = new Date();
   console.log(currentDate);
-
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  // console.log(day);
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
   console.log(formattedDate);
@@ -222,7 +223,6 @@ function calculateTripDuration(hourStart, hourEnd) {
   const endMinutes = parseInt(timePartsEnd[1], 10);
   const totalHour = endHour - startHour;
   const totalMinutes = endMinutes - startMinutes;
-
   return { totalHour, totalMinutes };
 }
 
@@ -238,11 +238,12 @@ function createDateTrip() {
   const tripDate = document.getElementById("dateTrip");
   const formattedDate = setCurrentDate();
   tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By Idan</span>`;
-  const ownerTripSpan = document.querySelector('.ownerTrip');
-  const editIcon = document.createElement('span');
+  const ownerTripSpan = document.querySelector(".ownerTrip");
+  const editIcon = document.createElement("span");
   editIcon.classList.add("editIconOneTrip");
-
   ownerTripSpan.appendChild(editIcon);
+  console.log(formattedDate);
+  finalTrip_lp[1] = formattedDate;
   tripTitles.appendChild(tripDate);
   titleAndIconsCont.appendChild(tripTitles);
 }
@@ -253,16 +254,27 @@ function finishTrip() {
     const hourEnd = document.getElementsByClassName("hourEnd");
     hourEnd[0].textContent = getCurrentTime();
     console.log(hourEnd[0]);
+    finalTrip_lp[2] = hourEnd[0];
+
     const hourStart = document.getElementsByClassName("hourStart");
     hourStart[0];
     console.log(hourStart[0]);
+    finalTrip_lp[3] = hourStart[0];
+
     let calculate = calculateTripDuration(hourStart[0], hourEnd[0]);
-    console.log(calculate);
-    const totalString = convertNumbersToTimeString(calculate.totalHour,calculate.totalMinutes);
-    console.log(totalString);
+    // console.log(calculate);
+    const totalString = convertNumbersToTimeString(
+      calculate.totalHour,
+      calculate.totalMinutes
+    );
+    // console.log(totalString);
     const total = document.getElementsByClassName("totalValue");
     total[0].textContent = totalString;
     const distance = document.getElementsByClassName("disValue");
-    distance[0].textContent = "0.3km"
+    distance[0].textContent = "0.3km";
+    distance_lp = distance[0].textContent;
+    finalTrip_lp[3] = distance_lp;
   });
 }
+
+console.log(finalTrip_lp);

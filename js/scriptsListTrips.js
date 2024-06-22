@@ -16,12 +16,14 @@ window.onload = () => {
       console.error("Error fetching data:", error);
     });
 
-  document.getElementById('selectButton').addEventListener('click', function() {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      card.classList.toggle('show-delete');
+  document
+    .getElementById("selectButton")
+    .addEventListener("click", function () {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach((card) => {
+        card.classList.toggle("show-delete");
+      });
     });
-  });
 };
 
 let selectedTripId;
@@ -31,8 +33,7 @@ function listDogs(trip, dataDogs, check) {
   let dogsList = [];
   for (const dogId of trip.dogs_id) {
     const dogName = findDog(dataDogs, dogId);
-    if(check == 1)
-      return dogId;
+    if (check == 1) return dogId;
     if (dogName) {
       dogsList.push(dogName);
     }
@@ -47,6 +48,63 @@ function findDog(dataDogs, id) {
     }
   }
   return null;
+}
+
+function createTrip(trip, contanierList, dataDogs) {
+  const cardTrip = document.createElement("div");
+  cardTrip.classList.add("card");
+  cardTrip.classList.add("card-list");
+
+      const tripId = trip.id;
+
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      const sectionTitles = document.createElement("section");
+      sectionTitles.classList.add("section-title");
+      const tripTitle = document.createElement("h5");
+      tripTitle.classList.add("card-title");
+      tripTitle.textContent = "Trip with  ";
+
+  const tripDogs = document.createElement("h6");
+  tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
+  const dogsList = listDogs(trip, dataDogs, 0);
+  tripDogs.textContent = dogsList;
+
+  const tripDetails = document.createElement("ul");
+  tripDetails.classList.add("list-group", "list-group-flush");
+  const details = `
+  <li>${trip.date}</li>
+  <li>${trip.start_time}</li>
+  <li>${trip.end_time}</li>
+  <li>${trip.distance}</li>`;
+  tripDetails.innerHTML = details;
+  const deleteIcon = document.createElement("span");
+  deleteIcon.classList.add("delete-icon");
+  deleteIcon.classList.add("iconImg");
+
+  deleteIcon.style.backgroundImage = `url("images/icons/delete.png")`;
+
+  deleteIcon.addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevent card click event
+    cardTrip.remove();
+  });
+
+  console.log(trip.id);
+
+  sectionTitles.appendChild(tripTitle);
+  sectionTitles.appendChild(tripDogs);
+  cardBody.appendChild(sectionTitles);
+  cardBody.appendChild(tripDetails);
+  cardTrip.appendChild(cardBody);
+  cardTrip.appendChild(deleteIcon);
+  contanierList.appendChild(cardTrip);
+
+  cardTrip.addEventListener("click", function () {
+    selectedTripId = trip.id;
+    selectedDogId = listDogs(trip, dataDogs, 1);
+    window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+  });
 }
 
 function initTripsList(dataTrips, dataDogs) {
@@ -111,6 +169,7 @@ function initTripsList(dataTrips, dataDogs) {
         selectedDogId = listDogs(trip, dataDogs, 1);
         window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
       });
+      createTrip(trip, contListTrip, dataDogs);
     }
   }
 }
@@ -131,3 +190,4 @@ function deleteSelectedTrip(dataTrips, selectedTripId) {
 //   dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== tripId);
 //   console.log('Trip removed from data:', dataTrips);
 // }
+function newTrip(tripData) {}
