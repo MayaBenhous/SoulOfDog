@@ -10,6 +10,7 @@ window.onload = () => {
   ])
     .then(([dataTrips, dataDogs]) => {
       newGroupTrip(selectedDogs, dataDogs);
+      finishTrip();
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -42,7 +43,6 @@ function newGroupTrip(selectedDogs, dataDogs) {
           "aria-placeholder",
           "The dog's needs on the trip were normal"
         );
-        textNote.setAttribute ("rows", 20);
 
         formFloat.appendChild(textNote);
         sectNotes.appendChild(formFloat);
@@ -109,8 +109,8 @@ function newGroupTrip(selectedDogs, dataDogs) {
       }
     }
   }
+  
   const secDetailsTrip = document.getElementById("secDetailsTrip");
-  // {
   const cardTime = document.createElement("div");
   cardTime.classList.add("cardsSingleTrip");
   const titlePart = document.createElement("div");
@@ -134,12 +134,13 @@ function newGroupTrip(selectedDogs, dataDogs) {
   const start = document.createElement("h5");
   start.textContent = `Start`;
   const hourStart = document.createElement("p");
+  hourStart.classList.add("hourStart");
   hourStart.textContent = getCurrentTime();
 
   const end = document.createElement("h5");
   end.textContent = `End`;
   const hourEnd = document.createElement("p");
-  hourEnd.classList.add("hourEnd")
+  hourEnd.classList.add("hourEnd");
   hourEnd.textContent = `00:00`;
 
   const lowDetailsPart = document.createElement("div");
@@ -149,6 +150,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
   total.textContent = `Total`;
   const totalNum = document.createElement("p");
   totalNum.classList.add("value");
+  totalNum.classList.add("totalValue");
   totalNum.textContent = `00:00`;
 
   start.appendChild(hourStart);
@@ -172,16 +174,17 @@ function newGroupTrip(selectedDogs, dataDogs) {
   const titleCardDistance = document.createElement("h5");
   titleCardDistance.classList.add("titleCard");
   titleCardDistance.textContent = `Distance`;
-  
+
   iconImgDistance.appendChild(titleCardDistance);
   titleDistance.appendChild(iconImgDistance);
   cardDistance.appendChild(titleDistance);
   const detailscardDistance = document.createElement("div");
   detailscardDistance.classList.add("detailsPart");
-  const value = document.createElement("p");
-  value.classList.add("value");
-  value.textContent = `0km`;
-  detailscardDistance.appendChild(value);
+  const valueDis = document.createElement("p");
+  valueDis.classList.add("value");
+  valueDis.classList.add("disValue");
+  valueDis.textContent = `0km`;
+  detailscardDistance.appendChild(valueDis);
   cardDistance.appendChild(detailscardDistance);
   secDetailsTrip.appendChild(cardTime);
   secDetailsTrip.appendChild(cardDistance);
@@ -225,12 +228,21 @@ function convertNumbersToTimeString(hours, minutes) {
 }
 
 function finishTrip() {
-
-// let calculate = calculateTripDuration(hourStart, hourEnd);
-  // const totalString = convertNumbersToTimeString(
-  //   calculate.totalHour,
-  //   calculate.totalMinutes
-  // );
-  // console.log(totalString);
-  // totalNum.textContent = totalString;
+  const finishButton = document.getElementById("finishTripButton");
+  finishButton.addEventListener("click", () => {
+    const hourEnd = document.getElementsByClassName("hourEnd");
+    hourEnd[0].textContent = getCurrentTime();
+    console.log(hourEnd[0]);
+    const hourStart = document.getElementsByClassName("hourStart");
+    hourStart[0];
+    console.log(hourStart[0]);
+    let calculate = calculateTripDuration(hourStart[0], hourEnd[0]);
+    console.log(calculate);
+    const totalString = convertNumbersToTimeString(calculate.totalHour,calculate.totalMinutes);
+    console.log(totalString);
+    const total = document.getElementsByClassName("totalValue");
+    total[0].textContent = totalString;
+    const distance = document.getElementsByClassName("disValue");
+    distance[0].textContent = "0.3km"
+  });
 }

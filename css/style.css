@@ -559,7 +559,7 @@ img {
   filter: grayscale(50%);
 }
 
-#buttons {
+.buttons {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -567,7 +567,7 @@ img {
   margin-top: 40px;
 }
 
-#buttons > button {
+.buttons > button {
   display: none;
   margin-top: 20px;
   width: 200px;
@@ -581,6 +581,15 @@ img {
   font-weight: 400;
   font-size: 24px;
   line-height: 1.5;
+}
+
+.secFinish {
+  align-items: center;
+}
+
+#finishTripButton {
+  display: block;
+  justify-content: center;
 }
 
 .dogName {
