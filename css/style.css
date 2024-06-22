@@ -715,6 +715,7 @@ img {
     width: 40px;
     height: 40px;
     margin-left: 2%;
+    cursor: pointer;
   }
 
   .homeIcon {
@@ -723,6 +724,7 @@ img {
     width: 40px;
     height: 40px;
     margin-left: 2%;
+    cursor: pointer;
   }
 
   .tripsListIconActive {
@@ -731,6 +733,7 @@ img {
     width: 400px;
     height: 40px;
     margin-left: 2%;
+    cursor: pointer;
   }
 
   .tripsListIcon {
@@ -739,6 +742,7 @@ img {
     width: 400px;
     height: 40px;
     margin-left: 2%;
+    cursor: pointer;
   }
 
   .scheduleIcon {
@@ -746,9 +750,10 @@ img {
     background-repeat: no-repeat;
     width: 400px;
     height: 40px;
+    cursor: pointer;
   }
 
   .nav-link {
-    margin-left: 100px;
+    padding-left: 100px;
   }
 }

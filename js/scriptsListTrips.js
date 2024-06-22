@@ -16,9 +16,7 @@ window.onload = () => {
       console.error("Error fetching data:", error);
     });
 
-  document
-    .getElementById("selectButton")
-    .addEventListener("click", function () {
+  document.getElementById("selectButton").addEventListener("click", function () {
       const cards = document.querySelectorAll(".card");
       cards.forEach((card) => {
         card.classList.toggle("show-delete");
@@ -88,7 +86,9 @@ function createTrip(trip, contanierList, dataDogs) {
 
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
-    cardTrip.remove();
+    if (confirm("Are you sure you want to delete this trip?")) {
+      cardTrip.remove();
+    }
   });
 
   sectionTitles.appendChild(tripId);
@@ -118,32 +118,13 @@ function initTripsList(dataTrips, dataDogs) {
   }
 }
 
-// function deleteSelectedTrip(dataTrips, selectedTripId) {
-//   // dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== selectedTripId);
-//   // console.log('Updated trips:', dataTrips);
-//   const tripCards = document.querySelectorAll('.card');
-//   tripCards.forEach(card => {
-//     console.log(tripCards);
-//     if (card.querySelector('p').textContent.includes(selectedTripId))
-//       card.remove();
-//   });
-//   // console.log('Updated trips:', dataTrips);
-// }
-
 function deleteSelectedTrip(dataTrips, selectedTripId) {
-  // dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== selectedTripId);
-  // console.log('Updated trips:', dataTrips);
   const tripCards = document.querySelectorAll('.card');
   tripCards.forEach(card => {
     console.log(tripCards);
     if (card.querySelector('p').textContent.includes(selectedTripId))
       card.remove();
   });
-  // console.log('Updated trips:', dataTrips);
 }
 
-// function deleteTripFromData(dataTrips, tripId) {
-//   dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== tripId);
-//   console.log('Trip removed from data:', dataTrips);
-// }
 function newTrip(tripData) {}

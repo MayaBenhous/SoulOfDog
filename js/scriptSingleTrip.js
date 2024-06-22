@@ -208,7 +208,9 @@ function deleteObject(selectedTripId) {
   const deleteDogButton = document.getElementById("deleteDogButton");
 
   deleteDogButton.addEventListener("click", () => {
-    window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+    if(confirm("Are you sure you want to delete this trip?")) {
+      window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+    }
   });
 
 }

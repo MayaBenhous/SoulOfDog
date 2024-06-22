@@ -1,7 +1,7 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
-  const selectedDogsContainer = document.getElementById("selectedDogs");
+  // const selectedDogsContainer = document.getElementById("selectedDogs");
   //   selectedDogsContainer.innerHTML = `Selected Dogs IDs: ${selectedDogs}`;
 
   Promise.all([
@@ -56,6 +56,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
         const sectPee = document.createElement("section");
         sectPee.classList.add("sectPeeG_trip");
         const needsPeeCheckbox = document.createElement("input");
+        // needsPeeCheckbox.classList.add("checkBox");
         needsPeeCheckbox.type = "checkbox";
         needsPeeCheckbox.checked = false;
         // needsPeeCheckbox.checked = dog.needs_pee;
