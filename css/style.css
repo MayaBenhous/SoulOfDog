@@ -177,6 +177,21 @@ header {
   background: rgba(0, 0, 0, 0.05);
 }
 
+/* .delete-icon {
+  display: none;
+  margin-left: auto;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 20px;
+}
+
+.card.show-delete .delete-icon {
+  display: inline;
+} */
+
 .card-list {
   margin-bottom: 15px;
 }
@@ -409,6 +424,21 @@ main {
   flex-shrink: 0;
 }
 
+.delete-icon {
+  display: none;
+  margin-left: auto;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.card.show-delete .delete-icon {
+  display: inline;
+}
+
 .titleCard {
   width: 300px;
   height: 40px;
@@ -512,7 +542,7 @@ main {
 }
 
 .icon-select {
-  background-image: url("../images/icons/select.png");
+  background-image: url("../images/icons/threedots.png");
   margin-left: 15px;
 }
 

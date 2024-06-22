@@ -9,6 +9,13 @@ window.onload = () => {
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
+
+  document.getElementById('selectButton').addEventListener('click', function() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.classList.toggle('show-delete');
+    });
+  });
 };
 
 let selectedTripId;
