@@ -11,6 +11,8 @@ window.onload = () => {
     // createDateTrip();
     newGroupTrip(selectedDogs, dataDogs);
     finishTrip();
+    createDateTrip();
+    // finishTrip();
   });
 };
 
@@ -216,12 +218,25 @@ function setCurrentDate() {
 function calculateTripDuration(hourStart, hourEnd) {
   const hourStartNum = hourStart.textContent;
   const hourEndNum = hourEnd.textContent;
+  
   const timePartsStart = hourStartNum.split(":");
   const startHour = parseInt(timePartsStart[0], 10);
   const startMinutes = parseInt(timePartsStart[1], 10);
+  
   const timePartsEnd = hourEndNum.split(":");
   const endHour = parseInt(timePartsEnd[0], 10);
   const endMinutes = parseInt(timePartsEnd[1], 10);
+
+  if (endMinutes < startMinutes) {
+    totalMinutes = 60 - startMinutes;
+    console.log(totalMinutes);
+    totalMinutes = totalMinutes - endMinutes;
+    console.log(totalMinutes);
+    totalHour = endHour - startHour - 1;
+    console.log(totalHour);
+
+    return { totalHour, totalMinutes };
+  }
   const totalHour = endHour - startHour;
   const totalMinutes = endMinutes - startMinutes;
   return { totalHour, totalMinutes };
