@@ -16,17 +16,17 @@ window.onload = () => {
   });
 };
 
-// let dogsList_lp, dateTrip_lp, timeStart_lp, timeEnd_lp, distance_lp;
-// let finalTrip_lp = [dogsList_lp, dateTrip_lp, timeStart_lp, timeEnd_lp, distance_lp];
-let finalTrip_lp = [0, 1, 2, 3, 4];
+let trip_lp = {
+  dogs_id: ["dog1", "dog2", "dog3"],
+  date: "2024-06-22",
+  start_time: "09:00",
+  end_time: "17:00",
+  distance: 0,
+};
 
 function newGroupTrip(selectedDogs, dataDogs) {
   const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
-
-  // finalTrip_lp.dogsList_lp = selectedDogsIdsArray;
-  finalTrip_lp[0] = selectedDogsIdsArray;
-
-  // const conGroupList = document.getElementById("groupTripCont_id");
+  trip_lp.dogs_id = selectedDogsIdsArray;
   const secDogsGroup = document.getElementById("dogs_cards");
   for (const s in selectedDogsIdsArray) {
     const selectDog = selectedDogsIdsArray[s];
@@ -196,6 +196,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
   secDetailsTrip.appendChild(cardDistance);
 }
 
+function listDogsNames() {}
 function getCurrentTime() {
   let now = new Date();
   let hours = now.getHours().toString().padStart(2, "0");
@@ -218,11 +219,11 @@ function setCurrentDate() {
 function calculateTripDuration(hourStart, hourEnd) {
   const hourStartNum = hourStart.textContent;
   const hourEndNum = hourEnd.textContent;
-  
+
   const timePartsStart = hourStartNum.split(":");
   const startHour = parseInt(timePartsStart[0], 10);
   const startMinutes = parseInt(timePartsStart[1], 10);
-  
+
   const timePartsEnd = hourEndNum.split(":");
   const endHour = parseInt(timePartsEnd[0], 10);
   const endMinutes = parseInt(timePartsEnd[1], 10);
@@ -255,8 +256,9 @@ function createDateTrip() {
   const editIcon = document.createElement("span");
   editIcon.classList.add("editIconOneTrip");
   ownerTripSpan.appendChild(editIcon);
+
   console.log(formattedDate);
-  finalTrip_lp[1] = formattedDate;
+  trip_lp.date = formattedDate;
   tripTitles.appendChild(tripDate);
   titleAndIconsCont.appendChild(tripTitles);
 }
@@ -264,15 +266,15 @@ function createDateTrip() {
 function finishTrip() {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
-    const hourEnd = document.getElementsByClassName("hourEnd");
-    hourEnd[0].textContent = getCurrentTime();
-    console.log(hourEnd[0]);
-    finalTrip_lp[2] = hourEnd[0];
-
     const hourStart = document.getElementsByClassName("hourStart");
     hourStart[0];
     console.log(hourStart[0]);
-    finalTrip_lp[3] = hourStart[0];
+    trip_lp.start_time = hourStart[0].textContent;
+
+    const hourEnd = document.getElementsByClassName("hourEnd");
+    hourEnd[0].textContent = getCurrentTime();
+    console.log(hourEnd[0]);
+    trip_lp.end_time = hourEnd[0].textContent;
 
     let calculate = calculateTripDuration(hourStart[0], hourEnd[0]);
     const totalString = convertNumbersToTimeString(
@@ -283,9 +285,10 @@ function finishTrip() {
     total[0].textContent = totalString;
     const distance = document.getElementsByClassName("disValue");
     distance[0].textContent = "0.3km";
-    distance_lp = distance[0].textContent;
-    finalTrip_lp[3] = distance_lp;
+    trip_lp.distance = distance[0].textContent;
+    console.log(trip_lp);
+    let trip_lp_string = JSON.stringify(trip_lp);
+    console.log(trip_lp_string);
+    window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
   });
 }
-
-console.log(finalTrip_lp);
