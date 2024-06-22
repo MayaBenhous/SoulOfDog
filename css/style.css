@@ -43,11 +43,11 @@ header {
   /* justify-content: space-between; */
 }
 
-/* #navbarSupportedContent { */
-/* background-color: aqua; */
-/* border-radius: 1px; */
-/* border-color: #000; */
-/* } */
+#navbarSupportedContent {
+  z-index: 1;
+  height: 100%;
+  /* margin-left: 30px; */
+}
 
 #low-header h1 {
   /* display: flex; */
@@ -91,7 +91,7 @@ header {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
   font-family: "ADLaM Display";
-  font-size: 30px;
+  font-size: 34px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -104,8 +104,6 @@ header {
 
 .nav-item:not(:last-child) {
   margin-right: 80px;
-  /* margin-right: 25%; */
-  /* justify-content: space-between; */
 }
 
 .container-fluid .navbar-collapse {
@@ -152,6 +150,7 @@ header {
   height: 100%;
   margin: 1% auto 5%;
   justify-content: center;
+  /* z-index: 0; */
 }
 
 .card {
@@ -562,9 +561,7 @@ img {
 
   header {
     height: 140px;
-    /* width: 100%; */
     background-color: #ffe5d0;
-    /* display: flex; */
   }
 
   #top-header {
@@ -573,12 +570,10 @@ img {
     justify-content: flex-end;
     width: 100%;
     padding-left: 12px;
-    /* justify-content: space-between; */
   }
 
   #top-header h1 {
     text-align: center;
-    /* justify-content: center; */
     display: flex;
     margin-right: 380px;
   }
@@ -588,21 +583,13 @@ img {
   }
 
   .navbar-nav {
+    display: flex;
+    justify-content: left;
     margin-top: 3px;
     width: 600px;
     height: 100vh;
     background-color: #ffffff;
-  }
-
-  .nav-item {
-    flex-direction: column;
-    width: 300px;
-    text-align: left;
-    height: 18px;
-    font-weight: 400;
-    font-size: 16px;
-    border-radius: 1px;
-    left: 0;
+    margin-top: 20px;
   }
 
   #low-header {
@@ -610,19 +597,55 @@ img {
   }
 
   .nav-item {
-    color: rgba(0, 0, 0, 0.5);
-    text-align: center;
-    font-family: "ADLaM Display";
-    font-size: 30px;
+    text-align:start;
     font-style: normal;
-    font-weight: 60px;
-    line-height: normal;
-    display: flex;
-    height: 40px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
+    width: 300px;
+    height: 30px;
     margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 2%;
   }
 
+  .homeIconActive {
+    background-image: url(../images/icons/home.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin-left: 2%;
+  }
+
+  .homeIcon {
+    background-image: url(../images/icons/homeNotActive.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin-left: 2%;
+  }
+
+  .tripsListIconActive {
+    background-image: url(../images/icons/dogStepActive.png);
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 40px;
+    margin-left: 2%;
+  }
+
+  .tripsListIcon {
+    background-image: url(../images/icons/dogStep.png);
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 40px;
+    margin-left: 2%;
+  }
+
+  .scheduleIcon {
+    background-image: url(../images/icons/calendar.png);
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 40px;
+  }
+
+  .nav-link {
+    margin-left: 100px;
+  }
 }
