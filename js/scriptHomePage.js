@@ -19,6 +19,7 @@ function initDogsHomePage(data) {
       const imgWrapper = document.createElement("div");
       imgWrapper.classList.add("imgWrapper");
       const img = document.createElement("img");
+      img.classList.add("imgHomePage");
       img.src = dog.img_dog;
       img.alt = dog.dogName;
       img.title = dog.dogName;
