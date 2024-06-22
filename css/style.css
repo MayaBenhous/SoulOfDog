@@ -587,8 +587,13 @@ img {
   border-width: 0;
 }
 
+.buttons > button:hover {
+  background-color: #D3D3D3;
+  color: #000;
+}
+
 .secFinish {
-  align-items: center;
+  margin: 0;
 }
 
 #finishTripButton {
