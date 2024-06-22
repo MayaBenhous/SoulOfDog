@@ -2,8 +2,6 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
   const dogId = urlParams.get("selectedDogId");
-  console.log(selectedTripId);
-  console.log(dogId);
 
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
@@ -11,6 +9,7 @@ window.onload = () => {
   ])
     .then(([dataTrips, dataDogs]) => {
       initTrip(dataTrips, dataDogs, dogId, selectedTripId);
+      deleteObject(selectedTripId);
     })
 };
 
@@ -182,11 +181,6 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       formFloat.classList.add("form-floating");
                       const textNote = document.createElement("textarea");
                       textNote.classList.add("form-control");
-                      formFloat.setAttribute(
-                        "aria-placeholder",
-                        "The dog's needs on the trip were normal"
-                      );
-                      // textNote.setAttribute ("rows", 20);
               
                       formFloat.appendChild(textNote);
                       sectNotes.appendChild(formFloat);
@@ -207,6 +201,14 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
               }
             });
           }
-        
     });
+}
+
+function deleteObject(selectedTripId) {
+  const deleteDogButton = document.getElementById("deleteDogButton");
+
+  deleteDogButton.addEventListener("click", () => {
+    window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+  });
+
 }

@@ -19,7 +19,6 @@ window.onload = () => {
 };
 
 function newGroupTrip(selectedDogs, dataDogs) {
-  // createDateTrip();
   const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
   // const conGroupList = document.getElementById("groupTripCont_id");
   const secDogsGroup = document.getElementById("dogs_cards");
@@ -242,9 +241,8 @@ function createDateTrip() {
   const ownerTripSpan = document.querySelector('.ownerTrip');
   const editIcon = document.createElement('span');
   editIcon.classList.add("editIconOneTrip");
-  ownerTripSpan.appendChild(editIcon);
-  console.log(formattedDate);
 
+  ownerTripSpan.appendChild(editIcon);
   tripTitles.appendChild(tripDate);
   titleAndIconsCont.appendChild(tripTitles);
 }

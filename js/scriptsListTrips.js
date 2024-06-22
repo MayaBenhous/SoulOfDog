@@ -1,10 +1,16 @@
 window.onload = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedTripId = urlParams.get("selectedTripId");
+  
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
   ])
     .then(([dataTrips, dataDogs]) => {
       initTripsList(dataTrips, dataDogs);
+      if (selectedTripId) {
+        deleteSelectedTrip(dataTrips, selectedTripId);
+      }
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -53,13 +59,15 @@ function initTripsList(dataTrips, dataDogs) {
       cardTrip.classList.add("card");
       cardTrip.classList.add("card-list");
 
-      const tripId = trip.id;
-
+      // const tripId = trip.id;
       const cardBody = document.createElement("div");
       cardBody.classList.add("card-body");
 
       const sectionTitles = document.createElement("section");
       sectionTitles.classList.add("section-title");
+      const tripId = document.createElement("p");
+      tripId.textContent = trip.id;
+      tripId.style.display = "none";
       const tripTitle = document.createElement("h5");
       tripTitle.classList.add("card-title");
       tripTitle.textContent = "Trip with  ";
@@ -81,16 +89,15 @@ function initTripsList(dataTrips, dataDogs) {
       const deleteIcon = document.createElement("span");
       deleteIcon.classList.add("delete-icon");
       deleteIcon.classList.add("iconImg");
-
       deleteIcon.style.backgroundImage = `url("images/icons/delete.png")`;
 
       deleteIcon.addEventListener('click', function(event) {
-        event.stopPropagation(); // Prevent card click event
+        event.stopPropagation();
         cardTrip.remove();
+        // deleteTripFromData(dataTrips, trip.id);
       });
-
-      console.log(trip.id);
-
+      
+      sectionTitles.appendChild(tripId);
       sectionTitles.appendChild(tripTitle);
       sectionTitles.appendChild(tripDogs);
       cardBody.appendChild(sectionTitles);
@@ -107,3 +114,20 @@ function initTripsList(dataTrips, dataDogs) {
     }
   }
 }
+
+function deleteSelectedTrip(dataTrips, selectedTripId) {
+  // dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== selectedTripId);
+  // console.log('Updated trips:', dataTrips);
+  const tripCards = document.querySelectorAll('.card');
+  tripCards.forEach(card => {
+    console.log(tripCards);
+    if (card.querySelector('p').textContent.includes(selectedTripId))
+      card.remove();
+  });
+  // console.log('Updated trips:', dataTrips);
+}
+
+// function deleteTripFromData(dataTrips, tripId) {
+//   dataTrips.trips = dataTrips.trips.filter(trip => trip.id !== tripId);
+//   console.log('Trip removed from data:', dataTrips);
+// }
