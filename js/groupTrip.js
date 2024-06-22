@@ -11,6 +11,7 @@ window.onload = () => {
     .then(([dataTrips, dataDogs]) => {
       newGroupTrip(selectedDogs, dataDogs);
       finishTrip();
+      createDateTrip();
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -18,12 +19,12 @@ window.onload = () => {
 };
 
 function newGroupTrip(selectedDogs, dataDogs) {
+  // createDateTrip();
   const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
   // const conGroupList = document.getElementById("groupTripCont_id");
   const secDogsGroup = document.getElementById("dogs_cards");
   for (const s in selectedDogsIdsArray) {
     const selectDog = selectedDogsIdsArray[s];
-    console.log(selectDog);
     for (const dog of dataDogs.dogs) {
       if (dog.id == selectDog) {
         const cardDog = document.createElement("div");
@@ -34,7 +35,6 @@ function newGroupTrip(selectedDogs, dataDogs) {
 
         const sectNotes = document.createElement("section");
         sectNotes.classList.add("sectNotesG_trip");
-
         const formFloat = document.createElement("div");
         formFloat.classList.add("form-floating");
         const textNote = document.createElement("textarea");
@@ -192,9 +192,24 @@ function newGroupTrip(selectedDogs, dataDogs) {
 
 function getCurrentTime() {
   let now = new Date();
+
   let hours = now.getHours().toString().padStart(2, "0");
   let minutes = now.getMinutes().toString().padStart(2, "0");
   return hours + ":" + minutes;
+}
+
+function setCurrentDate() {
+  const currentDate = new Date();
+  console.log(currentDate);
+
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  // console.log(day);
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  return formattedDate;
 }
 
 function calculateTripDuration(hourStart, hourEnd) {
@@ -202,21 +217,12 @@ function calculateTripDuration(hourStart, hourEnd) {
   const hourEndNum = hourEnd.textContent;
   const timePartsStart = hourStartNum.split(":");
   const startHour = parseInt(timePartsStart[0], 10);
-  console.log(startHour);
   const startMinutes = parseInt(timePartsStart[1], 10);
-  console.log(startMinutes);
-
   const timePartsEnd = hourEndNum.split(":");
   const endHour = parseInt(timePartsEnd[0], 10);
-  console.log(endHour);
   const endMinutes = parseInt(timePartsEnd[1], 10);
-  console.log(endMinutes);
-
   const totalHour = endHour - startHour;
-  console.log(totalHour);
-
   const totalMinutes = endMinutes - startMinutes;
-  console.log(totalMinutes);
 
   return { totalHour, totalMinutes };
 }
@@ -225,6 +231,22 @@ function convertNumbersToTimeString(hours, minutes) {
   const hoursStr = hours.toString().padStart(2, "0");
   const minutesStr = minutes.toString().padStart(2, "0");
   return `${hoursStr}:${minutesStr}`;
+}
+
+function createDateTrip() {
+  const titleAndIconsCont = document.getElementById("titleAndIcons-container");
+  const tripTitles = document.getElementById("tripTitles");
+  const tripDate = document.getElementById("dateTrip");
+  const formattedDate = setCurrentDate();
+  tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By Idan</span>`;
+  const ownerTripSpan = document.querySelector('.ownerTrip');
+  const editIcon = document.createElement('span');
+  editIcon.classList.add("editIconOneTrip");
+  ownerTripSpan.appendChild(editIcon);
+  console.log(formattedDate);
+
+  tripTitles.appendChild(tripDate);
+  titleAndIconsCont.appendChild(tripTitles);
 }
 
 function finishTrip() {

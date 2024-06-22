@@ -25,14 +25,26 @@
   </head>
   <body>
     <header>
-      <section id ="top-header">
+      <section id="top-header">
         <a id="logo" href="index.html"></a>
         <nav class="navbar navbar-expand-lg">
           <div class="container-fluid">
             <div id="header-left">
-              <img src="./images/logoAndUsers/Idan.png" class="img-fluid" alt="userImg">
+              <img
+                src="./images/logoAndUsers/Idan.png"
+                class="img-fluid"
+                alt="userImg"
+              />
               <p>Idan</p>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
                 <span class="navbar-toggler-icon"></span>
               </button>
             </div>
@@ -40,10 +52,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item homeIcon">
-                  <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                  <a class="nav-link" aria-current="page" href="index.html"
+                    >Home</a
+                  >
                 </li>
                 <li class="nav-item tripsListIconActive">
-                  <a class="nav-link active" href="tripsList.html">Trips & Needs</a>
+                  <a class="nav-link active" href="tripsList.html"
+                    >Trips & Needs</a
+                  >
                 </li>
                 <li class="nav-item scheduleIcon">
                   <a class="nav-link" href="#">Schedule</a>
@@ -61,17 +77,17 @@
       <!-- <div id="selectedDogs"></div> -->
       <section id="wrapper">
         <section class="titleAndIcons-container">
-          <section id="top_left">
-            <h1>Group trip</h1>
-            <!-- name -->
-            <!-- edit -->
+          <section id="tripTitles">
+            <h1 id="titleTrip">Group Trip</h1>
+            <h2 id="dateTrip"></h2>
           </section>
-        
           <section class="buttons secFinish">
-          <button id="finishTripButton" class="btn btn-primary">Finish Trip</button>
+            <button id="finishTripButton" class="btn btn-primary">
+              Finish Trip
+            </button>
           </section>
         </section>
-        <div id= "groupTripCont_id" class="groupTrip-Container">
+        <div id="groupTripCont_id" class="groupTrip-Container">
           <section id="dogs_cards"></section>
           <section id="secDetailsTrip"></section>
         </div>

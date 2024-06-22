@@ -174,6 +174,25 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       detailsPart.appendChild(sectNeeds);
                     }
 
+                    if (title === 'Notes') {
+                      const sectNotes = document.createElement("section");
+                      sectNotes.classList.add("sectNotesG_trip");
+                      sectNotes.classList.add("sectNotesS_trip");
+                      const formFloat = document.createElement("div");
+                      formFloat.classList.add("form-floating");
+                      const textNote = document.createElement("textarea");
+                      textNote.classList.add("form-control");
+                      formFloat.setAttribute(
+                        "aria-placeholder",
+                        "The dog's needs on the trip were normal"
+                      );
+                      // textNote.setAttribute ("rows", 20);
+              
+                      formFloat.appendChild(textNote);
+                      sectNotes.appendChild(formFloat);
+                      detailsPart.appendChild(sectNotes);
+                    }
+
                     const value = document.createElement("p");
                     value.classList.add("value");
                     for (const param in trip) {
