@@ -36,18 +36,16 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
             </div>
-            <h1>Home Page</h1>
+            <h1>Trips & Needs</h1>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="index.html"
-                    >Home</a
-                  >
+                <li class="nav-item homeIcon">
+                  <a class="nav-link" aria-current="page" href="index.html">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item tripsListIconActive">
                   <a class="nav-link active" aria-disabled="true" href="#">Trips & Needs</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item scheduleIcon">
                   <a class="nav-link" href="#">Schedule</a>
                 </li>
               </ul>
@@ -63,18 +61,19 @@
     </header>
     <main>
       <section id="wrapper">
-        <section id="top_left">
-          <h1>My Trips</h1>
-          <span class="icon icon-select"></span>
+        <section id="container-topMain">
+          <section class = "headOfListPage">
+            <h1>My Trips</h1>
+            <span class="icon icon-select"></span>
+          </section>
+          <section class = "headOfListPage">
+            <span class="icon icon-plus"></span>
+            <span class="icon icon-sort"></span>
+            <span class="icon icon-search"></span>
+          </section>
         </section>
-        <section id="top_right">
-          <span class="icon icon-plus"></span>
-          <span class="icon icon-sort"></span>
-          <!-- <span class="icon icon-filter"></span> -->
-          <span class="icon icon-search"></span>
-        </section>
-        <div id= "listTripsCont_id" class="listTrips-Container">
-        </div>
+        <div id= "listTripsCont_id" class="listTrips-Container"></div>
+      </section>
     </main>
   </body>
 </html>

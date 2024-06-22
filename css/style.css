@@ -145,6 +145,20 @@ header {
 }
 
 /* List-Trips */
+
+#container-topMain {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.headOfListPage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .listTrips-Container {
   width: 90%;
   height: 100%;
@@ -154,6 +168,7 @@ header {
 
 .card {
   margin-bottom: 30px;
+  cursor: pointer;
   width: 100%;
   display: flex;
   border-width: 0px;
@@ -172,6 +187,7 @@ header {
 .section-title .card-title {
   margin-left: 5px;
 }
+
 .card-body ul {
   width: 90%;
   display: ruby-text;
@@ -480,6 +496,8 @@ main {
 
 .icon-sort {
   background-image: url("../images/icons/sort.png");
+  width: 40px;
+  height: 40px;
 }
 
 .icon-filter {
@@ -487,7 +505,8 @@ main {
 }
 
 .icon-select {
-  background-image: url("../images/icons/sort.png");
+  background-image: url("../images/icons/select.png");
+  margin-left: 15px;
 }
 
 #title {
