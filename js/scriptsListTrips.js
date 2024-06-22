@@ -44,6 +44,7 @@ function initTripsList(dataTrips, dataDogs) {
     if (trip.type != "empty") {
       const cardTrip = document.createElement("div");
       cardTrip.classList.add("card");
+      cardTrip.classList.add("card-list");
 
       const tripId = trip.id;
 

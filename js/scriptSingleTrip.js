@@ -89,7 +89,6 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                     iconImg.style.backgroundImage = `url("${url}")`;
                     const titleCard = document.createElement("h5");
                     titleCard.classList.add("titleCard");
-                    console.log(card);
                     titleCard.textContent = title;
 
                     iconImg.appendChild(titleCard);
