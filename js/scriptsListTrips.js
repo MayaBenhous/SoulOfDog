@@ -10,12 +10,14 @@ window.onload = () => {
       console.error("Error fetching data:", error);
     });
 
-  document.getElementById('selectButton').addEventListener('click', function() {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      card.classList.toggle('show-delete');
+  document
+    .getElementById("selectButton")
+    .addEventListener("click", function () {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach((card) => {
+        card.classList.toggle("show-delete");
+      });
     });
-  });
 };
 
 let selectedTripId;
@@ -25,8 +27,7 @@ function listDogs(trip, dataDogs, check) {
   let dogsList = [];
   for (const dogId of trip.dogs_id) {
     const dogName = findDog(dataDogs, dogId);
-    if(check == 1)
-      return dogId;
+    if (check == 1) return dogId;
     if (dogName) {
       dogsList.push(dogName);
     }
@@ -72,6 +73,16 @@ function createTrip(trip, contanierList, dataDogs) {
   <li>${trip.end_time}</li>
   <li>${trip.distance}</li>`;
   tripDetails.innerHTML = details;
+  const deleteIcon = document.createElement("span");
+  deleteIcon.classList.add("delete-icon");
+  deleteIcon.classList.add("iconImg");
+
+  deleteIcon.style.backgroundImage = `url("images/icons/delete.png")`;
+
+  deleteIcon.addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevent card click event
+    cardTrip.remove();
+  });
 
   console.log(trip.id);
 
@@ -80,13 +91,14 @@ function createTrip(trip, contanierList, dataDogs) {
   cardBody.appendChild(sectionTitles);
   cardBody.appendChild(tripDetails);
   cardTrip.appendChild(cardBody);
+  cardTrip.appendChild(deleteIcon);
   contanierList.appendChild(cardTrip);
 
   cardTrip.addEventListener("click", function () {
-      selectedTripId = trip.id;
-      selectedDogId = listDogs(trip, dataDogs, 1);
-      window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
-    });
+    selectedTripId = trip.id;
+    selectedDogId = listDogs(trip, dataDogs, 1);
+    window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+  });
 }
 
 function initTripsList(dataTrips, dataDogs) {
@@ -100,6 +112,4 @@ function initTripsList(dataTrips, dataDogs) {
   }
 }
 
-function newTrip(tripData) {
-  
-}
+function newTrip(tripData) {}
