@@ -596,6 +596,20 @@ img {
   border-width: 0;
 }
 
+.buttons > button:hover {
+  background-color: #D3D3D3;
+  color: #000;
+}
+
+.secFinish {
+  margin: 0;
+}
+
+#finishTripButton {
+  display: block;
+  justify-content: center;
+}
+
 .dogName {
   color: #000;
   text-align: center;
