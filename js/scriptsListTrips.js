@@ -36,55 +36,63 @@ function findDog(dataDogs, id) {
   return null;
 }
 
+function createTrip(trip, contanierList, dataDogs) {
+  const cardTrip = document.createElement("div");
+  cardTrip.classList.add("card");
+  cardTrip.classList.add("card-list");
+
+  const tripId = trip.id;
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+
+  const sectionTitles = document.createElement("section");
+  sectionTitles.classList.add("section-title");
+  const tripTitle = document.createElement("h5");
+  tripTitle.classList.add("card-title");
+  tripTitle.textContent = "Trip with  ";
+
+  const tripDogs = document.createElement("h6");
+  tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
+  const dogsList = listDogs(trip, dataDogs, 0);
+  tripDogs.textContent = dogsList;
+
+  const tripDetails = document.createElement("ul");
+  tripDetails.classList.add("list-group", "list-group-flush");
+  const details = `
+  <li>${trip.date}</li>
+  <li>${trip.start_time}</li>
+  <li>${trip.end_time}</li>
+  <li>${trip.distance}</li>`;
+  tripDetails.innerHTML = details;
+
+  console.log(trip.id);
+
+  sectionTitles.appendChild(tripTitle);
+  sectionTitles.appendChild(tripDogs);
+  cardBody.appendChild(sectionTitles);
+  cardBody.appendChild(tripDetails);
+  cardTrip.appendChild(cardBody);
+  contanierList.appendChild(cardTrip);
+
+  cardTrip.addEventListener("click", function () {
+      selectedTripId = trip.id;
+      selectedDogId = listDogs(trip, dataDogs, 1);
+      window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+    });
+}
+
 function initTripsList(dataTrips, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
 
   for (let t in dataTrips.trips) {
     const trip = dataTrips.trips[t];
     if (trip.type != "empty") {
-      const cardTrip = document.createElement("div");
-      cardTrip.classList.add("card");
-      cardTrip.classList.add("card-list");
-
-      const tripId = trip.id;
-
-      const cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-
-      const sectionTitles = document.createElement("section");
-      sectionTitles.classList.add("section-title");
-      const tripTitle = document.createElement("h5");
-      tripTitle.classList.add("card-title");
-      tripTitle.textContent = "Trip with  ";
-
-      const tripDogs = document.createElement("h6");
-      tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
-      const dogsList = listDogs(trip, dataDogs, 0);
-      tripDogs.textContent = dogsList;
-
-      const tripDetails = document.createElement("ul");
-      tripDetails.classList.add("list-group", "list-group-flush");
-      const details = `
-      <li>${trip.date}</li>
-      <li>${trip.start_time}</li>
-      <li>${trip.end_time}</li>
-      <li>${trip.distance}</li>`;
-      tripDetails.innerHTML = details;
-
-      console.log(trip.id);
-
-      sectionTitles.appendChild(tripTitle);
-      sectionTitles.appendChild(tripDogs);
-      cardBody.appendChild(sectionTitles);
-      cardBody.appendChild(tripDetails);
-      cardTrip.appendChild(cardBody);
-      contListTrip.appendChild(cardTrip);
-
-      cardTrip.addEventListener("click", function () {
-        selectedTripId = trip.id;
-        selectedDogId = listDogs(trip, dataDogs, 1);
-        window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
-      });
+      createTrip(trip, contListTrip, dataDogs);
     }
   }
+}
+
+function newTrip(tripData) {
+  
 }
