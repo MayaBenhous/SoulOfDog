@@ -28,12 +28,24 @@ function newGroupTrip(selectedDogs, dataDogs) {
         cardDog.classList.add("card");
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
+        cardBody.classList.add("cardGroup_trip");
 
         const sectNotes = document.createElement("section");
         sectNotes.classList.add("sectNotesG_trip");
-        const notesSpan = document.createElement("span");
-        notesSpan.textContent = "The dog's needs on the trip were normal";
-        sectNotes.appendChild(notesSpan);
+        
+        const formFloat = document.createElement("div");
+        formFloat.classList.add("form-floating");
+        const textNote = document.createElement("textarea");
+        textNote.classList.add("form-control");
+        textNote.ariaPlaceholder = "The dog's needs on the trip were normal";
+
+        // const notesSpan = document.createElement("span");
+        // notesSpan.textContent = "The dog's needs on the trip were normal";
+        // sectNotes.appendChild(notesSpan);
+
+        formFloat.appendChild(textNote);
+        sectNotes.appendChild(formFloat);
+        // sectNotes.appendChild(notesSpan);
         cardBody.appendChild(sectNotes);
         
         const sectNeeds = document.createElement("section");
@@ -79,14 +91,15 @@ function newGroupTrip(selectedDogs, dataDogs) {
         cardBody.appendChild(sectNeeds);
 
         const sectImgName = document.createElement("section");
-        cardBody.classList.add("secImgNameG_trip");
+        sectImgName.classList.add("secImgNameG_trip");
         const imgDog = document.createElement("img");
         imgDog.classList.add("imgDogInTrip");
         imgDog.src = dog.img_dog;
         imgDog.alt = dog.dogName;
         imgDog.title = dog.dogName;
         let dogName = document.createElement("h6");
-        dogName.classList.add("nameDogInTrip");
+        // dogName.classList.add("nameDogInTrip");
+        dogName.classList.add("dogName");
         dogName.textContent = dog.dogName;
         sectImgName.appendChild(imgDog);
         sectImgName.appendChild(dogName);

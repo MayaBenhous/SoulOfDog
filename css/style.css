@@ -179,12 +179,11 @@ header {
 /* group-trip */
 #groupTripCont_id .card {
   padding: 8px 8px 8px 8px;
-  background: #0000000D;
-  border-radius: 20px 20px 20px 20px;  
+  background: #0000000d;
+  border-radius: 20px 20px 20px 20px;
 }
 #groupTripCont_id .card-body {
   justify-content: space-between;
-
 }
 /* note - part1 */
 .sectNotesG_trip {
@@ -194,11 +193,11 @@ header {
   color: #000000;
   font-family: "ADLaM Display";
   font-weight: 400;
-  font-size: 12px;
+  font-size: 20px;
   line-height: 1.3;
   text-align: center;
-  background: #FFFFFF;
-  border-color: #000000B7;
+  background: #ffffff;
+  border-color: #000000b7;
   border-width: 1.5px;
   border-style: solid;
   border-radius: 5px;
@@ -207,6 +206,10 @@ header {
 /* needs - part2 */
 .sectNeedsG_trip {
   display: grid;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
 }
 
 .sectPeeG_trip {
@@ -243,13 +246,20 @@ input[type="checkbox"] {
   width: 15px;
   height: 15px;
   border-width: 2px;
-  border-color: #000000B7;
+  border-color: #000000b7;
 }
 
 /* name&pic - part3 */
+.cardGroup_trip {
+  display: flex;
+  text-align: center;
+}
+
 .secImgNameG_trip {
   display: flex;
-  text-align: center; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .imgDogInTrip {
@@ -305,8 +315,8 @@ main {
   flex-direction: column;
 }
 
-#tripTitles h2{
-  color: rgba(0, 0, 0, 0.70);
+#tripTitles h2 {
+  color: rgba(0, 0, 0, 0.7);
   font-family: "ADLaM Display";
   font-size: 28px;
   font-style: normal;
@@ -316,7 +326,7 @@ main {
 }
 
 #tripTitles h2 .ownerTrip {
-  margin-left: 70px; 
+  margin-left: 70px;
   display: flex;
 }
 
@@ -397,7 +407,7 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  color: rgba(0, 0, 0, 0.80);
+  color: rgba(0, 0, 0, 0.8);
   font-family: "ADLaM Display";
   font-size: 24px;
   font-style: normal;
@@ -409,7 +419,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: rgba(0, 0, 0, 0.80);
+  color: rgba(0, 0, 0, 0.8);
   font-family: "ADLaM Display";
   font-size: 12px;
   font-style: normal;
@@ -632,5 +642,4 @@ img {
     flex-shrink: 0;
     margin-top: 40px;
   }
-
 }
