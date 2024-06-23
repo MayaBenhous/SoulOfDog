@@ -1,7 +1,7 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
-  const trip_lp_string = urlParams.get("newTripObj");
+  // const trip_lp_string = urlParams.get("newTripObj");
 
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
@@ -10,20 +10,22 @@ window.onload = () => {
     .then(([dataTrips, dataDogs]) => {
       initTripsList(dataTrips, dataDogs);
       if (selectedTripId) {
-        deleteSelectedTrip(dataTrips, selectedTripId);
+        deleteSelectedTrip(selectedTripId);
       }
-      if (trip_lp_string) {
-        const newTripObj = JSON.parse(decodeURIComponent(trip_lp_string));
+      // if (trip_lp_string) {
+      //   const newTripObj = JSON.parse(decodeURIComponent(trip_lp_string));
+      //   newTrip(newTripObj, dataDogs);
+      // }
+      let newTrips = JSON.parse(localStorage.getItem('trips')) || [];
+      newTrips.forEach(newTripObj => {
         newTrip(newTripObj, dataDogs);
-      }
+      });
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
 
-  document
-    .getElementById("selectButton")
-    .addEventListener("click", function () {
+  document.getElementById("selectButton").addEventListener("click", function () {
       const cards = document.querySelectorAll(".card");
       cards.forEach((card) => {
         card.classList.toggle("show-delete");
@@ -93,6 +95,9 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
+      let trips = JSON.parse(localStorage.getItem('trips')) || [];
+      trips = trips.filter(storedTrip => storedTrip.id !== trip.id);
+      localStorage.setItem('trips', JSON.stringify(trips));
       cardTrip.remove();
     }
   });
@@ -132,10 +137,14 @@ function initTripsList(dataTrips, dataDogs) {
   // newTrip(newTripObj, dataDogs);
 }
 
-function deleteSelectedTrip(dataTrips, selectedTripId) {
+function deleteSelectedTrip(selectedTripId) {
+  let trips = JSON.parse(localStorage.getItem('trips')) || [];
+  trips = trips.filter(storedTrip => storedTrip.id !== selectedTripId);
+  localStorage.setItem('trips', JSON.stringify(trips));
+
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
-    console.log(tripCards);
+    // console.log(tripCards);
     if (card.querySelector("p").textContent.includes(selectedTripId))
       card.remove();
   });
@@ -144,6 +153,7 @@ function deleteSelectedTrip(dataTrips, selectedTripId) {
 function newTrip(newTripObj, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
   const trip = newTripObj;
+  console.log(trip);
   if (Array.isArray(trip.dogs_id)) {
     arrayDogsId = trip.dogs_id.map(Number);
   } else if (typeof trip.dogs_id === "string") {

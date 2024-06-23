@@ -212,5 +212,4 @@ function deleteObject(selectedTripId) {
       window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
     }
   });
-
 }
