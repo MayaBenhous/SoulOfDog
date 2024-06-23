@@ -55,7 +55,7 @@ function findDog(dataDogs, id) {
   return null;
 }
 
-function createTrip(trip, contanierList, dogsList) {
+function createTrip(trip, contanierList, dogsList, dataDogs) {
   const cardTrip = document.createElement("div");
   cardTrip.classList.add("card");
   cardTrip.classList.add("card-list");
@@ -120,7 +120,7 @@ function initTripsList(dataTrips, dataDogs) {
     const trip = dataTrips.trips[t];
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
-      createTrip(trip, contListTrip, dogsList);
+      createTrip(trip, contListTrip, dogsList, dataDogs);
     }
   }
 
@@ -148,5 +148,5 @@ function newTrip(newTripObj, dataDogs) {
   }
   trip.dogs_id = arrayDogsId;
   const dogsList = listDogs(trip, dataDogs, 0);
-  createTrip(trip, contListTrip, dogsList);
+  createTrip(trip, contListTrip, dogsList,dataDogs);
 }
