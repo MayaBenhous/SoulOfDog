@@ -109,7 +109,12 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   cardTrip.addEventListener("click", function () {
     selectedTripId = trip.id;
     selectedDogId = listDogs(trip, dataDogs, 1);
-    window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+    if (trip.type == "Single") {
+      window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
+    } else if (trip.type === "Group") {
+      const groupTripId = selectedTripId;
+      window.location.href = `groupTrip.html?groupTripId=${selectedTripId}`;
+    }
   });
 }
 
@@ -144,9 +149,9 @@ function newTrip(newTripObj, dataDogs) {
   } else if (typeof trip.dogs_id === "string") {
     arrayDogsId = trip.dogs_id.split(",").map(Number);
   } else {
-    console.error('Invalid dogs_id:', trip.dogs_id);
+    console.error("Invalid dogs_id:", trip.dogs_id);
   }
   trip.dogs_id = arrayDogsId;
   const dogsList = listDogs(trip, dataDogs, 0);
-  createTrip(trip, contListTrip, dogsList,dataDogs);
+  createTrip(trip, contListTrip, dogsList, dataDogs);
 }
