@@ -17,6 +17,7 @@ window.onload = () => {
 };
 
 let trip_lp = {
+  id: 1,
   dogs_id: ["dog1", "dog2", "dog3"],
   date: "2024-06-22",
   start_time: "09:00",
@@ -266,6 +267,9 @@ function createDateTrip() {
 function finishTrip() {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
+    const min = 8;
+    const max = 100;
+    trip_lp.id = Math.floor(Math.random() * (max - min + 1)) + min;
     const hourStart = document.getElementsByClassName("hourStart");
     hourStart[0];
     console.log(hourStart[0]);
