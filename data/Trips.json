@@ -13,8 +13,8 @@
       "heartbeat": "null",
       "steps": "null",
       "avg_speed": "null",
-      "needs_pee": ["false", "false", "false"],
-      "needs_poop": ["false", "true", "false"],
+      "needs_pee": [false, false, false],
+      "needs_poop": [false, true, false],
       "notes": "none"
     },
     {
@@ -29,8 +29,8 @@
       "heartbeat": "100 BPM",
       "steps": "160 steps",
       "avg_speed": "15 km/h",
-      "needs_pee": "true",
-      "needs_poop": "true",
+      "needs_pee": true,
+      "needs_poop": true,
       "notes": "none"
     },
     {
@@ -45,8 +45,8 @@
       "heartbeat": "null",
       "steps": "null",
       "avg_speed": "null",
-      "needs_pee": ["false", "false", "true", "false"],
-      "needs_poop": ["false", "true", "false", "false"],
+      "needs_pee": [false, false, true, false],
+      "needs_poop": [false, true, false, false],
       "notes": "none"
     },
     {
@@ -61,8 +61,8 @@
       "heartbeat": "100 BPM",
       "steps": "160",
       "avg_speed": "15 km/h",
-      "needs_pee": "true",
-      "needs_poop": "true",
+      "needs_pee": true,
+      "needs_poop": true,
       "notes": "none"
     },
     {
@@ -77,8 +77,8 @@
       "heartbeat": "null",
       "steps": "null",
       "avg_speed": "null",
-      "needs_pee": ["false", "false"],
-      "needs_poop": ["false", "false"],
+      "needs_pee": [false, false],
+      "needs_poop": [false, false],
       "notes": "none"
     },
     {
@@ -93,8 +93,8 @@
       "heartbeat": "null",
       "steps": "null",
       "avg_speed": "null",
-      "needs_pee": ["false", "false", "true", "false"],
-      "needs_poop": ["false", "true", "false", "false"],
+      "needs_pee": [false, false, true, false],
+      "needs_poop": [false, true, false, false],
       "notes": "none"
     },
     {
@@ -109,8 +109,8 @@
       "heartbeat": "null",
       "steps": "null",
       "avg_speed": "null",
-      "needs_pee": ["false"],
-      "needs_poop": ["false"],
+      "needs_pee": [false],
+      "needs_poop": [false],
       "notes": "none"
     }
   ]

@@ -13,14 +13,12 @@ window.onload = () => {
     if (groupTripId) {
       const groupTrip = findTrip(dataTrips, groupTripId);
       existGroupTrip(groupTrip, dataDogs);
-    }
-    else{
-      newGroupTrip(selectedDogs, dataDogs);      
+    } else {
+      newGroupTrip(selectedDogs, dataDogs);
       finishTrip();
     }
     // createDateTrip();
     // finishTrip();
-    
   });
 };
 
@@ -36,7 +34,7 @@ let trip_lp = {
 function findTrip(dataTrips, tripId) {
   // console.log(tripId);
   for (const trip of dataTrips.trips) {
-  // console.log(trip.id);
+    // console.log(trip.id);
     if (trip.id == tripId) {
       return trip;
     }
@@ -60,7 +58,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
     const selectDog = selectedDogsIdsArray[s];
     for (const dog of dataDogs.dogs) {
       if (dog.id == selectDog) {
-        createDogCrad(dog, 0);
+        createDogCard(dog, 0, null);
       }
     }
   }
@@ -167,23 +165,28 @@ function finishTrip() {
     let trip_lp_string = JSON.stringify(trip_lp);
     console.log(trip_lp_string);
     // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
-    let trips = JSON.parse(localStorage.getItem('trips')) || [];
+    let trips = JSON.parse(localStorage.getItem("trips")) || [];
     trips.push(trip_lp);
-    localStorage.setItem('trips', JSON.stringify(trips));
+    localStorage.setItem("trips", JSON.stringify(trips));
   });
 }
 
 function existGroupTrip(trip, dataDogs) {
-  console.log(trip);
-  console.log(trip.dogs_id);
+  const finishButton = document.getElementById("finishTripButton");
+  finishButton.style.display = "none";
+  let countDog = 0;
   for (const dogId of trip.dogs_id) {
     const dog = findDog(dataDogs, dogId);
-    createDogCrad(dog, 1);
+    console.log(trip);
+    console.log(trip.needs_pee);
+    console.log(trip.needs_poop);
+    createDogCard(dog, 1, trip, countDog);
+    countDog++;
   }
   createDatils(trip);
 }
 
-function createDogCrad(dog, type) {
+function createDogCard(dog, type, trip, countDog) {
   const secDogsGroup = document.getElementById("dogs_cards");
   const cardDog = document.createElement("div");
   cardDog.classList.add("card");
@@ -244,8 +247,8 @@ function createDogCrad(dog, type) {
     needsPeeCheckbox.checked = false;
     needsPoopCheckbox.checked = false;
   } else if (type == 1) {
-    needsPeeCheckbox.checked = dog.needs_pee;
-    needsPoopCheckbox.checked = dog.needs_poop;
+    needsPeeCheckbox.checked = trip.needs_pee[countDog];
+    needsPoopCheckbox.checked = trip.needs_poop[countDog];
   }
 
   sectNeeds.appendChild(sectPee);
