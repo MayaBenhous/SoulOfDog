@@ -12,18 +12,20 @@ window.onload = () => {
       if (selectedTripId) {
         deleteSelectedTrip(dataTrips, selectedTripId);
       }
-      if (trip_lp_string) {
-        const newTripObj = JSON.parse(decodeURIComponent(trip_lp_string));
+      // if (trip_lp_string) {
+      //   const newTripObj = JSON.parse(decodeURIComponent(trip_lp_string));
+      //   newTrip(newTripObj, dataDogs);
+      // }
+      let newTrips = JSON.parse(localStorage.getItem('trips')) || [];
+      newTrips.forEach(newTripObj => {
         newTrip(newTripObj, dataDogs);
-      }
+      });
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
 
-  document
-    .getElementById("selectButton")
-    .addEventListener("click", function () {
+  document.getElementById("selectButton").addEventListener("click", function () {
       const cards = document.querySelectorAll(".card");
       cards.forEach((card) => {
         card.classList.toggle("show-delete");
@@ -130,7 +132,7 @@ function initTripsList(dataTrips, dataDogs) {
 function deleteSelectedTrip(dataTrips, selectedTripId) {
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
-    console.log(tripCards);
+    // console.log(tripCards);
     if (card.querySelector("p").textContent.includes(selectedTripId))
       card.remove();
   });

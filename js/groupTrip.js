@@ -289,6 +289,9 @@ function finishTrip() {
     console.log(trip_lp);
     let trip_lp_string = JSON.stringify(trip_lp);
     console.log(trip_lp_string);
-    window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
+    // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
+    let trips = JSON.parse(localStorage.getItem('trips')) || [];
+    trips.push(trip_lp);
+    localStorage.setItem('trips', JSON.stringify(trips));
   });
 }
