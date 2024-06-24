@@ -184,9 +184,6 @@ function existGroupTrip(trip, dataDogs) {
   let countDog = 0;
   for (const dogId of trip.dogs_id) {
     const dog = findDog(dataDogs, dogId);
-    console.log(trip);
-    console.log(trip.needs_pee);
-    console.log(trip.needs_poop);
     createDogCard(dog, 1, trip, countDog);
     countDog++;
   }
@@ -245,6 +242,8 @@ function createDogCard(dog, type, trip, countDog) {
   sectPoop.appendChild(document.createTextNode("Poop"));
   sectPoop.appendChild(imgPoop);
 
+  needsPeeCheckbox.style.accentColor = "#ffffff";
+  needsPoopCheckbox.style.accentColor = "#ffffff";
   if (type == 0) {
     needsPeeCheckbox.checked = false;
     needsPoopCheckbox.checked = false;
@@ -301,13 +300,11 @@ function createDatils(trip) {
   start.textContent = `Start`;
   const hourStart = document.createElement("p");
   hourStart.classList.add("hourStart");
-  // hourStart.textContent = getCurrentTime();
 
   const end = document.createElement("h5");
   end.textContent = `End`;
   const hourEnd = document.createElement("p");
   hourEnd.classList.add("hourEnd");
-  // hourEnd.textContent = `00:00`;
 
   const lowDetailsPart = document.createElement("div");
   lowDetailsPart.classList.add("lowDetailsPart");
@@ -317,7 +314,6 @@ function createDatils(trip) {
   const totalNum = document.createElement("p");
   totalNum.classList.add("value");
   totalNum.classList.add("totalValue");
-  // totalNum.textContent = `00:00`;
 
   start.appendChild(hourStart);
   end.appendChild(hourEnd);
@@ -349,7 +345,6 @@ function createDatils(trip) {
   const valueDis = document.createElement("p");
   valueDis.classList.add("value");
   valueDis.classList.add("disValue");
-  // valueDis.textContent = `0km`;
 
   if (trip == null) {
     hourStart.textContent = getCurrentTime();

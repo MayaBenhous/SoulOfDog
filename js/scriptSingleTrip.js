@@ -139,7 +139,8 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       sectPee.classList.add("sectPeeG_trip");
                       const needsPeeCheckbox = document.createElement("input");
                       needsPeeCheckbox.type = "checkbox";
-                      needsPeeCheckbox.checked = false;
+                      needsPeeCheckbox.style.accentColor = "#ffffff";
+                      needsPeeCheckbox.checked = trip.needs_pee;
                       const imgPeeTop = document.createElement("img");
                       imgPeeTop.src="images/icons/pee.png";
                       imgPeeTop.alt =  "imgPeeTop";
@@ -159,7 +160,8 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       sectPoop.classList.add("sectPoop");
                       const needsPoopCheckbox = document.createElement("input");
                       needsPoopCheckbox.type = "checkbox";
-                      needsPoopCheckbox.checked = false;
+                      needsPoopCheckbox.style.accentColor = "#ffffff";
+                      needsPoopCheckbox.checked = trip.needs_poop;
                       const imgPoop = document.createElement("img");
                       imgPoop.src = "images/icons/poop.png";
                       imgPoop.alt =  "imgPoop";
