@@ -1,22 +1,23 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
-  // const selectedDogsContainer = document.getElementById("selectedDogs");
-  //   selectedDogsContainer.innerHTML = `Selected Dogs IDs: ${selectedDogs}`;
   const groupTripId = urlParams.get("groupTripId");
 
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
   ]).then(([dataTrips, dataDogs]) => {
-    createDateTrip();
+    // createDateTrip();
     if (groupTripId) {
       const groupTrip = findTrip(dataTrips, groupTripId);
+      createDateTrip(groupTrip);
       existGroupTrip(groupTrip, dataDogs);
     } else {
+      createDateTrip(null);
       newGroupTrip(selectedDogs, dataDogs);
       finishTrip();
     }
+    deleteObject(groupTripId);
     // createDateTrip();
     // finishTrip();
   });
@@ -52,6 +53,8 @@ function findDog(dataDogs, dogId) {
 }
 
 function newGroupTrip(selectedDogs, dataDogs) {
+  const deleteButton = document.getElementById("deleteDogButton");
+  deleteButton.style.display = "none";
   const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
   trip_lp.dogs_id = selectedDogsIdsArray;
   for (const s in selectedDogsIdsArray) {
@@ -123,21 +126,25 @@ function totalTime(hourStart, hourEnd) {
   return totalString;
 }
 
-function createDateTrip() {
+function createDateTrip(trip) {
   // const titleAndIconsCont = document.getElementById("titleAndIcons-container");
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
-  const formattedDate = setCurrentDate();
-  tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By Idan</span>`;
+  let formattedDate;
+  if (trip) {
+    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By Idan</span>`;
+  }
+  else {
+    formattedDate = setCurrentDate();
+    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By Idan</span>`;
+  }
   const ownerTripSpan = document.querySelector(".ownerTrip");
   const editIcon = document.createElement("span");
   editIcon.classList.add("editIconOneTrip");
-  ownerTripSpan.appendChild(editIcon);
 
-  console.log(formattedDate);
+  ownerTripSpan.appendChild(editIcon);
   trip_lp.date = formattedDate;
   tripTitles.appendChild(tripDate);
-  // titleAndIconsCont.appendChild(tripTitles);
 }
 
 function finishTrip() {
@@ -200,11 +207,6 @@ function createDogCard(dog, type, trip, countDog) {
   formFloat.classList.add("form-floating");
   const textNote = document.createElement("textarea");
   textNote.classList.add("form-control");
-  formFloat.setAttribute(
-    "aria-placeholder",
-    "The dog's needs on the trip were normal"
-  );
-
   formFloat.appendChild(textNote);
   sectNotes.appendChild(formFloat);
   cardBody.appendChild(sectNotes);
@@ -365,4 +367,14 @@ function createDatils(trip) {
   cardDistance.appendChild(detailscardDistance);
   secDetailsTrip.appendChild(cardTime);
   secDetailsTrip.appendChild(cardDistance);
+}
+
+function deleteObject(selectedTripId) {
+  const deleteDogButton = document.getElementById("deleteDogButton");
+
+  deleteDogButton.addEventListener("click", () => {
+    if(confirm("Are you sure you want to delete this trip?")) {
+      window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+    }
+  });
 }
