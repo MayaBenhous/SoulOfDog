@@ -150,6 +150,7 @@ function createDateTrip(trip) {
 function finishTrip() {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
+    finishButton.style.display = "none";
     const min = 8;
     const max = 100;
     trip_lp.id = Math.floor(Math.random() * (max - min + 1)) + min;
