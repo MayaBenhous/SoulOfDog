@@ -137,7 +137,6 @@ function totalTime(hourStart, hourEnd) {
 }
 
 function createDateTrip(trip) {
-  // const titleAndIconsCont = document.getElementById("titleAndIcons-container");
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   let formattedDate;
@@ -159,6 +158,7 @@ function createDateTrip(trip) {
 function finishTrip() {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
+    finishButton.style.display = "none";
     const min = 8;
     const max = 100;
     trip_lp.id = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -178,12 +178,15 @@ function finishTrip() {
     distance[0].textContent = "0.3km";
     trip_lp.distance = distance[0].textContent;
     checkBoxNeeds();
-    console.log(trip_lp);
-    let trip_lp_string = JSON.stringify(trip_lp);
-    console.log(trip_lp_string);
-    console.log(`POST {domain}/Trips/New_trip_${trip_lp.id}`);
-    console.log("Response:", trip_lp);
-    // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
+    // console.log(trip_lp);
+    // let trip_lp_string = JSON.stringify(trip_lp);
+    // console.log(trip_lp_string);
+    console.log(`POST {domain}/trips/${trip_lp.id}`);
+    console.log("Request Body:",trip_lp);
+    // console.log(trip_lp);
+    // let trip_lp_string = JSON.stringify(trip_lp);
+    // console.log(trip_lp_string);
+    // // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
     // let trips = JSON.parse(localStorage.getItem("trips")) || [];
     // trips.push(trip_lp);
     // localStorage.setItem("trips", JSON.stringify(trips));
@@ -391,7 +394,8 @@ function deleteObject(selectedTripId) {
   const deleteDogButton = document.getElementById("deleteDogButton");
 
   deleteDogButton.addEventListener("click", () => {
-    if (confirm("Are you sure you want to delete this trip?")) {
+    if(confirm("Are you sure you want to delete this trip?")) {
+      console.log(`DELETE {domain}/trips/${selectedTripId}`);
       window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
     }
   });
