@@ -86,6 +86,7 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
+      console.log(`DELETE {domain}/trips/${trip.id}`);
       cardTrip.remove();
     }
   });
