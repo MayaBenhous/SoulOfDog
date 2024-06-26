@@ -127,7 +127,6 @@ function totalTime(hourStart, hourEnd) {
 }
 
 function createDateTrip(trip) {
-  // const titleAndIconsCont = document.getElementById("titleAndIcons-container");
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   let formattedDate;
@@ -169,13 +168,16 @@ function finishTrip() {
     const distance = document.getElementsByClassName("disValue");
     distance[0].textContent = "0.3km";
     trip_lp.distance = distance[0].textContent;
-    console.log(trip_lp);
-    let trip_lp_string = JSON.stringify(trip_lp);
-    console.log(trip_lp_string);
-    // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
-    let trips = JSON.parse(localStorage.getItem("trips")) || [];
-    trips.push(trip_lp);
-    localStorage.setItem("trips", JSON.stringify(trips));
+
+    console.log(`POST {domain}/trips/${trip_lp.id}`);
+    console.log("Request Body:",trip_lp);
+    // console.log(trip_lp);
+    // let trip_lp_string = JSON.stringify(trip_lp);
+    // console.log(trip_lp_string);
+    // // window.location.href = `tripsList.html?newTripObj=${encodeURIComponent(trip_lp_string)}`;
+    // let trips = JSON.parse(localStorage.getItem("trips")) || [];
+    // trips.push(trip_lp);
+    // localStorage.setItem("trips", JSON.stringify(trips));
   });
 }
 
@@ -370,6 +372,7 @@ function deleteObject(selectedTripId) {
 
   deleteDogButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete this trip?")) {
+      console.log(`DELETE {domain}/trips/${selectedTripId}`);
       window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
     }
   });

@@ -15,7 +15,6 @@ function initDogsHomePage(data) {
 
   for (const dog of data.dogs) {
     if (dog.id != 0) {
-      console.log(dog);
       const imgWrapper = document.createElement("div");
       imgWrapper.classList.add("imgWrapper");
       const img = document.createElement("img");
@@ -57,6 +56,8 @@ function initDogsHomePage(data) {
             );
             if (imgWrapperToRemove) {
               imgsCont.removeChild(imgWrapperToRemove);
+              console.log(`DELETE {domain}/dogs/${dogId}`);
+
             }
           }
         });
