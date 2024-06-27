@@ -216,3 +216,7 @@ function deleteObject(selectedTripId) {
     }
   });
 }
+
+
+
+
