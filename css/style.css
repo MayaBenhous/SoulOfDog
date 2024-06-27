@@ -46,6 +46,7 @@ header {
 #navbarSupportedContent {
   z-index: 1;
   height: 100%;
+  margin-right: 120px;
   /* margin-left: 30px; */
 }
 
@@ -108,7 +109,7 @@ header {
   margin-right: 80px;
 }
 
-.container-fluid .navbar-collapse {
+.navbar-collapse {
   text-align: center;
   justify-content: center;
   /* justify-content: space-between; */
@@ -116,20 +117,29 @@ header {
 
 #header-left {
   display: flex;
+  flex-direction: row;
+}
+
+#contUser {
+  display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  margin-right: 20px;
 }
 
 .navbar-toggler {
   border-width: 0px;
 }
 
-#top-header img {
-  flex-shrink: 0;
-  border-radius: 100px;
+#header-right {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  width: 120px;
+  height: 120px;
 }
 
-#top-header p {
+#contUser p {
   color: #000;
   text-align: center;
   font-family: "ADLaM Display";
@@ -138,7 +148,11 @@ header {
   font-weight: 400;
   line-height: normal;
   margin-bottom: 0;
-  /* display: flex; */
+  cursor: pointer;
+}
+
+#contUser > img {
+  cursor: pointer;
 }
 
 #top-header h1 {
@@ -366,7 +380,7 @@ main {
 }
 
 .editIconOneTrip {
-  background-image: url(../images/icons/edit.png);
+  background-image: url("../images/icons/edit.svg");
   background-size: cover;
   width: 25px;
   height: 25px;
@@ -500,8 +514,8 @@ main {
 }
 
 .icon {
-  width: 37px;
-  height: 37px;
+  width: 45px;
+  height: 45px;
   background-size: contain;
   background-repeat: no-repeat;
   margin-right: 16px;
@@ -512,31 +526,38 @@ main {
   justify-content: end;
 }
 
+.icon-bell {
+  background-image: url("../images/icons/bell.svg");
+  width: 35px;
+  height: 35px;
+  margin-top: 25px;
+}
+
 .icon-plus {
-  background-image: url("../images/icons/plus.png");
+  background-image: url("../images/icons/plus.svg");
 }
 
 .icon-search {
-  background-image: url("../images/icons/search.png");
+  background-image: url("../images/icons/search.svg");
 }
 
 .icon-sort {
-  background-image: url("../images/icons/sort.png");
-  width: 40px;
-  height: 40px;
+  background-image: url("../images/icons/sort.svg");
 }
 
 .icon-filter {
-  background-image: url("../images/icons/search.png");
+  background-image: url("../images/icons/search.svg");
 }
 
 .icon-select {
-  background-image: url("../images/icons/threedots.png");
+  background-image: url("../images/icons/select.svg");
   margin-left: 15px;
+  width: 35px;
+  height: 35px;
 }
 
 .icon-delete {
-  background-image: url("../images/icons/delete.png");
+  background-image: url("../images/icons/delete.svg");
   margin-left: 15px;
   width: 50px;
   height: 50px;
@@ -702,57 +723,46 @@ img {
   .nav-item {
     text-align:start;
     font-style: normal;
-    width: 300px;
-    height: 30px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    margin-left: 2%;
-  }
-
-  .homeIconActive {
-    background-image: url(../images/icons/home.png);
-    background-repeat: no-repeat;
-    width: 40px;
-    height: 40px;
-    margin-left: 2%;
-    cursor: pointer;
+    margin-top: 10%;
   }
 
   .homeIcon {
-    background-image: url(../images/icons/homeNotActive.png);
+    background-image: url("../images/icons/home.svg");
     background-repeat: no-repeat;
-    width: 40px;
-    height: 40px;
-    margin-left: 2%;
-    cursor: pointer;
-  }
-
-  .tripsListIconActive {
-    background-image: url(../images/icons/dogStepActive.png);
-    background-repeat: no-repeat;
-    width: 400px;
-    height: 40px;
-    margin-left: 2%;
+    position: absolute;
+    margin-left: 1.5%;
+    margin-bottom: 1%;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
   }
 
   .tripsListIcon {
-    background-image: url(../images/icons/dogStep.png);
+    background-image: url("../images/icons/dogStep.svg");
     background-repeat: no-repeat;
-    width: 400px;
-    height: 40px;
+    position: absolute;
     margin-left: 2%;
+    margin-bottom: 1%;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
   }
 
   .scheduleIcon {
-    background-image: url(../images/icons/calendar.png);
+    background-image: url("../images/icons/calendar.svg");
     background-repeat: no-repeat;
-    width: 400px;
-    height: 40px;
+    position: absolute;
+    margin-left: 2%;
+    margin-bottom: 1%;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
   }
 
+  .iconNotActive {
+    opacity: 0.5;
+  }
+  
   .nav-link {
     padding-left: 100px;
   }

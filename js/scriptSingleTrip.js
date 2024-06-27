@@ -47,7 +47,7 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
     const contTripMainDetails = document.getElementById("TripMainDetails-container");
     const singleTripCardsCont = document.getElementById("singleTripCrads-container");
 
-    iconsArr = ['images/icons/clock.png','images/icons/distance.png','images/icons/heartbeat.png','images/icons/steps.png','images/icons/avgSpeed.png','images/icons/needs.png','images/icons/notes.png'];
+    iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
     titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
 
     dataDogs.dogs.forEach(dog => {   
@@ -142,12 +142,12 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       needsPeeCheckbox.style.accentColor = "#ffffff";
                       needsPeeCheckbox.checked = trip.needs_pee;
                       const imgPeeTop = document.createElement("img");
-                      imgPeeTop.src="images/icons/pee.png";
+                      imgPeeTop.src="images/icons/pee.svg";
                       imgPeeTop.alt =  "imgPeeTop";
                       imgPeeTop.title =  "imgPeeTop";
                       imgPeeTop.classList.add("imgPeeTop-G");
                       const imgPeeBot = document.createElement("img");
-                      imgPeeBot.src="images/icons/pee.png";
+                      imgPeeBot.src="images/icons/pee.svg";
                       imgPeeBot.alt =  "imgPeeBot";
                       imgPeeBot.title =  "imgPeeBot";
                       imgPeeBot.classList.add("imgPeeBot-G");
@@ -163,7 +163,7 @@ function initTrip(dataTrips, dataDogs, dogId, tripId) {
                       needsPoopCheckbox.style.accentColor = "#ffffff";
                       needsPoopCheckbox.checked = trip.needs_poop;
                       const imgPoop = document.createElement("img");
-                      imgPoop.src = "images/icons/poop.png";
+                      imgPoop.src = "images/icons/poop.svg";
                       imgPoop.alt =  "imgPoop";
                       imgPoop.title =  "imgPoop";
                       imgPoop.classList.add("imgPoop-G");

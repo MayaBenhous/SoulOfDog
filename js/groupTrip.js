@@ -240,12 +240,12 @@ function createDogCard(dog, type, trip, countDog) {
   needsPeeCheckbox.type = "checkbox";
   needsPeeCheckbox.classList.add("needsPeeCheckbox");
   const imgPeeTop = document.createElement("img");
-  imgPeeTop.src = "images/icons/pee.png";
+  imgPeeTop.src = "images/icons/pee.svg";
   imgPeeTop.alt = "imgPeeTop";
   imgPeeTop.title = "imgPeeTop";
   imgPeeTop.classList.add("imgPeeTop-G");
   const imgPeeBot = document.createElement("img");
-  imgPeeBot.src = "images/icons/pee.png";
+  imgPeeBot.src = "images/icons/pee.svg";
   imgPeeBot.alt = "imgPeeBot";
   imgPeeBot.title = "imgPeeBot";
   imgPeeBot.classList.add("imgPeeBot-G");
@@ -260,7 +260,7 @@ function createDogCard(dog, type, trip, countDog) {
   needsPoopCheckbox.type = "checkbox";
   needsPoopCheckbox.classList.add("needsPoopCheckbox");
   const imgPoop = document.createElement("img");
-  imgPoop.src = "images/icons/poop.png";
+  imgPoop.src = "images/icons/poop.svg";
   imgPoop.alt = "imgPoop";
   imgPoop.title = "imgPoop";
   imgPoop.classList.add("imgPoop-G");
@@ -308,7 +308,7 @@ function createDatils(trip) {
   titlePart.classList.add("titlePart");
   const iconImg = document.createElement("span");
   iconImg.classList.add("iconImg");
-  iconImg.style.backgroundImage = `url("images/icons/clock.png")`;
+  iconImg.style.backgroundImage = `url("images/icons/clock.svg")`;
   const titleCard = document.createElement("h5");
   titleCard.classList.add("titleCard");
   titleCard.textContent = `Trip Duration`;
@@ -358,7 +358,7 @@ function createDatils(trip) {
   titleDistance.classList.add("titlePart");
   const iconImgDistance = document.createElement("span");
   iconImgDistance.classList.add("iconImg");
-  iconImgDistance.style.backgroundImage = `url("images/icons/distance.png")`;
+  iconImgDistance.style.backgroundImage = `url("images/icons/distance.svg")`;
   const titleCardDistance = document.createElement("h5");
   titleCardDistance.classList.add("titleCard");
   titleCardDistance.textContent = `Distance`;

@@ -81,7 +81,7 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   deleteIcon.classList.add("delete-icon");
   deleteIcon.classList.add("iconImg");
 
-  deleteIcon.style.backgroundImage = `url("images/icons/delete.png")`;
+  deleteIcon.style.backgroundImage = `url("images/icons/delete.svg")`;
 
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();

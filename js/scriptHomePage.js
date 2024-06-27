@@ -55,9 +55,10 @@ function initDogsHomePage(data) {
                 wrapper.querySelector("img").src.includes(dogToRemove.img_dog)
             );
             if (imgWrapperToRemove) {
-              imgsCont.removeChild(imgWrapperToRemove);
-              console.log(`DELETE {domain}/dogs/${dogId}`);
-
+              if(confirm("Are you sure you want to delete this trip?")) {
+                imgsCont.removeChild(imgWrapperToRemove);
+                console.log(`DELETE {domain}/dogs/${dogId}`);
+              }
             }
           }
         });
