@@ -4,16 +4,15 @@ window.onload = () => {
     .then((data) => initDogsHomePage(data));
 };
 
-function initDogsHomePage(data) {
-  // console.log(data);
+function initDogsHomePage(dataDogs) {
   const titleDogs = document.getElementById("title");
-  titleDogs.textContent = data.title;
+  titleDogs.textContent = dataDogs.title;
   const imgsCont = document.getElementById("dogsImgs-Container");
   const startTripButton = document.getElementById("startTripButton");
   const deleteDogButton = document.getElementById("deleteDogButton");
   const selectedDogs = new Set();
 
-  for (const dog of data.dogs) {
+  for (const dog of dataDogs.dogs) {
     if (dog.id != 0) {
       const imgWrapper = document.createElement("div");
       imgWrapper.classList.add("imgWrapper");
@@ -47,18 +46,27 @@ function initDogsHomePage(data) {
       });
 
       deleteDogButton.addEventListener("click", () => {
+        let askOnce = true;
         selectedDogs.forEach((dogId) => {
-          const dogToRemove = data.dogs.find((dog) => dog.id === dogId);
+          const dogToRemove = dataDogs.dogs.find((dog) => dog.id === dogId);
           if (dogToRemove) {
             const imgWrapperToRemove = Array.from(imgsCont.children).find(
               (wrapper) =>
                 wrapper.querySelector("img").src.includes(dogToRemove.img_dog)
             );
             if (imgWrapperToRemove) {
-              if(confirm("Are you sure you want to delete this trip?")) {
+              if (askOnce) {
+                if (confirm("Are you sure you want to delete this trip?")) {
+                  imgsCont.removeChild(imgWrapperToRemove);
+                  console.log(`DELETE {domain}/dogs/${dogId}`);
+                }
+                askOnce = false;
+              }
+              else {
                 imgsCont.removeChild(imgWrapperToRemove);
                 console.log(`DELETE {domain}/dogs/${dogId}`);
               }
+            
             }
           }
         });
@@ -69,11 +77,7 @@ function initDogsHomePage(data) {
   }
 }
 
-function updateButtonsVisibility(
-  selectedDogs,
-  startTripButton,
-  deleteDogButton
-) {
+function updateButtonsVisibility(selectedDogs,startTripButton,deleteDogButton) {
   startTripButton.style.display = selectedDogs.size > 0 ? "block" : "none";
   deleteDogButton.style.display = selectedDogs.size > 0 ? "block" : "none";
 }

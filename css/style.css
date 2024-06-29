@@ -3,14 +3,7 @@
   padding: 0;
 }
 
-header,
-main,
-footer,
-nav,
-aside,
-section,
-article,
-div {
+header,main,footer,nav,aside,section,article,div {
   display: block;
 }
 
@@ -23,8 +16,6 @@ div {
 body {
   font-family: "ADLaM Display";
 }
-
-/* HEADER */
 
 header {
   height: 340px;
@@ -80,7 +71,6 @@ header {
   margin-right: 15px;
   margin-top: 12px;
   cursor: pointer;
-
 }
 
 .nav-item {
@@ -165,8 +155,6 @@ select {
   margin: 1% 20% 0% 5%;
 }
 
-/* List-Trips */
-
 #container-topMain {
   display: flex;
   flex-direction: row;
@@ -218,19 +206,18 @@ select {
   list-style: none;
 }
 
-/* group-trip */
 #groupTripCont_id .card {
   padding: 8px 8px 8px 8px;
   background: #0000000d;
   border-radius: 20px 20px 20px 20px;
 }
+
 #groupTripCont_id .card-body {
   justify-content: space-between;
 }
-/* note - part1 */
+
 .sectNotesG_trip {
   width: 50%;
-  /* width: 50%; */
   border-radius: 10px;
   align-content: center;
   color: #000000;
@@ -256,7 +243,6 @@ select {
   border-width: 0px;
 }
 
-/* needs - part2 */
 .sectNeedsG_trip {
   display: grid;
   justify-content: center;
@@ -302,7 +288,6 @@ input[type="checkbox"] {
   border-color: #000000b7;
 }
 
-/* name&pic - part3 */
 .cardGroup_trip {
   display: flex;
   text-align: center;
@@ -317,30 +302,21 @@ input[type="checkbox"] {
 
 .imgDogInTrip {
   width: 100px;
-  /* width: 40%; */
   height: 100px;
-  /* height: 80%; */
   border-radius: 100px;
 }
 
-/* MAIN */
-
 main {
   display: block;
-  /* flex-wrap: wrap; */
   height: 100%;
   margin-top: 30px;
   margin-bottom: 40px;
-  /* width: 100%; */
 }
 
 #wrapper {
   margin: 0 auto;
   width: 90%;
-  /* height: 100vh; */
 }
-
-/* SINGLE TRIP PAGE*/
 
 #TripMainDetails-container {
   display: flex;
@@ -507,8 +483,6 @@ main {
   font-size: 28px;
 }
 
-/* ICONS */
-
 .titleAndIcons-container {
   display: flex;
   flex-direction: row;
@@ -598,7 +572,6 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* margin-right: 10px; */
 }
 
 .image-wrapper img {
@@ -675,7 +648,6 @@ img {
   display: flex;
   width: 60px;
   height: 28px;
-  /* flex-direction: column; */
   justify-content: center;
   flex-shrink: 0;
 }
