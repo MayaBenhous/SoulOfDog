@@ -10,7 +10,7 @@ window.onload = () => {
     .then(([dataTrips, dataDogs]) => {
       initTrip(dataTrips, dataDogs, dogId, selectedTripId);
       deleteObject(selectedTripId);
-    })
+    });
 };
 
 function calculateTripDuration(hourStart,hourEnd) {
@@ -106,8 +106,7 @@ function handleTripDuration(detailsPart, trip) {
   const totalNum = document.createElement("p");
   totalNum.classList.add("value");
   let calculate = calculateTripDuration(hourStart,hourEnd);
-  const totalString = convertNumbersToTimeString(calculate.totalHour, calculate.totalMinutes)
-  console.log(totalString);
+  const totalString = convertNumbersToTimeString(calculate.totalHour, calculate.totalMinutes);
   totalNum.textContent = totalString;
 
   start.appendChild(hourStart);

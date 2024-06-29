@@ -5,7 +5,6 @@ window.onload = () => {
 };
 
 function initDogsHomePage(dataDogs) {
-  // console.log(dataDogs);
   const titleDogs = document.getElementById("title");
   titleDogs.textContent = dataDogs.title;
   const imgsCont = document.getElementById("dogsImgs-Container");
