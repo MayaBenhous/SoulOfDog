@@ -1,7 +1,6 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
-
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
@@ -15,7 +14,6 @@ window.onload = () => {
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
-
   document.getElementById("selectButton").addEventListener("click", function () {
       const cards = document.querySelectorAll(".card");
       cards.forEach((card) => {
@@ -52,10 +50,17 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   const cardTrip = document.createElement("div");
   cardTrip.classList.add("card");
   cardTrip.classList.add("card-list");
-
   const cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
+  handleSecTitle(trip, cardBody, dogsList);
+  handleDeatilsTrip(trip, cardBody);
+  cardTrip.appendChild(cardBody);
+  handleDeleteIcon(cardTrip);
+  contanierList.appendChild(cardTrip);
+  handleClickTrip(cardTrip, selectedTripId, trip, dataDogs);
+}
 
+function handleSecTitle(trip, cardBody, dogsList) {
   const sectionTitles = document.createElement("section");
   sectionTitles.classList.add("section-title");
   const tripId = document.createElement("p");
@@ -64,11 +69,16 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   const tripTitle = document.createElement("h5");
   tripTitle.classList.add("card-title");
   tripTitle.textContent = "Trip with  ";
-
   const tripDogs = document.createElement("h6");
   tripDogs.classList.add("card-subtitle", "mb-2", "text-body-secondary");
   tripDogs.textContent = dogsList;
+  sectionTitles.appendChild(tripId);
+  sectionTitles.appendChild(tripTitle);
+  sectionTitles.appendChild(tripDogs);
+  cardBody.appendChild(sectionTitles);
+}
 
+function handleDeatilsTrip(trip, cardBody) {
   const tripDetails = document.createElement("ul");
   tripDetails.classList.add("list-group", "list-group-flush");
   const details = `
@@ -77,12 +87,14 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   <li>${trip.end_time}</li>
   <li>${trip.distance}</li>`;
   tripDetails.innerHTML = details;
+  cardBody.appendChild(tripDetails);
+}
+
+function handleDeleteIcon(cardTrip) {
   const deleteIcon = document.createElement("span");
   deleteIcon.classList.add("delete-icon");
   deleteIcon.classList.add("iconImg");
-
   deleteIcon.style.backgroundImage = `url("images/icons/delete.svg")`;
-
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
@@ -90,16 +102,10 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
       cardTrip.remove();
     }
   });
-
-  sectionTitles.appendChild(tripId);
-  sectionTitles.appendChild(tripTitle);
-  sectionTitles.appendChild(tripDogs);
-  cardBody.appendChild(sectionTitles);
-  cardBody.appendChild(tripDetails);
-  cardTrip.appendChild(cardBody);
   cardTrip.appendChild(deleteIcon);
-  contanierList.appendChild(cardTrip);
+}
 
+function handleClickTrip(cardTrip, selectedTripId, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
     selectedTripId = trip.id;
     selectedDogId = listDogs(trip, dataDogs, 1);
@@ -114,7 +120,6 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
 
 function initTripsList(dataTrips, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
-
   for (let t in dataTrips.trips) {
     const trip = dataTrips.trips[t];
     if (trip.type != "empty") {
@@ -122,7 +127,6 @@ function initTripsList(dataTrips, dataDogs) {
       createTrip(trip, contListTrip, dogsList, dataDogs);
     }
   }
-
 }
 
 function deleteSelectedTrip(selectedTripId) {
@@ -137,7 +141,6 @@ function deleteSelectedTrip(selectedTripId) {
 function newTrip(newTripObj, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
   const trip = newTripObj;
-  console.log(trip);
   if (Array.isArray(trip.dogs_id)) {
     arrayDogsId = trip.dogs_id.map(Number);
   } else if (typeof trip.dogs_id === "string") {
