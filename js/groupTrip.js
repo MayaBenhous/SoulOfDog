@@ -72,7 +72,7 @@ function newGroupTrip(selectedDogs, dataDogs) {
       }
     }
   }
-  createDatils(null);
+  createDeatils(null);
 }
 
 function getCurrentTime() {
@@ -194,7 +194,7 @@ function existGroupTrip(trip, dataDogs) {
     createDogCard(dog, 1, trip, countDog);
     countDog++;
   }
-  createDatils(trip);
+  createDeatils(trip);
 }
 
 function createDogCard(dog, type, trip, countDog) {
@@ -300,7 +300,7 @@ function handleSecNotes(cardBody) {
   cardBody.appendChild(sectNotes);
 }
 
-function createDatils(trip) {
+function createDeatils(trip) {
   const secDetailsTrip = document.getElementById("secDetailsTrip");
   createSecTime(secDetailsTrip, trip);
   createSecDistance(secDetailsTrip, trip);

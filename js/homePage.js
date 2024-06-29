@@ -55,7 +55,7 @@ function initDogsHomePage(dataDogs) {
             );
             if (imgWrapperToRemove) {
               if (askOnce) {
-                if (confirm("Are you sure you want to delete this trip?")) {
+                if (confirm("Are you sure you want to delete this dogs?")) {
                   imgsCont.removeChild(imgWrapperToRemove);
                   console.log(`DELETE {domain}/dogs/${dogId}`);
                 }
