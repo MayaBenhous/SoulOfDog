@@ -24,13 +24,16 @@ let numDogs;
 
 let trip_lp = {
   id: 0,
+  type: "Group",
+  implement: "Idan",
   dogs_id: [],
   date: "",
   start_time: "",
   end_time: "",
+  distance: 0,
   needs_pee: [],
   needs_poop: [],
-  distance: 0,
+  notes:[]
 };
 
 function findTrip(dataTrips, tripId) {
@@ -160,6 +163,7 @@ function finishTrip() {
     distance[0].textContent = randomNumber + "km";
     trip_lp.distance = distance[0].textContent;
     checkBoxNeeds();
+    textInNotes();
     console.log(`POST {domain}/trips/${trip_lp.id}`);
     console.log("Request Body:", trip_lp);
   });
@@ -168,10 +172,16 @@ function finishTrip() {
 function checkBoxNeeds() {
   for (let i = 0; i < numDogs; i++) {
     const checkboxPee = document.getElementsByClassName("needsPeeCheckbox")[i];
-    const checkboxPoop =
-      document.getElementsByClassName("needsPoopCheckbox")[i];
+    const checkboxPoop = document.getElementsByClassName("needsPoopCheckbox")[i];
     trip_lp.needs_pee[i] = checkboxPee.checked;
     trip_lp.needs_poop[i] = checkboxPoop.checked;
+  }
+}
+
+function textInNotes() {
+  for (let i = 0; i < numDogs; i++) {
+    const textNote = document.getElementsByClassName("textarea-Notes")[i];
+    trip_lp.notes[i] = textNote.value;
   }
 }
 
@@ -217,7 +227,7 @@ function handleSecNameImg(dog, trip, cardBody) {
   cardBody.appendChild(sectImgName);
 }
 
-function handleSecPeeSelect(dog, trip, sectNeeds) {
+function handleSecPeeSelect(dog, trip, type, sectNeeds, countDog) {
   const sectPee = document.createElement("section");
   sectPee.classList.add("sectPeeG_trip");
   const needsPeeCheckbox = document.createElement("input");
@@ -234,6 +244,11 @@ function handleSecPeeSelect(dog, trip, sectNeeds) {
   imgPeeBot.alt = "imgPeeBot";
   imgPeeBot.title = "imgPeeBot";
   imgPeeBot.classList.add("imgPeeBot-G");
+  if (type == 0) {
+    needsPeeCheckbox.checked = false;
+  } else if (type == 1) {
+    needsPeeCheckbox.checked = trip.needs_pee[countDog];
+  }
   sectPee.appendChild(needsPeeCheckbox);
   sectPee.appendChild(document.createTextNode("Pee"));
   sectPee.appendChild(imgPeeBot);
@@ -241,7 +256,7 @@ function handleSecPeeSelect(dog, trip, sectNeeds) {
   sectNeeds.appendChild(sectPee);
 }
 
-function handleSecPoopSelect(dog, trip, sectNeeds) {
+function handleSecPoopSelect(dog, type, trip, sectNeeds, countDog) {
   const sectPoop = document.createElement("section");
   sectPoop.classList.add("sectPoop");
   const needsPoopCheckbox = document.createElement("input");
@@ -253,6 +268,11 @@ function handleSecPoopSelect(dog, trip, sectNeeds) {
   imgPoop.alt = "imgPoop";
   imgPoop.title = "imgPoop";
   imgPoop.classList.add("imgPoop-G");
+  if (type == 0) {
+    needsPoopCheckbox.checked = false;
+  } else if (type == 1) {
+    needsPoopCheckbox.checked = trip.needs_poop[countDog];
+  }
   sectPoop.appendChild(needsPoopCheckbox);
   sectPoop.appendChild(document.createTextNode("Poop"));
   sectPoop.appendChild(imgPoop);
@@ -262,18 +282,8 @@ function handleSecPoopSelect(dog, trip, sectNeeds) {
 function handleSecNeeds(dog, type, trip, cardBody, countDog) {
   const sectNeeds = document.createElement("section");
   sectNeeds.classList.add("sectNeedsG_trip");
-  handleSecPeeSelect(dog, trip, sectNeeds);
-  handleSecPoopSelect(dog, trip, sectNeeds);
-  const needsPeeCheckbox = document.getElementsByClassName("needsPeeCheckbox");
-  const needsPoopCheckbox =
-    document.getElementsByClassName("needsPoopCheckbox");
-  if (type == 0) {
-    needsPeeCheckbox.checked = false;
-    needsPoopCheckbox.checked = false;
-  } else if (type == 1) {
-    needsPeeCheckbox.checked = trip.needs_pee[countDog];
-    needsPoopCheckbox.checked = trip.needs_poop[countDog];
-  }
+  handleSecPeeSelect(dog, trip, type, sectNeeds, countDog);
+  handleSecPoopSelect(dog, type, trip, sectNeeds, countDog);
   cardBody.appendChild(sectNeeds);
 }
 
@@ -284,6 +294,7 @@ function handleSecNotes(cardBody) {
   formFloat.classList.add("form-floating");
   const textNote = document.createElement("textarea");
   textNote.classList.add("form-control");
+  textNote.classList.add("textarea-Notes");
   formFloat.appendChild(textNote);
   sectNotes.appendChild(formFloat);
   cardBody.appendChild(sectNotes);
@@ -301,13 +312,12 @@ function createSecTime(secDetailsTrip, trip) {
   handleNameImgTime(cardTime);
   const detailsPart = document.createElement("div");
   detailsPart.classList.add("detailsPart");
-  handleTopDeatils(detailsPart);
-  handleLowDeatils(detailsPart);
+  handleDeatilsTime(detailsPart, trip);
   cardTime.appendChild(detailsPart);
-  secDetailsTrip.appendChild(cardTime);
+  secDetailsTrip.appendChild(cardTime, trip);
 }
 
-function handleNameImgTime(cardTime) {
+function handleNameImgTime(cardTime, trip) {
   const titlePart = document.createElement("div");
   titlePart.classList.add("titlePart");
   const iconImg = document.createElement("span");
@@ -321,7 +331,7 @@ function handleNameImgTime(cardTime) {
   cardTime.appendChild(titlePart);
 }
 
-function handleTopDeatils(detailsPart, trip) {
+function handleDeatilsTime(detailsPart, trip) {
   const topDetailsPart = document.createElement("div");
   topDetailsPart.classList.add("topDetailsPart");
   const start = document.createElement("h5");
@@ -343,10 +353,6 @@ function handleTopDeatils(detailsPart, trip) {
   end.appendChild(hourEnd);
   topDetailsPart.appendChild(start);
   topDetailsPart.appendChild(end);
-  detailsPart.appendChild(topDetailsPart);
-}
-
-function handleLowDeatils(detailsPart, trip) {
   const lowDetailsPart = document.createElement("div");
   lowDetailsPart.classList.add("lowDetailsPart");
   const total = document.createElement("h5");
@@ -362,6 +368,7 @@ function handleLowDeatils(detailsPart, trip) {
   }
   lowDetailsPart.appendChild(total);
   lowDetailsPart.appendChild(totalNum);
+  detailsPart.appendChild(topDetailsPart);
   detailsPart.appendChild(lowDetailsPart);
 }
 

@@ -55,7 +55,7 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   handleSecTitle(trip, cardBody, dogsList);
   handleDeatilsTrip(trip, cardBody);
   cardTrip.appendChild(cardBody);
-  handleDeleteIcon(cardTrip);
+  handleDeleteIcon(cardTrip, trip);
   contanierList.appendChild(cardTrip);
   handleClickTrip(cardTrip, selectedTripId, trip, dataDogs);
 }
@@ -90,7 +90,7 @@ function handleDeatilsTrip(trip, cardBody) {
   cardBody.appendChild(tripDetails);
 }
 
-function handleDeleteIcon(cardTrip) {
+function handleDeleteIcon(cardTrip, trip) {
   const deleteIcon = document.createElement("span");
   deleteIcon.classList.add("delete-icon");
   deleteIcon.classList.add("iconImg");
