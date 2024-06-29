@@ -21,10 +21,10 @@ function initDogsHomePage(dataDogs) {
       img.src = dog.img_dog;
       img.alt = dog.dogName;
       img.title = dog.dogName;
-
       let dogName = document.createElement("span");
       dogName.classList.add("dogName");
       dogName.textContent = dog.dogName;
+
       imgWrapper.appendChild(img);
       imgWrapper.appendChild(dogName);
       imgsCont.appendChild(imgWrapper);
@@ -36,7 +36,6 @@ function initDogsHomePage(dataDogs) {
         } else {
           selectedDogs.delete(dog.id);
         }
-
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
 
@@ -66,7 +65,6 @@ function initDogsHomePage(dataDogs) {
                 imgsCont.removeChild(imgWrapperToRemove);
                 console.log(`DELETE {domain}/dogs/${dogId}`);
               }
-            
             }
           }
         });

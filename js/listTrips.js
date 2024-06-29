@@ -14,7 +14,9 @@ window.onload = () => {
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
-  document.getElementById("selectButton").addEventListener("click", function () {
+  document
+    .getElementById("selectButton")
+    .addEventListener("click", function () {
       const cards = document.querySelectorAll(".card");
       cards.forEach((card) => {
         card.classList.toggle("show-delete");
@@ -120,7 +122,8 @@ function handleClickTrip(cardTrip, selectedTripId, trip, dataDogs) {
 
 function initTripsList(dataTrips, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
-  for (let t in dataTrips.trips) {
+  let length = dataTrips.trips.length;
+  for (let t = length - 1; t >= 0; t--) {
     const trip = dataTrips.trips[t];
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
