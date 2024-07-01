@@ -46,6 +46,8 @@ function initDogsHomePage(dataDogs) {
 
       deleteDogButton.addEventListener("click", () => {
         let askOnce = true;
+        let userConfirm = false;
+
         selectedDogs.forEach((dogId) => {
           const dogToRemove = dataDogs.dogs.find((dog) => dog.id === dogId);
           if (dogToRemove) {
@@ -55,19 +57,19 @@ function initDogsHomePage(dataDogs) {
             );
             if (imgWrapperToRemove) {
               if (askOnce) {
-                if (confirm("Are you sure you want to delete this dogs?")) {
-                  imgsCont.removeChild(imgWrapperToRemove);
-                  console.log(`DELETE {domain}/dogs/${dogId}`);
-                }
+                userConfirm = confirm("Are you sure you want to delete this dogs?");
                 askOnce = false;
               }
-              else {
+              if (userConfirm) {
                 imgsCont.removeChild(imgWrapperToRemove);
                 console.log(`DELETE {domain}/dogs/${dogId}`);
+              } else {
+                return;
               }
             }
           }
         });
+
         selectedDogs.clear();
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
