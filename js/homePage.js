@@ -1,10 +1,16 @@
 window.onload = () => {
-  fetch("data/dogs.json")
-    .then((response) => response.json())
-    .then((data) => initDogsHomePage(data));
+  getDataDogs(userId);
 };
+let userId = 2;
+
+function getDataDogs(userId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  .then((response) => response.json())
+  .then((dataDogs) => initDogsHomePage(dataDogs));
+}
 
 function initDogsHomePage(dataDogs) {
+  console.log(dataDogs);
   const titleDogs = document.getElementById("title");
   titleDogs.textContent = dataDogs.title;
   const imgsCont = document.getElementById("dogsImgs-Container");
@@ -18,7 +24,8 @@ function initDogsHomePage(dataDogs) {
       imgWrapper.classList.add("imgWrapper");
       const img = document.createElement("img");
       img.classList.add("imgHomePage");
-      img.src = dog.img_dog;
+      img.src = dog.img;
+      // img.src = dog.img_dog;
       img.alt = dog.dogName;
       img.title = dog.dogName;
       let dogName = document.createElement("span");
