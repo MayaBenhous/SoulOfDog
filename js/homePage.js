@@ -9,6 +9,28 @@ function getDataDogs(userId) {
   .then((dataDogs) => initDogsHomePage(dataDogs));
 }
 
+function putUnconnectDWtoDog(dogId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/unconnectDWToDog/${dogId}`, {
+    method: "PUT", 
+    // headers: {
+    //   "Content-Type": "application/json",
+    // }
+  })
+  .then((response) => response.json())
+  .then((userId) => getDataDogs(userId));
+}
+
+function putUnconnectDWtoDog(dogId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/connectDWToDog/${userId}/${dogId}`, {
+    method: "PUT", 
+    // headers: {
+    //   "Content-Type": "application/json",
+    // }
+  })
+  .then((response) => response.json())
+  .then((userId) => getDataDogs(userId));
+}
+
 function initDogsHomePage(dataDogs) {
   console.log(dataDogs);
   const titleDogs = document.getElementById("title");
@@ -19,13 +41,12 @@ function initDogsHomePage(dataDogs) {
   const selectedDogs = new Set();
 
   for (const dog of dataDogs.dogs) {
-    if (dog.id != 0) {
+    if (dog.dogId != 0) {
       const imgWrapper = document.createElement("div");
       imgWrapper.classList.add("imgWrapper");
       const img = document.createElement("img");
       img.classList.add("imgHomePage");
       img.src = dog.img;
-      // img.src = dog.img_dog;
       img.alt = dog.dogName;
       img.title = dog.dogName;
       let dogName = document.createElement("span");
@@ -39,9 +60,9 @@ function initDogsHomePage(dataDogs) {
       imgWrapper.addEventListener("click", () => {
         imgWrapper.classList.toggle("selected");
         if (imgWrapper.classList.contains("selected")) {
-          selectedDogs.add(dog.id);
+          selectedDogs.add(dog.dogId);
         } else {
-          selectedDogs.delete(dog.id);
+          selectedDogs.delete(dog.dogId);
         }
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
@@ -56,11 +77,12 @@ function initDogsHomePage(dataDogs) {
         let userConfirm = false;
 
         selectedDogs.forEach((dogId) => {
-          const dogToRemove = dataDogs.dogs.find((dog) => dog.id === dogId);
+          const dogToRemove = dataDogs.dogs.find((dog) =>dog.dogId === dogId);
           if (dogToRemove) {
             const imgWrapperToRemove = Array.from(imgsCont.children).find(
               (wrapper) =>
-                wrapper.querySelector("img").src.includes(dogToRemove.img_dog)
+                wrapper.querySelector("img").src.includes(dogToRemove.img)
+              // wrapper.querySelector("img").src.includes(dogToRemove.img_dog)
             );
             if (imgWrapperToRemove) {
               if (askOnce) {
@@ -68,8 +90,10 @@ function initDogsHomePage(dataDogs) {
                 askOnce = false;
               }
               if (userConfirm) {
-                imgsCont.removeChild(imgWrapperToRemove);
+                imgsCont.removeChild(imgWrapperToRemove);                
                 console.log(`DELETE {domain}/dogs/${dogId}`);
+                console.log(dogId);
+                putUnconnectDWtoDog(dogId);
               } else {
                 return;
               }
