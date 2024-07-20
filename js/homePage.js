@@ -1,9 +1,40 @@
 window.onload = () => {
-  getDataDogs(userId);
+  // getTypeUser(userId);
+  selectedType(userType);
+  // getDataDogs(userId);
 };
 let userId = 2;
 
-function getDataDogs(userId) {
+// function getTypeUser(userId) {
+//   fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+//   .then((response) => response.json())
+//   .then((userType) => selectedType(userType));
+// }
+
+let userType = "owner";
+
+function selectedType(userType) {
+  if(userType === "owner")
+  {
+    // getDataDogsOwner(userId);
+  }
+  else if(userType === "dogWalker")
+  {
+    getDataDogsDW(userId);
+  }
+  else
+  {
+    return null;
+  }
+}
+
+function getDataDogsDW(userId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  .then((response) => response.json())
+  .then((dataDogs) => initDogsHomePage(dataDogs));
+}
+
+function getDataDogsOwner(userId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
   .then((dataDogs) => initDogsHomePage(dataDogs));
@@ -20,7 +51,7 @@ function putUnconnectDWtoDog(dogId) {
   .then((userId) => getDataDogs(userId));
 }
 
-function putUnconnectDWtoDog(dogId) {
+function putconnectDWtoDog(dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/connectDWToDog/${userId}/${dogId}`, {
     method: "PUT", 
     // headers: {
