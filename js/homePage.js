@@ -3,7 +3,6 @@ window.onload = () => {
   selectedType(userType);
   // getDataDogs(userId);
 };
-let userId = 2;
 
 // function getTypeUser(userId) {
 //   fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
@@ -11,12 +10,17 @@ let userId = 2;
 //   .then((userType) => selectedType(userType));
 // }
 
-let userType = "owner";
+// let userId = 1;
+let userId = 2;
+
+
+// let userType = "owner";
+let userType = "dogWalker";
 
 function selectedType(userType) {
   if(userType === "owner")
   {
-    // getDataDogsOwner(userId);
+    getDataDogsOwner(userId);
   }
   else if(userType === "dogWalker")
   {
@@ -31,13 +35,13 @@ function selectedType(userType) {
 function getDataDogsDW(userId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
-  .then((dataDogs) => initDogsHomePage(dataDogs));
+  .then((dataDogs) => initDogWalkerHomePage(dataDogs));
 }
 
 function getDataDogsOwner(userId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
-  .then((dataDogs) => initDogWalkerHomePage(dataDogs));
+  .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
 
 function putUnconnectDWtoDog(dogId) {
@@ -57,7 +61,6 @@ function putconnectDWtoDog(dogId) { // connect it to the add dog function that i
 }
 
 function createWrapperDataDog(dog,imgWrapper) {
-
     const img = document.createElement("img");
     img.classList.add("imgHomePage");
     img.src = dog.img;
@@ -78,30 +81,11 @@ function initDogWalkerHomePage(dataDogs) {
   const startTripButton = document.getElementById("startTripButton");
   const deleteDogButton = document.getElementById("deleteDogButton");
   const selectedDogs = new Set();
-
   for (const dog of dataDogs.dogs) {
     const imgWrapper = document.createElement("div");
     imgWrapper.classList.add("imgWrapper");
     createWrapperDataDog(dog,imgWrapper);
     imgsCont.appendChild(imgWrapper);
-
-
-    // if (dog.dogId != 0) {
-    //   const imgWrapper = document.createElement("div");
-    //   imgWrapper.classList.add("imgWrapper");
-    //   const img = document.createElement("img");
-    //   img.classList.add("imgHomePage");
-    //   img.src = dog.img;
-    //   img.alt = dog.dogName;
-    //   img.title = dog.dogName;
-    //   let dogName = document.createElement("span");
-    //   dogName.classList.add("dogName");
-    //   dogName.textContent = dog.dogName;
-
-    //   imgWrapper.appendChild(img);
-    //   imgWrapper.appendChild(dogName);
-    //   imgsCont.appendChild(imgWrapper);
-
       imgWrapper.addEventListener("click", () => {
         imgWrapper.classList.toggle("selected");
         if (imgWrapper.classList.contains("selected")) {
@@ -111,23 +95,19 @@ function initDogWalkerHomePage(dataDogs) {
         }
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
-
       startTripButton.addEventListener("click", () => {
         const selectedIds = Array.from(selectedDogs).join(",");
         window.location.href = `groupTrip.html?selectedDogs=${selectedIds}`;
       });
-
       deleteDogButton.addEventListener("click", () => {
         let askOnce = true;
         let userConfirm = false;
-
         selectedDogs.forEach((dogId) => {
           const dogToRemove = dataDogs.dogs.find((dog) =>dog.dogId === dogId);
           if (dogToRemove) {
             const imgWrapperToRemove = Array.from(imgsCont.children).find(
               (wrapper) =>
                 wrapper.querySelector("img").src.includes(dogToRemove.img)
-              // wrapper.querySelector("img").src.includes(dogToRemove.img_dog)
             );
             if (imgWrapperToRemove) {
               if (askOnce) {
@@ -136,8 +116,6 @@ function initDogWalkerHomePage(dataDogs) {
               }
               if (userConfirm) {
                 imgsCont.removeChild(imgWrapperToRemove);                
-                console.log(`DELETE {domain}/dogs/${dogId}`);
-                console.log(dogId);
                 putUnconnectDWtoDog(dogId);
               } else {
                 return;
@@ -145,13 +123,23 @@ function initDogWalkerHomePage(dataDogs) {
             }
           }
         });
-
         selectedDogs.clear();
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
     }
+}
+
+function initOwnerHomePage(dataDogs) {
+  const titleDogs = document.getElementById("title");
+  titleDogs.textContent = dataDogs.title;
+  const imgsCont = document.getElementById("dogsImgs-Container");
+  for (const dog of dataDogs.dogs) {
+    const imgWrapper = document.createElement("div");
+    imgWrapper.classList.add("imgWrapper");
+    createWrapperDataDog(dog,imgWrapper);
+    imgsCont.appendChild(imgWrapper);
   }
-// }
+}
 
 function updateButtonsVisibility(selectedDogs,startTripButton,deleteDogButton) {
   startTripButton.style.display = selectedDogs.size > 0 ? "block" : "none";
