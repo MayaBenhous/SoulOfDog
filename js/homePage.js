@@ -105,8 +105,8 @@ function initDogWalkerHomePage(dataDogs) {
               }
               if (userConfirm) {
                 imgsCont.removeChild(imgWrapperToRemove);                
-                console.log(`DELETE {domain}/dogs/${dogId}`);
-                console.log(dogId);
+                // console.log(`DELETE {domain}/dogs/${dogId}`);
+                // console.log(dogId);
                 putUnconnectDWtoDog(dogId);
               } else {
                 return;
