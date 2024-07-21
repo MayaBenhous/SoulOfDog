@@ -13,7 +13,6 @@ window.onload = () => {
 // let userId = 1;
 let userId = 2;
 
-
 // let userType = "owner";
 let userType = "dogWalker";
 
@@ -129,7 +128,7 @@ function initDogWalkerHomePage(dataDogs) {
     }
 }
 
-function initOwnerHomePage(dataDogs) {
+function initOwnerHomePage(dataDogs) { // fix!!
   const titleDogs = document.getElementById("title");
   titleDogs.textContent = dataDogs.title;
   const imgsCont = document.getElementById("dogsImgs-Container");

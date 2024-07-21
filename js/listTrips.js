@@ -1,6 +1,12 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
+  
+  startWitHhoutServer();
+  createButtonDelete();
+};
+
+function startWitHhoutServer(){
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
@@ -14,18 +20,31 @@ window.onload = () => {
     .catch((error) => {
       console.error("Error fetching data:", error);
     });
-  document
-    .getElementById("selectButton")
-    .addEventListener("click", function () {
-      const cards = document.querySelectorAll(".card");
-      cards.forEach((card) => {
-        card.classList.toggle("show-delete");
-      });
-    });
-};
+}
+let userId = 2;
+
+function getListTrips(userId) {
+  fetch(`https://soulofdog-server.onrender.com/api/trips/createListTrips/${userId}`)
+  .then((response) => response.json())
+  .then((dataListTrips) => initTripsList(dataListTrips));
+}
 
 let selectedTripId;
 let selectedDogId;
+
+// function initTripsList(dataListTrips) {
+  // console.log(dataListTrips);
+  function initTripsList(dataTrips, dataDogs) {
+  const contListTrip = document.getElementById("listTripsCont_id");
+  let length = dataTrips.trips.length;
+  for (let t = length - 1; t >= 0; t--) {
+    const trip = dataTrips.trips[t];
+    if (trip.type != "empty") {
+      const dogsList = listDogs(trip, dataDogs, 0);
+      createTrip(trip, contListTrip, dogsList, dataDogs);
+    }
+  }
+}
 
 function listDogs(trip, dataDogs, check) {
   let dogsList = [];
@@ -120,18 +139,6 @@ function handleClickTrip(cardTrip, selectedTripId, trip, dataDogs) {
   });
 }
 
-function initTripsList(dataTrips, dataDogs) {
-  const contListTrip = document.getElementById("listTripsCont_id");
-  let length = dataTrips.trips.length;
-  for (let t = length - 1; t >= 0; t--) {
-    const trip = dataTrips.trips[t];
-    if (trip.type != "empty") {
-      const dogsList = listDogs(trip, dataDogs, 0);
-      createTrip(trip, contListTrip, dogsList, dataDogs);
-    }
-  }
-}
-
 function deleteSelectedTrip(selectedTripId) {
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
@@ -154,4 +161,12 @@ function newTrip(newTripObj, dataDogs) {
   trip.dogs_id = arrayDogsId;
   const dogsList = listDogs(trip, dataDogs, 0);
   createTrip(trip, contListTrip, dogsList, dataDogs);
+}
+
+function createButtonDelete() {
+  document.getElementById("selectButton").addEventListener("click", function () {
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => {
+      card.classList.toggle("show-delete");});
+  });
 }
