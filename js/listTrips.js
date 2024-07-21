@@ -22,49 +22,52 @@ function startWitHhoutServer(){
       console.error("Error fetching data:", error);
     });
 }
-let userId = 2;
+let userId = 2; 
+
+let i = 0;
+
+let dataList = {
+  dataTrips: null,
+  dataDogs: null
+};
 
 function startWithServer(userId) {
-  getDataTrips(userId);
-  // getDataDogs(userId);
-}
-
-function getDataTrips(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/trips/createListTrips/${userId}`)
-  .then((response) => response.json())
-  .then((dataTripsServer) => getDataList(dataTripsServer, null));
-}
-
-function getDataDogs(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
-  .then((response) => response.json())
-  .then((dataDogsServer) => getDataList(null, dataDogsServer));
-}
-
-function getDataList(dataTripsServer, dataDogsServer) {
-  let dataTrips = dataTripsServer || null;
-  getDataDogs(userId);
-  let dataDogs = dataDogsServer || null;
-  if(dataDogs!== null && dataTrips !==null)
-  {
-    initTripsList(dataTrips, dataDogs);
-  }
-  console.log(dataTrips);
-  console.log(dataDogs);
+  console.log('Starting with userId:', userId);
+  Promise.all([
+    fetch(`https://soulofdog-server.onrender.com/api/trips/createListTrips/${userId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      }),
+    fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+  ])
+  .then(([dataTripsServer, dataDogsServer]) => {
+    initTripsList(dataTripsServer, dataDogsServer);
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error);
+  });
 }
 
 let selectedTripId;
 let selectedDogId;
 
 function initTripsList(dataTrips, dataDogs) {
-  // console.log(dataTrips);
-  // console.log(dataDogs);
+  console.log(dataTrips);
+  console.log(dataDogs);
   const contListTrip = document.getElementById("listTripsCont_id");
   let length = dataTrips.listTrips.length;
   console.log(length);
   for (let t = length - 1; t >= 0; t--) {
     const trip = dataTrips.listTrips[t];
-    console.log(trip);
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
       createTrip(trip, contListTrip, dogsList, dataDogs);
@@ -74,9 +77,7 @@ function initTripsList(dataTrips, dataDogs) {
 
 function listDogs(trip, dataDogs, check) {
   let dogsList = [];
-  console.log(dataDogs);
   for (const dogId of trip.dogsId) {
-    // for (const dogId of trip.dogs_id) {
     const dogName = findDog(dataDogs, dogId);
     if (check == 1) return dogId;
     if (dogName) {
@@ -87,7 +88,6 @@ function listDogs(trip, dataDogs, check) {
 }
 
 function findDog(dataDogs, id) {
-  console.log(dataDogs);
   for (const dog of dataDogs.dogs) {
     if (dog.dogId === id) {
       return dog.dogName;
@@ -133,8 +133,8 @@ function handleDeatilsTrip(trip, cardBody) {
   tripDetails.classList.add("list-group", "list-group-flush");
   const details = `
   <li>${trip.date}</li>
-  <li>${trip.start_time}</li>
-  <li>${trip.end_time}</li>
+  <li>${trip.startTime}</li>
+  <li>${trip.endTime}</li>
   <li>${trip.distance}</li>`;
   tripDetails.innerHTML = details;
   cardBody.appendChild(tripDetails);
