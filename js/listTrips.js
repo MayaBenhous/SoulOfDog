@@ -1,8 +1,9 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
-  
-  startWitHhoutServer();
+
+  startWithServer(userId);
+  // startWitHhoutServer();
   createButtonDelete();
 };
 
@@ -23,22 +24,47 @@ function startWitHhoutServer(){
 }
 let userId = 2;
 
-function getListTrips(userId) {
+function startWithServer(userId) {
+  getDataTrips(userId);
+  // getDataDogs(userId);
+}
+
+function getDataTrips(userId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/createListTrips/${userId}`)
   .then((response) => response.json())
-  .then((dataListTrips) => initTripsList(dataListTrips));
+  .then((dataTripsServer) => getDataList(dataTripsServer, null));
+}
+
+function getDataDogs(userId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  .then((response) => response.json())
+  .then((dataDogsServer) => getDataList(null, dataDogsServer));
+}
+
+function getDataList(dataTripsServer, dataDogsServer) {
+  let dataTrips = dataTripsServer || null;
+  getDataDogs(userId);
+  let dataDogs = dataDogsServer || null;
+  if(dataDogs!== null && dataTrips !==null)
+  {
+    initTripsList(dataTrips, dataDogs);
+  }
+  console.log(dataTrips);
+  console.log(dataDogs);
 }
 
 let selectedTripId;
 let selectedDogId;
 
-// function initTripsList(dataListTrips) {
-  // console.log(dataListTrips);
-  function initTripsList(dataTrips, dataDogs) {
+function initTripsList(dataTrips, dataDogs) {
+  // console.log(dataTrips);
+  // console.log(dataDogs);
   const contListTrip = document.getElementById("listTripsCont_id");
-  let length = dataTrips.trips.length;
+  let length = dataTrips.listTrips.length;
+  console.log(length);
   for (let t = length - 1; t >= 0; t--) {
-    const trip = dataTrips.trips[t];
+    const trip = dataTrips.listTrips[t];
+    console.log(trip);
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
       createTrip(trip, contListTrip, dogsList, dataDogs);
@@ -48,7 +74,9 @@ let selectedDogId;
 
 function listDogs(trip, dataDogs, check) {
   let dogsList = [];
-  for (const dogId of trip.dogs_id) {
+  console.log(dataDogs);
+  for (const dogId of trip.dogsId) {
+    // for (const dogId of trip.dogs_id) {
     const dogName = findDog(dataDogs, dogId);
     if (check == 1) return dogId;
     if (dogName) {
@@ -59,8 +87,9 @@ function listDogs(trip, dataDogs, check) {
 }
 
 function findDog(dataDogs, id) {
+  console.log(dataDogs);
   for (const dog of dataDogs.dogs) {
-    if (dog.id === id) {
+    if (dog.dogId === id) {
       return dog.dogName;
     }
   }
