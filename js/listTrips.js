@@ -21,7 +21,7 @@ function startWitHhoutServer(){
       console.error("Error fetching data:", error);
     });
 }
-let userId = 6; 
+let userId = 2; 
 
 let i = 0;
 let dataList = {
@@ -139,7 +139,26 @@ function handleDeatilsTrip(trip, cardBody) {
   cardBody.appendChild(tripDetails);
 }
 
-function handleDeleteIcon(cardTrip, trip) {
+function handleClickTrip(cardTrip, trip, dataDogs) {
+  cardTrip.addEventListener("click", function () {
+    let countDogs = trip.dogsId.length;
+    let selectedDogId = trip.dogsId;
+    let userType = trip.userType;
+    if((countDogs === 1) && (userType !== "dogWalker"))
+    {
+        window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
+    }
+    else {
+        console.log(selectedDogId);
+        console.log("group!!");
+        // window.location.href = `groupTrip.html?groupTripId=${trip.tripId}`;     
+      window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogs=null`;     
+    }
+  });
+}
+
+function handleDeleteIcon(cardTrip, trip) //not working now
+{
   const deleteIcon = document.createElement("span");
   deleteIcon.classList.add("delete-icon");
   deleteIcon.classList.add("iconImg");
@@ -154,25 +173,8 @@ function handleDeleteIcon(cardTrip, trip) {
   cardTrip.appendChild(deleteIcon);
 }
 
-function handleClickTrip(cardTrip, trip, dataDogs) {
-  cardTrip.addEventListener("click", function () {
-    let countDogs = trip.dogsId.length;
-    let selectedDogId = trip.dogsId;
-    let userType = trip.userType;
-    if((countDogs === 1) && (userType !== "dogWalker"))
-    {
-        window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
-    }
-    else {
-        console.log(selectedDogId);
-        console.log("group!!");
-        window.location.href = `groupTrip.html?groupTripId=${trip.tripId}`;     
-      // window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogs=${selectedDogId}`;     
-    }
-  });
-}
-
-function deleteSelectedTrip(selectedTripId) {
+function deleteSelectedTrip(selectedTripId) //not working now
+{
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
     if (card.querySelector("p").textContent.includes(selectedTripId))
@@ -197,7 +199,8 @@ function newTrip(newTripObj, dataDogs) // not working now
   createTrip(trip, contListTrip, dogsList, dataDogs);
 }
 
-function createButtonDelete() {
+function createButtonDelete() //not working now
+{
   document.getElementById("selectButton").addEventListener("click", function () {
     const cards = document.querySelectorAll(".card");
     cards.forEach((card) => {

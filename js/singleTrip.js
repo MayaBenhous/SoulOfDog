@@ -6,7 +6,9 @@ window.onload = () => {
   getTripData(selectedTripId);
   // startWithoutServer();
 };
-
+iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
+titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
+   
 // const selectedTripId = 8;
 // const dogId = 1;
 
@@ -161,9 +163,6 @@ function handleSingleDetails(trip){
   ownerTripSpan.appendChild(editIcon);
 }
 
-iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
-titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
-   
 function handleCreateCard(title, index, trip, dogintrip) {
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
   const url = iconsArr[index];
@@ -238,7 +237,8 @@ function convertNumbersToTimeString(hours, minutes) {
   return `${hoursStr}:${minutesStr}`;
 }
 
-function deleteObject(selectedTripId) { //to finish
+function deleteObject(selectedTripId) //not working now
+{ 
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete this trip?")) {

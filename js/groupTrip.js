@@ -2,37 +2,42 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
   const groupTripId = urlParams.get("groupTripId");
-  getTripData(tripId);
+  if(selectedDogs === "null")
+  {
+    getGroupTripExist(groupTripId);
+  }
+  else {
+    startNewTrip(selectedDogs);
+  }
 };
 
-function startWithoutServer() {
-  Promise.all([
-    fetch("data/Trips.json").then((response) => response.json()),
-    fetch("data/dogs.json").then((response) => response.json()),
-  ]).then(([dataTrips, dataDogs]) => {
-    if (groupTripId) {
-      const groupTrip = findTrip(dataTrips, groupTripId);
-      createDateTrip(groupTrip);
-      existGroupTrip(groupTrip, dataDogs);
-    } else {
-      createDateTrip(null);
-      newGroupTrip(selectedDogs, dataDogs);
-      finishTrip();
-    }
-    deleteObject(groupTripId);
-  });
-}
+// function startWithoutServer() {
+//   Promise.all([
+//     fetch("data/Trips.json").then((response) => response.json()),
+//     fetch("data/dogs.json").then((response) => response.json()),
+//   ]).then(([dataTrips, dataDogs]) => {
+//     if (groupTripId) {
+//       const groupTrip = findTrip(dataTrips, groupTripId);
+//       createDateTrip(groupTrip);
+//       existGroupTrip(groupTrip, dataDogs);
+//     } else {
+//       createDateTrip(null);
+//       newGroupTrip(selectedDogs, dataDogs);
+//       finishTrip();
+//     }
+//     deleteObject(groupTripId);
+//   });
+// }
 
-function getTripData(tripId) {
+function getGroupTripExist(groupTripId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)
   .then((response) => response.json())
-  .then((dataTrip) => initSingleTrip(dataTrip));
+  .then((dataTrip) => initGroupTripExist(dataTrip));
 }
 
 function initGroupTripExist(dataTrip) {
   let dataDogs = dataTrip.trip.dogs[0];
-  console.log(dataDogs);
-  console.log(dataTrip);
+  createDateTrip(dataTrip.trip);
   existGroupTrip(dataTrip.trip, dataDogs);
 }
 
@@ -52,22 +57,34 @@ let trip_lp = {
   notes:[]
 };
 
-function findTrip(dataTrips, tripId) {
-  for (const trip of dataTrips.trips) {
-    if (trip.id == tripId) {
-      return trip;
-    }
-  }
-  return null;
-}
+// function findTrip(dataTrips, tripId) {
+//   for (const trip of dataTrips.trips) {
+//     if (trip.id == tripId) {
+//       return trip;
+//     }
+//   }
+//   return null;
+// }
 
-function findDog(dataDogs, dogId) {
-  for (const dog of dataDogs.dogs) {
-    if (dog.id === dogId) {
-      return dog;
-    }
+// function findDog(dataDogs, dogId) {
+//   for (const dog of dataDogs.dogs) {
+//     if (dog.id === dogId) {
+//       return dog;
+//     }
+//   }
+//   return null;
+// }
+
+function existGroupTrip(trip) {
+  const finishButton = document.getElementById("finishTripButton");
+  finishButton.style.display = "none";
+  let countDog = 0;
+  for(let i = 0; i< (trip.dogs.length); i++) {
+    dog = trip.dogs[i];
+    createDogCard(dog, 1);
+    countDog++;
   }
-  return null;
+  createDeatils(trip);
 }
 
 function newGroupTrip(selectedDogs, dataDogs) {
@@ -91,57 +108,6 @@ function newGroupTrip(selectedDogs, dataDogs) {
   createDeatils(null);
 }
 
-function getCurrentTime() {
-  let now = new Date();
-  let hours = now.getHours().toString().padStart(2, "0");
-  let minutes = now.getMinutes().toString().padStart(2, "0");
-  return hours + ":" + minutes;
-}
-
-function setCurrentDate() {
-  const currentDate = new Date();
-  const day = String(currentDate.getDate()).padStart(2, "0");
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const year = currentDate.getFullYear();
-  const formattedDate = `${day}-${month}-${year}`;
-  return formattedDate;
-}
-
-function calculateTripDuration(hourStart, hourEnd) {
-  const hourStartNum = hourStart.textContent;
-  const hourEndNum = hourEnd.textContent;
-  const timePartsStart = hourStartNum.split(":");
-  const startHour = parseInt(timePartsStart[0], 10);
-  const startMinutes = parseInt(timePartsStart[1], 10);
-  const timePartsEnd = hourEndNum.split(":");
-  const endHour = parseInt(timePartsEnd[0], 10);
-  const endMinutes = parseInt(timePartsEnd[1], 10);
-  if (endMinutes < startMinutes) {
-    let totalMinutes = 60 - startMinutes;
-    totalMinutes = totalMinutes + endMinutes;
-    let totalHour = endHour - startHour - 1;
-    return { totalHour, totalMinutes };
-  }
-  const totalHour = endHour - startHour;
-  const totalMinutes = endMinutes - startMinutes;
-  return { totalHour, totalMinutes };
-}
-
-function convertNumbersToTimeString(hours, minutes) {
-  const hoursStr = hours.toString().padStart(2, "0");
-  const minutesStr = minutes.toString().padStart(2, "0");
-  return `${hoursStr}:${minutesStr}`;
-}
-
-function totalTime(hourStart, hourEnd) {
-  let calculate = calculateTripDuration(hourStart, hourEnd);
-  const totalString = convertNumbersToTimeString(
-    calculate.totalHour,
-    calculate.totalMinutes
-  );
-  return totalString;
-}
-
 function createDateTrip(trip) {
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
@@ -160,31 +126,6 @@ function createDateTrip(trip) {
   tripTitles.appendChild(tripDate);
 }
 
-function finishTrip() {
-  const finishButton = document.getElementById("finishTripButton");
-  finishButton.addEventListener("click", () => {
-    finishButton.style.display = "none";
-    const min = 8;
-    const max = 100;
-    trip_lp.id = Math.floor(Math.random() * (max - min + 1)) + min;
-    const hourStart = document.getElementsByClassName("hourStart");
-    trip_lp.start_time = hourStart[0].textContent;
-    const hourEnd = document.getElementsByClassName("hourEnd");
-    hourEnd[0].textContent = getCurrentTime();
-    trip_lp.end_time = hourEnd[0].textContent;
-    const total = document.getElementsByClassName("totalValue");
-    total[0].textContent = totalTime(hourStart[0], hourEnd[0]);
-    const distance = document.getElementsByClassName("disValue");
-    let randomNumber = Math.random().toFixed(2);
-    distance[0].textContent = randomNumber + "km";
-    trip_lp.distance = distance[0].textContent;
-    checkBoxNeeds();
-    textInNotes();
-    console.log(`POST {domain}/trips/${trip_lp.id}`);
-    console.log("Request Body:", trip_lp);
-  });
-}
-
 function checkBoxNeeds() {
   for (let i = 0; i < numDogs; i++) {
     const checkboxPee = document.getElementsByClassName("needsPeeCheckbox")[i];
@@ -201,27 +142,15 @@ function textInNotes() {
   }
 }
 
-function existGroupTrip(trip, dataDogs) {
-  const finishButton = document.getElementById("finishTripButton");
-  finishButton.style.display = "none";
-  let countDog = 0;
-  for (const dogId of trip.dogs_id) {
-    const dog = findDog(dataDogs, dogId);
-    createDogCard(dog, 1, trip, countDog);
-    countDog++;
-  }
-  createDeatils(trip);
-}
-
-function createDogCard(dog, type, trip, countDog) {
+function createDogCard(dog, type) {
   const secDogsGroup = document.getElementById("dogs_cards");
   const cardDog = document.createElement("div");
   cardDog.classList.add("card");
   const cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
   cardBody.classList.add("cardGroup_trip");
-  handleSecNotes(cardBody);
-  handleSecNeeds(type, trip, cardBody, countDog);
+  handleSecNotes(dog, cardBody);
+  handleSecNeeds(dog, type, cardBody);
   handleSecNameImg(dog, cardBody);
   cardDog.appendChild(cardBody);
   secDogsGroup.appendChild(cardDog);
@@ -232,7 +161,7 @@ function handleSecNameImg(dog, cardBody) {
   sectImgName.classList.add("secImgNameG_trip");
   const imgDog = document.createElement("img");
   imgDog.classList.add("imgDogInTrip");
-  imgDog.src = dog.img_dog;
+  imgDog.src = dog.img;
   imgDog.alt = dog.dogName;
   imgDog.title = dog.dogName;
   let dogName = document.createElement("h6");
@@ -243,7 +172,7 @@ function handleSecNameImg(dog, cardBody) {
   cardBody.appendChild(sectImgName);
 }
 
-function handleSecPeeSelect(trip, type, sectNeeds, countDog) {
+function handleSecPeeSelect(dog, type, sectNeeds, countDog) {
   const sectPee = document.createElement("section");
   sectPee.classList.add("sectPeeG_trip");
   const needsPeeCheckbox = document.createElement("input");
@@ -263,7 +192,7 @@ function handleSecPeeSelect(trip, type, sectNeeds, countDog) {
   if (type == 0) {
     needsPeeCheckbox.checked = false;
   } else if (type == 1) {
-    needsPeeCheckbox.checked = trip.needs_pee[countDog];
+    needsPeeCheckbox.checked = dog.needPee;
   }
   sectPee.appendChild(needsPeeCheckbox);
   sectPee.appendChild(document.createTextNode("Pee"));
@@ -272,7 +201,7 @@ function handleSecPeeSelect(trip, type, sectNeeds, countDog) {
   sectNeeds.appendChild(sectPee);
 }
 
-function handleSecPoopSelect(type, trip, sectNeeds, countDog) {
+function handleSecPoopSelect(dog, type, sectNeeds, countDog) {
   const sectPoop = document.createElement("section");
   sectPoop.classList.add("sectPoop");
   const needsPoopCheckbox = document.createElement("input");
@@ -287,7 +216,7 @@ function handleSecPoopSelect(type, trip, sectNeeds, countDog) {
   if (type == 0) {
     needsPoopCheckbox.checked = false;
   } else if (type == 1) {
-    needsPoopCheckbox.checked = trip.needs_poop[countDog];
+    needsPoopCheckbox.checked = dog.needPoop;
   }
   sectPoop.appendChild(needsPoopCheckbox);
   sectPoop.appendChild(document.createTextNode("Poop"));
@@ -295,15 +224,15 @@ function handleSecPoopSelect(type, trip, sectNeeds, countDog) {
   sectNeeds.appendChild(sectPoop);
 }
 
-function handleSecNeeds(type, trip, cardBody, countDog) {
+function handleSecNeeds(dog, type, cardBody, countDog) {
   const sectNeeds = document.createElement("section");
   sectNeeds.classList.add("sectNeedsG_trip");
-  handleSecPeeSelect(trip, type, sectNeeds, countDog);
-  handleSecPoopSelect(type, trip, sectNeeds, countDog);
+  handleSecPeeSelect(dog, type, sectNeeds, countDog);
+  handleSecPoopSelect(dog, type, sectNeeds, countDog);
   cardBody.appendChild(sectNeeds);
 }
 
-function handleSecNotes(cardBody) {
+function handleSecNotes(dog, cardBody) {
   const sectNotes = document.createElement("section");
   sectNotes.classList.add("sectNotesG_trip");
   const formFloat = document.createElement("div");
@@ -311,6 +240,7 @@ function handleSecNotes(cardBody) {
   const textNote = document.createElement("textarea");
   textNote.classList.add("form-control");
   textNote.classList.add("textarea-Notes");
+  textNote.textContent = dog.notes;
   formFloat.appendChild(textNote);
   sectNotes.appendChild(formFloat);
   cardBody.appendChild(sectNotes);
@@ -362,8 +292,8 @@ function handleDeatilsTime(detailsPart, trip) {
     hourStart.textContent = getCurrentTime();
     hourEnd.textContent = `00:00`;
   } else {
-    hourStart.textContent = trip.start_time;
-    hourEnd.textContent = trip.end_time;
+    hourStart.textContent = trip.startTime;
+    hourEnd.textContent = trip.endTime;
   }
   start.appendChild(hourStart);
   end.appendChild(hourEnd);
@@ -418,15 +348,93 @@ function handleDeatilsDistance(cardDistance, trip) {
   valueDis.classList.add("value");
   valueDis.classList.add("disValue");
   if (trip == null) {
-    valueDis.textContent = `0km`;
+    valueDis.textContent = `0Km`;
   } else {
-    valueDis.textContent = trip.distance;
+    valueDis.textContent = trip.distance+"Km";
   }
   detailscardDistance.appendChild(valueDis);
   cardDistance.appendChild(detailscardDistance);
 }
 
-function deleteObject(selectedTripId) {
+function getCurrentTime() {
+  let now = new Date();
+  let hours = now.getHours().toString().padStart(2, "0");
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+  return hours + ":" + minutes;
+}
+
+function setCurrentDate() {
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+}
+
+function calculateTripDuration(hourStart, hourEnd) {
+  const hourStartNum = hourStart.textContent;
+  const hourEndNum = hourEnd.textContent;
+  const timePartsStart = hourStartNum.split(":");
+  const startHour = parseInt(timePartsStart[0], 10);
+  const startMinutes = parseInt(timePartsStart[1], 10);
+  const timePartsEnd = hourEndNum.split(":");
+  const endHour = parseInt(timePartsEnd[0], 10);
+  const endMinutes = parseInt(timePartsEnd[1], 10);
+  if (endMinutes < startMinutes) {
+    let totalMinutes = 60 - startMinutes;
+    totalMinutes = totalMinutes + endMinutes;
+    let totalHour = endHour - startHour - 1;
+    return { totalHour, totalMinutes };
+  }
+  const totalHour = endHour - startHour;
+  const totalMinutes = endMinutes - startMinutes;
+  return { totalHour, totalMinutes };
+}
+
+function convertNumbersToTimeString(hours, minutes) {
+  const hoursStr = hours.toString().padStart(2, "0");
+  const minutesStr = minutes.toString().padStart(2, "0");
+  return `${hoursStr}:${minutesStr}`;
+}
+
+function totalTime(hourStart, hourEnd) {
+  let calculate = calculateTripDuration(hourStart, hourEnd);
+  const totalString = convertNumbersToTimeString(
+    calculate.totalHour,
+    calculate.totalMinutes
+  );
+  return totalString;
+}
+
+function finishTrip() //not working now
+{
+  const finishButton = document.getElementById("finishTripButton");
+  finishButton.addEventListener("click", () => {
+    finishButton.style.display = "none";
+    const min = 8;
+    const max = 100;
+    trip_lp.id = Math.floor(Math.random() * (max - min + 1)) + min;
+    const hourStart = document.getElementsByClassName("hourStart");
+    trip_lp.start_time = hourStart[0].textContent;
+    const hourEnd = document.getElementsByClassName("hourEnd");
+    hourEnd[0].textContent = getCurrentTime();
+    trip_lp.end_time = hourEnd[0].textContent;
+    const total = document.getElementsByClassName("totalValue");
+    total[0].textContent = totalTime(hourStart[0], hourEnd[0]);
+    const distance = document.getElementsByClassName("disValue");
+    let randomNumber = Math.random().toFixed(2);
+    distance[0].textContent = randomNumber + "km";
+    trip_lp.distance = distance[0].textContent;
+    checkBoxNeeds();
+    textInNotes();
+    console.log(`POST {domain}/trips/${trip_lp.id}`);
+    console.log("Request Body:", trip_lp);
+  });
+}
+
+function deleteObject(selectedTripId) //not working now
+{
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this trip?")) {
