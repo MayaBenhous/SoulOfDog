@@ -151,12 +151,14 @@ function handleDeleteIcon(cardTrip, trip) {
 
 function handleClickTrip(cardTrip, selectedTripId, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
-    selectedTripId = trip.id;
-    selectedDogId = listDogs(trip, dataDogs, 1);
+    console.log(trip);
+    // selectedTripId = trip.id;
+    // selectedDogId = listDogs(trip, dataDogs, 1);
+    let type = trip.type;
     if (trip.type == "Single") {
       window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
     } else if (trip.type === "Group") {
-      const groupTripId = selectedTripId;
+      // const groupTripId = selectedTripId;
       window.location.href = `groupTrip.html?groupTripId=${selectedTripId}`;
     }
   });

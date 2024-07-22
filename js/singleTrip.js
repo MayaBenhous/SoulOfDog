@@ -32,7 +32,6 @@ function initSingleTrip(dataTrip) {
   initTrip(dataTrip.trip, dataDog);
 }
 
-
 function initTrip(dataTrip, dataDog) {
   const contTripMainDetails = document.getElementById("TripMainDetails-container");
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
