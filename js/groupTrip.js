@@ -2,7 +2,10 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
   const groupTripId = urlParams.get("groupTripId");
+  getTripData(tripId);
+};
 
+function startWithoutServer() {
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
@@ -18,7 +21,20 @@ window.onload = () => {
     }
     deleteObject(groupTripId);
   });
-};
+}
+
+function getTripData(tripId) {
+  fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)
+  .then((response) => response.json())
+  .then((dataTrip) => initSingleTrip(dataTrip));
+}
+
+function initGroupTripExist(dataTrip) {
+  let dataDogs = dataTrip.trip.dogs[0];
+  console.log(dataDogs);
+  console.log(dataTrip);
+  existGroupTrip(dataTrip.trip, dataDogs);
+}
 
 let numDogs;
 

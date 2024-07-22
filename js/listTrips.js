@@ -21,13 +21,18 @@ function startWitHhoutServer(){
       console.error("Error fetching data:", error);
     });
 }
-let userId = 2; 
+let userId = 6; 
 
 let i = 0;
 let dataList = {
   dataTrips: null,
   dataDogs: null
 };
+
+function getDogsUser(userId) {
+  return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  .then((response) => response.json())
+}
 
 function startWithServer(userId) {
   Promise.all([
@@ -101,7 +106,7 @@ function createTrip(trip, contanierList, dogsList, dataDogs) {
   cardTrip.appendChild(cardBody);
   handleDeleteIcon(cardTrip, trip);
   contanierList.appendChild(cardTrip);
-  handleClickTrip(cardTrip, selectedTripId, trip, dataDogs);
+  handleClickTrip(cardTrip, trip, dataDogs);
 }
 
 function handleSecTitle(trip, cardBody, dogsList) {
@@ -149,17 +154,20 @@ function handleDeleteIcon(cardTrip, trip) {
   cardTrip.appendChild(deleteIcon);
 }
 
-function handleClickTrip(cardTrip, selectedTripId, trip, dataDogs) {
+function handleClickTrip(cardTrip, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
-    console.log(trip);
-    // selectedTripId = trip.id;
-    // selectedDogId = listDogs(trip, dataDogs, 1);
-    let type = trip.type;
-    if (trip.type == "Single") {
-      window.location.href = `singleTrip.html?selectedTripId=${selectedTripId}&selectedDogId=${selectedDogId}`;
-    } else if (trip.type === "Group") {
-      // const groupTripId = selectedTripId;
-      window.location.href = `groupTrip.html?groupTripId=${selectedTripId}`;
+    let countDogs = trip.dogsId.length;
+    let selectedDogId = trip.dogsId;
+    let userType = trip.userType;
+    if((countDogs === 1) && (userType !== "dogWalker"))
+    {
+        window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
+    }
+    else {
+        console.log(selectedDogId);
+        console.log("group!!");
+        window.location.href = `groupTrip.html?groupTripId=${trip.tripId}`;     
+      // window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogs=${selectedDogId}`;     
     }
   });
 }
@@ -173,7 +181,8 @@ function deleteSelectedTrip(selectedTripId) {
   console.log(`DELETE {domain}/trips/${selectedTripId}`);
 }
 
-function newTrip(newTripObj, dataDogs) {
+function newTrip(newTripObj, dataDogs) // not working now
+{
   const contListTrip = document.getElementById("listTripsCont_id");
   const trip = newTripObj;
   if (Array.isArray(trip.dogs_id)) {

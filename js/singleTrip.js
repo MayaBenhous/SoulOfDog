@@ -1,14 +1,14 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  // const selectedTripId = urlParams.get("selectedTripId");
+  const selectedTripId = urlParams.get("selectedTripId");
   // const dogId = urlParams.get("selectedDogId");
-
+  
   getTripData(selectedTripId);
   // startWithoutServer();
 };
 
-const selectedTripId = 8;
-const dogId = 1;
+// const selectedTripId = 8;
+// const dogId = 1;
 
 function startWithoutServer(){
     Promise.all([
