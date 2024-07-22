@@ -3,7 +3,6 @@ window.onload = () => {
   const selectedTripId = urlParams.get("selectedTripId");
 
   startWithServer(userId);
-  // startWitHhoutServer();
   createButtonDelete();
 };
 
@@ -25,14 +24,12 @@ function startWitHhoutServer(){
 let userId = 2; 
 
 let i = 0;
-
 let dataList = {
   dataTrips: null,
   dataDogs: null
 };
 
 function startWithServer(userId) {
-  console.log('Starting with userId:', userId);
   Promise.all([
     fetch(`https://soulofdog-server.onrender.com/api/trips/createListTrips/${userId}`)
       .then(response => {
@@ -61,11 +58,8 @@ let selectedTripId;
 let selectedDogId;
 
 function initTripsList(dataTrips, dataDogs) {
-  console.log(dataTrips);
-  console.log(dataDogs);
   const contListTrip = document.getElementById("listTripsCont_id");
   let length = dataTrips.listTrips.length;
-  console.log(length);
   for (let t = length - 1; t >= 0; t--) {
     const trip = dataTrips.listTrips[t];
     if (trip.type != "empty") {
@@ -135,7 +129,7 @@ function handleDeatilsTrip(trip, cardBody) {
   <li>${trip.date}</li>
   <li>${trip.startTime}</li>
   <li>${trip.endTime}</li>
-  <li>${trip.distance}</li>`;
+  <li>${trip.distance}km</li>`;
   tripDetails.innerHTML = details;
   cardBody.appendChild(tripDetails);
 }
