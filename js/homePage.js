@@ -71,6 +71,7 @@ function createWrapperDataDog(dog,imgWrapper) {
 }
 
 function initDogWalkerHomePage(dataDogs) {
+  document.getElementById("addDog").style.display = "block";
   const imgsCont = document.getElementById("dogsImgs-Container");
   const startTripButton = document.getElementById("startTripButton");
   const deleteDogButton = document.getElementById("deleteDogButton");
