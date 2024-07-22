@@ -168,6 +168,36 @@ select {
   align-items: center;
 }
 
+#notifications-Container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  display: none;
+}
+
+#bodyNoti {
+  height: 300px;
+}
+
+#hpDogDetailsCont{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  display: none;
+}
+
+#bodyMap {
+  height: 300px;
+  width: 400px;
+}
+
+#lastActivity {
+  height: 300px;
+  justify-content: left;
+  width: 400px;
+}
+
 .listTrips-Container {
   width: 90%;
   height: 100%;
@@ -544,7 +574,7 @@ main {
   background-color: #ffffff;
 }
 
-#title {
+.title {
   width: 224px;
   height: 70px;
   font-weight: 400;
@@ -554,6 +584,17 @@ main {
   text-align: center;
   margin: 0;
   margin-left: 150px;
+}
+
+.subTitlesHp {
+  margin: 0;
+  font-size: 35px;
+}
+
+.pLastActivity {
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 26px;
 }
 
 #dogsImgs-Container {
