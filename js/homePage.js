@@ -1,4 +1,4 @@
-let userId = 2;
+let userId = 1;
 
 window.onload = () => {
   getTypeUser(userId);
