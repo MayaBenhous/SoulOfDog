@@ -61,7 +61,7 @@
       <main>
         <section class="titleAndIcons-container">
           <h1 class="title">My Dogs</h1>
-          <span class="icon icon-plus"></span>
+          <button type="button" class="icon icon-plus" data-bs-toggle="modal" data-bs-target="#addDogModal"></button>
           <span class="icon icon-sort"></span>
           <span class="icon icon-search"></span>
         </section>
@@ -91,6 +91,28 @@
             </div>
           </section>
         </section>
+        <div class="modal fade" id="addDogModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Connect to a dog</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="chipIdForm">
+                  <div class="mb-3">
+                    <label for="chipIdInput" class="form-label">Chip ID</label>
+                    <input type="text" class="form-control" id="chipIdInput" required>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="askPermissionButton">Ask for permission</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   </body>
