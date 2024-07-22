@@ -2,7 +2,10 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
   const groupTripId = urlParams.get("groupTripId");
+  getTripData(tripId);
+};
 
+function startWithoutServer() {
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
@@ -18,7 +21,20 @@ window.onload = () => {
     }
     deleteObject(groupTripId);
   });
-};
+}
+
+function getTripData(tripId) {
+  fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)
+  .then((response) => response.json())
+  .then((dataTrip) => initSingleTrip(dataTrip));
+}
+
+function initGroupTripExist(dataTrip) {
+  let dataDogs = dataTrip.trip.dogs[0];
+  console.log(dataDogs);
+  console.log(dataTrip);
+  existGroupTrip(dataTrip.trip, dataDogs);
+}
 
 let numDogs;
 
@@ -205,13 +221,13 @@ function createDogCard(dog, type, trip, countDog) {
   cardBody.classList.add("card-body");
   cardBody.classList.add("cardGroup_trip");
   handleSecNotes(cardBody);
-  handleSecNeeds(dog, type, trip, cardBody, countDog);
-  handleSecNameImg(dog, trip, cardBody);
+  handleSecNeeds(type, trip, cardBody, countDog);
+  handleSecNameImg(dog, cardBody);
   cardDog.appendChild(cardBody);
   secDogsGroup.appendChild(cardDog);
 }
 
-function handleSecNameImg(dog, trip, cardBody) {
+function handleSecNameImg(dog, cardBody) {
   const sectImgName = document.createElement("section");
   sectImgName.classList.add("secImgNameG_trip");
   const imgDog = document.createElement("img");
@@ -227,7 +243,7 @@ function handleSecNameImg(dog, trip, cardBody) {
   cardBody.appendChild(sectImgName);
 }
 
-function handleSecPeeSelect(dog, trip, type, sectNeeds, countDog) {
+function handleSecPeeSelect(trip, type, sectNeeds, countDog) {
   const sectPee = document.createElement("section");
   sectPee.classList.add("sectPeeG_trip");
   const needsPeeCheckbox = document.createElement("input");
@@ -256,7 +272,7 @@ function handleSecPeeSelect(dog, trip, type, sectNeeds, countDog) {
   sectNeeds.appendChild(sectPee);
 }
 
-function handleSecPoopSelect(dog, type, trip, sectNeeds, countDog) {
+function handleSecPoopSelect(type, trip, sectNeeds, countDog) {
   const sectPoop = document.createElement("section");
   sectPoop.classList.add("sectPoop");
   const needsPoopCheckbox = document.createElement("input");
@@ -279,11 +295,11 @@ function handleSecPoopSelect(dog, type, trip, sectNeeds, countDog) {
   sectNeeds.appendChild(sectPoop);
 }
 
-function handleSecNeeds(dog, type, trip, cardBody, countDog) {
+function handleSecNeeds(type, trip, cardBody, countDog) {
   const sectNeeds = document.createElement("section");
   sectNeeds.classList.add("sectNeedsG_trip");
-  handleSecPeeSelect(dog, trip, type, sectNeeds, countDog);
-  handleSecPoopSelect(dog, type, trip, sectNeeds, countDog);
+  handleSecPeeSelect(trip, type, sectNeeds, countDog);
+  handleSecPoopSelect(type, trip, sectNeeds, countDog);
   cardBody.appendChild(sectNeeds);
 }
 
