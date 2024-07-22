@@ -543,7 +543,10 @@ main {
 }
 
 .icon-plus {
+  border-width: 0;
   background-image: url("../images/icons/plus.svg");
+  background-color: #ffffff;
+  display: none;
 }
 
 .icon-search {

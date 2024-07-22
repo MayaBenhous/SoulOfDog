@@ -2,6 +2,7 @@ let userId = 2;
 
 window.onload = () => {
   getTypeUser(userId);
+  handleConnectDWtoDog();
 };
 
 function getTypeUser(userId) {
@@ -39,7 +40,7 @@ function getDataDogsOwner(userId) {
   .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
 
-function putconnectDWtoDog(dogId) { // connect it to the add dog function that i will do
+function putconnectDWtoDog(userId,dogId) { // connect it to the add dog function that i will do
   fetch(`https://soulofdog-server.onrender.com/api/dogs/connectDWToDog/${userId}/${dogId}`, {
     method: "PUT", 
   })
@@ -70,10 +71,7 @@ function createWrapperDataDog(dog,imgWrapper) {
 }
 
 function initDogWalkerHomePage(dataDogs) {
-  // const notiCont = document.getElementById("notifications-Container");
-  // notiCont.style.display = "none";
-  // const titleDogs = document.getElementById("title");
-  // titleDogs.textContent = dataDogs.title;
+  document.getElementById("addDog").style.display = "block";
   const imgsCont = document.getElementById("dogsImgs-Container");
   const startTripButton = document.getElementById("startTripButton");
   const deleteDogButton = document.getElementById("deleteDogButton");
@@ -126,7 +124,7 @@ function initDogWalkerHomePage(dataDogs) {
     }
 }
 
-function initOwnerHomePage(dataDogs) { // fix!!
+function initOwnerHomePage(dataDogs) {
   const imgsCont = document.getElementById("dogsImgs-Container");
   for (const dog of dataDogs.dogs) {
     const imgWrapper = document.createElement("div");
@@ -154,6 +152,137 @@ function initOwnerHomePage(dataDogs) { // fix!!
       lastActBody.appendChild(sectNeeds);
   })
   .catch((error) => console.error('Error fetching last trip data:', error));
+}
+
+function handleConnectDWtoDog() {
+  const modalElement = document.getElementById('addDogModal');
+  const modal = new bootstrap.Modal(modalElement);
+  const askPermissionButton = document.getElementById("askPermissionButton");
+  askPermissionButton.addEventListener('click', () => {
+    const chipId = document.getElementById("chipIdInput").value;
+    modal.hide();
+    if (chipId) {
+      fetch (`https://soulofdog-server.onrender.com/api/dogs/getUserIdByChipId/${chipId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.userId) {
+          sendConnectionRequest(data.userId, chipId); // stopped here
+        } else if (data.error) {
+          console.error('Error:', data.error);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+    }
+  })
+}
+
+function sendConnectionRequest(ownerId, chipId) {
+  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ownerId: ownerId,
+      chipId: chipId
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Connection request sent successfully.');
+    } else {
+      console.error('Failed to send connection request:', data.error);
+      alert(`Error: ${data.error}`);
+    }
+  })
+  .catch((error) => {
+    console.error('Error sending connection request:', error);
+  });
+}
+
+function addOwnerNotification(ownerId, chipId) {
+  // console.log(ownerId);
+  // console.log(userId);
+  // if (ownerId === userId) {
+    // console.log(ownerId);
+    const notificationsCont = document.getElementById("notifications-Container");
+    const notification = document.createElement("div");
+    notification.classList.add("notification");
+    const message = document.createElement("p");
+    message.textContent = `A connection request has been made for chip ID: ${chipId}.`;
+    notification.appendChild(message);
+  
+    const confirmButton = document.createElement("button");
+    confirmButton.textContent = "Confirm";
+    confirmButton.classList.add("btn", "btn-success");
+    confirmButton.addEventListener("click", () => confirmConnection(ownerId, chipId, notification));
+    notification.appendChild(confirmButton);
+  
+    const denyButton = document.createElement("button");
+    denyButton.textContent = "Deny";
+    denyButton.classList.add("btn", "btn-danger");
+    denyButton.addEventListener("click", () => denyConnection(ownerId, chipId, notification));
+    notification.appendChild(denyButton);
+  
+    notificationsCont.appendChild(notification);
+  
+}
+
+function confirmConnection(ownerId, chipId, notification) {
+  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/confirm', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ownerId: ownerId,
+      chipId: chipId
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Connection confirmed successfully.');
+      notification.remove();
+    } else {
+      console.error('Failed to confirm connection:', data.error);
+      alert(`Error: ${data.error}`);
+    }
+  })
+  .catch((error) => {
+    console.error('Error confirming connection:', error);
+  });
+
+  putconnectDWtoDog();
+}
+
+function denyConnection(ownerId, chipId, notification) {
+  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/deny', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ownerId: ownerId,
+      chipId: chipId
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Connection denied successfully.');
+      notification.remove();
+    } else {
+      console.error('Failed to deny connection:', data.error);
+      alert(`Error: ${data.error}`);
+    }
+  })
+  .catch((error) => {
+    console.error('Error denying connection:', error);
+  });
 }
 
 function handleSecPeeSelect(type, sectNeeds) {
