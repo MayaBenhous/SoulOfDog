@@ -1,4 +1,4 @@
-let userId = 1;
+let userId = 2;
 
 window.onload = () => {
   getTypeUser(userId);
@@ -47,14 +47,6 @@ function getDataDogsOwner(userId) {
   .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
 
-function putUnconnectDWtoDog(dogId) { // do
-  fetch(`https://soulofdog-server.onrender.com/api/dogs/unconnectDWToDog/${dogId}`, {
-    method: "PUT", 
-  })
-  .then((response) => response.json())
-  .then((userId) => getDataDogsOwner(userId));
-}
-
 function createWrapperDataDog(dog,imgWrapper) {
     const img = document.createElement("img");
     img.classList.add("imgHomePage");
@@ -89,10 +81,12 @@ function initDogWalkerHomePage(dataDogs) {
         }
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
+
       startTripButton.addEventListener("click", () => {
         const selectedIds = Array.from(selectedDogs).join(",");
         window.location.href = `groupTrip.html?selectedDogs=${selectedIds}`;
       });
+
       deleteDogButton.addEventListener("click", () => {
         let askOnce = true;
         let userConfirm = false;
@@ -141,7 +135,7 @@ function initOwnerHomePage(dataDogs) {
   getDataLastTrip(dataDogs.dogs[0].dogId)
     .then((dataTrip) => {
       const lastActivity = document.createElement("p");
-      lastActivity.classList.add("pLastActivity");
+      lastActivity.classList.add("message");
       lastActivity.textContent = `Last trip was at ${dataTrip.lastTrip.time}`;
       const sectNeeds = document.createElement("section");
       sectNeeds.classList.add("sectNeedsG_trip");
@@ -201,18 +195,18 @@ function sendConnectionRequest(ownerId, chipId) {
 }
 
 function addOwnerNotification(dataNoti) {
-  console.log(dataNoti.length);
   const notificationsCont = document.getElementById("bodyNoti");
   for (let i = 0; i < dataNoti.length; i++) {
     const notification = document.createElement("div");
     notification.classList.add("notification");
     const message = document.createElement("p");
-    message.textContent = `${dataNoti[i].senderName} the ${dataNoti[i].senderType} want to ${dataNoti[i].notificationType} to ${dataNoti[i].dogName}`;
+    message.classList.add("message");
+    message.textContent = `${dataNoti[i].senderName} the ${dataNoti[i].senderType} wants to ${dataNoti[i].notificationType} with ${dataNoti[i].dogName}`;
     notification.appendChild(message);
 
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirm";
-    confirmButton.classList.add("btn", "btn-success");
+    confirmButton.classList.add("btn", "btn-success","confirmButton");
     confirmButton.addEventListener("click", () => {
       notification.remove();
       putConnectDWtoDog(dataNoti[i].senderId, dataNoti[i].dogId, dataNoti[i].notificationId);
@@ -221,10 +215,10 @@ function addOwnerNotification(dataNoti) {
   
     const denyButton = document.createElement("button");
     denyButton.textContent = "Deny";
-    denyButton.classList.add("btn", "btn-danger");
+    denyButton.classList.add("btn", "btn-danger", "confirmButton");
     denyButton.addEventListener("click", () => {
       notification.remove();
-      deleteNotification(notiId);
+      deleteNotification(dataNoti[i].notificationId);
     });
 
     notification.appendChild(denyButton);
@@ -243,10 +237,28 @@ function putConnectDWtoDog(userId,dogId,notiId) {
   .then((response) => response.json())
   .then(data => {
     if (data.success) {
-      console.log(data.success);
       deleteNotification(notiId);
     } else {
       console.error('Failed to connect dog to dog walker connection');
+    }
+  })
+  .catch((error) => {
+    console.error('Error confirming connection:', error);
+  });
+}
+
+function putUnconnectDWtoDog(dogId) { // do
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/unconnectDWToDog/${dogId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(),
+  })
+  .then((response) => response.json())
+  .then(data => {
+    if (!data.success) {
+      console.error('Failed to unconnect dog to dog walker connection');
     }
   })
   .catch((error) => {

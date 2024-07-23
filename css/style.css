@@ -175,6 +175,18 @@ select {
   display: none;
 }
 
+.notification {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+
+.confirmButton {
+  height: 40px;
+  margin-right: 20px;
+}
+
 #bodyNoti {
   height: 300px;
 }
@@ -594,10 +606,11 @@ main {
   font-size: 35px;
 }
 
-.pLastActivity {
+.message{
   margin-left: 20px;
   margin-top: 15px;
   font-size: 26px;
+  margin-right: 20px;
 }
 
 #dogsImgs-Container {
