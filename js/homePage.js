@@ -87,8 +87,8 @@ function initDogWalkerHomePage(dataDogs) {
         const selectedIds = Array.from(selectedDogs).join(",");
         console.log(selectedIds);
         // window.location.href = `groupTrip.html?groupTripId=null&selectedDogs=null`;     
-        window.location.href = `groupTrip.html?selectedDogsIds=${selectedIds}`;
-        // window.location.href = `groupTrip.html?groupTripId=null&selectedDogs=${selectedIds}`;
+        // window.location.href = `groupTrip.html?selectedDogsIds=${selectedIds}`;
+        window.location.href = `groupTrip.html?groupTripId=null&selectedDogsIds=${selectedIds}`;
       });
 
       deleteDogButton.addEventListener("click", () => {

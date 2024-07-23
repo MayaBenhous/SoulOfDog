@@ -144,6 +144,7 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
     let countDogs = trip.dogsId.length;
     let selectedDogId = trip.dogsId[0];
     let userType = trip.userType;
+    console.log(trip.tripId);
     if(countDogs === 1)
     {
         window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
@@ -151,8 +152,7 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
     else {
         console.log(selectedDogId);
         console.log("group!!");
-        // window.location.href = `groupTrip.html?groupTripId=${trip.tripId}`;     
-      window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogs=null`;     
+      window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogsIds=null`;     
     }
   });
 }

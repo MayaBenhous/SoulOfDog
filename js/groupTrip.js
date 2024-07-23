@@ -1,9 +1,11 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const selectedDogs = urlParams.get("selectedDogs");
+  const selectedDogs = urlParams.get("selectedDogsIds");
+  console.log(selectedDogs);
   const groupTripId = urlParams.get("groupTripId");
   if(selectedDogs === "null")
   {
+    console.log(groupTripId); 
     getGroupTripExist(groupTripId);
   }
   else if(groupTripId === "null"){
@@ -524,9 +526,9 @@ function finishTrip()
     const total = document.getElementsByClassName("totalValue");
     total[0].textContent = totalTime(hourStart[0], hourEnd[0]);
     const distance = document.getElementsByClassName("disValue");
-    let randomNumber = Math.random().toFixed(2);
-    distance[0].textContent = randomNumber + "km";
+    distance[0].textContent = random(0.5, 7.0) + "km";
     newTrip.distance = distance[0].textContent;
+    console.log(newTrip.distance);
     checkBoxNeeds();
     textInNotes();
     console.log(newTrip);
@@ -537,7 +539,7 @@ function finishTrip()
   });
 }
 
-function deleteObject(selectedTripId) //not working now
+function deleteObject(selectedTripId)
 {
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
