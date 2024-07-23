@@ -1,5 +1,3 @@
-// const { response } = require("express");
-
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogs");
@@ -13,6 +11,8 @@ window.onload = () => {
     getNewGroupTrip(selectedDogs);
   }
 };
+
+let userId = 2; 
 
 // function startWithoutServer() {
 //   Promise.all([
@@ -49,6 +49,11 @@ function getDataDog(dogId) {
   .then((response) => response.json());
 }
 
+function getUserName(userId) {
+  return fetch(`https://soulofdog-server.onrender.com/api/users/getUserName/${userId}`)
+  .then((response) => response.json());
+}
+
 function listFromSelected(input_str) {
   let items = input_str.split(',').map(item => item.trim());
   items = items.filter(item => item !== '');
@@ -69,9 +74,11 @@ function getNewGroupTrip(selectedDogs) {
       dataDogs.push(dataDog);
     }));
   }
+  getUser
   Promise.all(promises).then(() => {
     console.log(dataDogs); 
     newGroupTrip(listDogsId, dataDogs);
+    finishTrip();
   });
 }
 
@@ -90,6 +97,47 @@ let tripLp = {
   needsPoop: [],
   notes:[]
 };
+
+let newTrip = {
+  implementName: "",
+  tripType: "",
+  date: "",
+  startTime: "",
+  endTime: "",
+  distance: 0,
+  dogs: []
+};
+
+let dogInTrip = {
+      dogId:0,
+      heartbeat:0,
+      steps:0,
+      avgSpeed:0,
+      needPee: 0,
+      needPoop:0,
+      notes:null
+};
+
+  //   {
+  //     dogId:0,
+  //     heartbeat:0,
+  //     steps:0,
+  //     avgSpeed:0,
+  //     needPee: 0,
+  //     needPoop:0,
+  //     notes:null
+  //   },
+  //   {
+  //     dogId:0,
+  //     heartbeat:0,
+  //     steps:0,
+  //     avgSpeed:0,
+  //     needPee: 0,
+  //     needPoop:0,
+  //     notes:null
+  //   }
+  // ]
+// };
 
 // function findTrip(dataTrips, tripId) {
 //   for (const trip of dataTrips.trips) {
@@ -125,17 +173,38 @@ function newGroupTrip(selectedDogs, dataDogs) {
   const deleteButton = document.getElementById("deleteDogButton");
   deleteButton.style.display = "none";
   numDogs = selectedDogs.length;
-  for (let i = 0; i < numDogs; i++) {
-    tripLp.needsPee[i] = false;
-    tripLp.needsPoop[i] = false;
-  }
-  tripLp.dogsId = selectedDogs;
   for (let i = 0; i< numDogs; i++) {
-    let dog = dataDogs[i].dog[0];
-    console.log(dog);
+    let rowDog = dataDogs[i].dog[0];
+    let dog = newDogInTrip(rowDog);
+    // console.log(dog);
+    newTrip.dogs.push(dog);
     createDogCard(dog, 0, null);
   }
+  console.log(newTrip);
+  for (let i = 0; i < numDogs; i++) {
+    // console.log(newTrip.dogs[i]);
+    newTrip.dogs[i].needPee = false;
+    newTrip.dogs[i].needPoop = false;
+  }
   createDeatils(null);
+}
+
+function newDogInTrip(rowDog) {
+  return dogInTrip = {
+    dogId:rowDog.dogId,
+    dogName:rowDog.dogName,
+    img:rowDog.img,
+    heartbeat:random(80,140),
+    steps:random(60,180),
+    avgSpeed:random(0.5, 3.0).toFixed(1),
+    needPee: false,
+    needPoop:false,
+    notes:null
+  };
+}
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function createDateTrip(trip) {
@@ -160,8 +229,8 @@ function checkBoxNeeds() {
   for (let i = 0; i < numDogs; i++) {
     const checkboxPee = document.getElementsByClassName("needsPeeCheckbox")[i];
     const checkboxPoop = document.getElementsByClassName("needsPoopCheckbox")[i];
-    tripLp.needsPee[i] = checkboxPee.checked;
-    tripLp.needsPoop[i] = checkboxPoop.checked;
+    newTrip.dogs[i].needPee = checkboxPee.checked;
+    newTrip.dogs[i].needPoop = checkboxPoop.checked;
   }
 }
 
@@ -442,22 +511,23 @@ function finishTrip() //not working now
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
     finishButton.style.display = "none";
-    const min = 8;
-    const max = 100;
-    tripLp.id = Math.floor(Math.random() * (max - min + 1)) + min;
+    // const min = 8;
+    // const max = 100;
+    // tripLp.id = random(min, max);
     const hourStart = document.getElementsByClassName("hourStart");
-    tripLp.startTime = hourStart[0].textContent;
+    newTrip.startTime = hourStart[0].textContent;
     const hourEnd = document.getElementsByClassName("hourEnd");
     hourEnd[0].textContent = getCurrentTime();
-    tripLp.endTime = hourEnd[0].textContent;
+    newTrip.endTime = hourEnd[0].textContent;
     const total = document.getElementsByClassName("totalValue");
     total[0].textContent = totalTime(hourStart[0], hourEnd[0]);
     const distance = document.getElementsByClassName("disValue");
     let randomNumber = Math.random().toFixed(2);
     distance[0].textContent = randomNumber + "km";
-    tripLp.distance = distance[0].textContent;
+    newTrip.distance = distance[0].textContent;
     checkBoxNeeds();
     textInNotes();
+
     console.log(`POST {domain}/trips/${tripLp.id}`);
     console.log("Request Body:", tripLp);
   });
