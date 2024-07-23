@@ -3,6 +3,7 @@ let userId = 1;
 window.onload = () => {
   getTypeUser(userId);
   handleConnectDWtoDog();
+  getDataNotifications(userId);
 };
 
 function getTypeUser(userId) {
@@ -29,6 +30,12 @@ function getDataDogsDW(userId) {
   .then((dataDogs) => initDogWalkerHomePage(dataDogs));
 }
 
+function getDataNotifications(userId) {
+  fetch(`https://soulofdog-server.onrender.com/api/users/getNotifications/${userId}`)
+  .then((response) => response.json())
+  .then((dataNoti) => addOwnerNotification(dataNoti));
+}
+
 function getDataLastTrip(dogId) {
   return fetch(`https://soulofdog-server.onrender.com/api/trips/getLastTrip/${dogId}`)
   .then((response) => response.json())
@@ -40,15 +47,7 @@ function getDataDogsOwner(userId) {
   .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
 
-function putconnectDWtoDog(userId,dogId) { // connect it to the add dog function that i will do
-  fetch(`https://soulofdog-server.onrender.com/api/dogs/connectDWToDog/${userId}/${dogId}`, {
-    method: "PUT", 
-  })
-  .then((response) => response.json())
-  .then((userId) => getDataDogsOwner(userId));
-}
-
-function putUnconnectDWtoDog(dogId) {
+function putUnconnectDWtoDog(dogId) { // do
   fetch(`https://soulofdog-server.onrender.com/api/dogs/unconnectDWToDog/${dogId}`, {
     method: "PUT", 
   })
@@ -166,7 +165,7 @@ function handleConnectDWtoDog() {
       .then((response) => response.json())
       .then((data) => {
         if (data.userId) {
-          sendConnectionRequest(data.userId, chipId); // stopped here
+          sendConnectionRequest(data.userId, chipId);
         } else if (data.error) {
           console.error('Error:', data.error);
         }
@@ -179,23 +178,21 @@ function handleConnectDWtoDog() {
 }
 
 function sendConnectionRequest(ownerId, chipId) {
-  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/add', {
+  fetch(`https://soulofdog-server.onrender.com/api/users/postNotification/${ownerId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      ownerId: ownerId,
+      notificationType: 'connect',
+      senderId: userId,
       chipId: chipId
     })
   })
   .then(response => response.json())
   .then(data => {
-    if (data.success) {
-      alert('Connection request sent successfully.');
-    } else {
-      console.error('Failed to send connection request:', data.error);
-      alert(`Error: ${data.error}`);
+    if (data.error) {
+      console.error('Failed to send connection request');
     }
   })
   .catch((error) => {
@@ -203,86 +200,67 @@ function sendConnectionRequest(ownerId, chipId) {
   });
 }
 
-function addOwnerNotification(ownerId, chipId) {
-  // console.log(ownerId);
-  // console.log(userId);
-  // if (ownerId === userId) {
-    // console.log(ownerId);
-    const notificationsCont = document.getElementById("notifications-Container");
+function addOwnerNotification(dataNoti) {
+  console.log(dataNoti.length);
+  const notificationsCont = document.getElementById("bodyNoti");
+  for (let i = 0; i < dataNoti.length; i++) {
     const notification = document.createElement("div");
     notification.classList.add("notification");
     const message = document.createElement("p");
-    message.textContent = `A connection request has been made for chip ID: ${chipId}.`;
+    message.textContent = `${dataNoti[i].senderName} the ${dataNoti[i].senderType} want to ${dataNoti[i].notificationType} to ${dataNoti[i].dogName}`;
     notification.appendChild(message);
-  
+
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirm";
     confirmButton.classList.add("btn", "btn-success");
-    confirmButton.addEventListener("click", () => confirmConnection(ownerId, chipId, notification));
+    confirmButton.addEventListener("click", () => {
+      notification.remove();
+      putConnectDWtoDog(dataNoti[i].senderId, dataNoti[i].dogId, dataNoti[i].notificationId);
+    });
     notification.appendChild(confirmButton);
   
     const denyButton = document.createElement("button");
     denyButton.textContent = "Deny";
     denyButton.classList.add("btn", "btn-danger");
-    denyButton.addEventListener("click", () => denyConnection(ownerId, chipId, notification));
+    denyButton.addEventListener("click", () => {
+      notification.remove();
+      deleteNotification(notiId);
+    });
+
     notification.appendChild(denyButton);
-  
     notificationsCont.appendChild(notification);
-  
+  }
 }
 
-function confirmConnection(ownerId, chipId, notification) {
-  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/confirm', {
-    method: 'POST',
+function putConnectDWtoDog(userId,dogId,notiId) {
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/connectDWToDog/${userId}/${dogId}`, {
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      ownerId: ownerId,
-      chipId: chipId
-    })
+    body: JSON.stringify(),
   })
-  .then(response => response.json())
+  .then((response) => response.json())
   .then(data => {
     if (data.success) {
-      alert('Connection confirmed successfully.');
-      notification.remove();
+      console.log(data.success);
+      deleteNotification(notiId);
     } else {
-      console.error('Failed to confirm connection:', data.error);
-      alert(`Error: ${data.error}`);
+      console.error('Failed to connect dog to dog walker connection');
     }
   })
   .catch((error) => {
     console.error('Error confirming connection:', error);
   });
-
-  putconnectDWtoDog();
 }
 
-function denyConnection(ownerId, chipId, notification) {
-  fetch('https://soulofdog-server.onrender.com/api/connectionRequests/deny', {
-    method: 'POST',
+function deleteNotification(notificationIdId) {
+  fetch(`https://soulofdog-server.onrender.com/api/users/deleteNotification/${notificationIdId}`, {
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      ownerId: ownerId,
-      chipId: chipId
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      alert('Connection denied successfully.');
-      notification.remove();
-    } else {
-      console.error('Failed to deny connection:', data.error);
-      alert(`Error: ${data.error}`);
-    }
-  })
-  .catch((error) => {
-    console.error('Error denying connection:', error);
-  });
+  }).then((response) => response.json());
 }
 
 function handleSecPeeSelect(type, sectNeeds) {
