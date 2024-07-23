@@ -1,9 +1,9 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const selectedTripId = urlParams.get("selectedTripId");
+  // const selectedTripId = urlParams.get("selectedTripId");
 
   startWithServer(userId);
-  createButtonDelete();
+  createButtonDelete(); //not work
 };
 
 function startWitHhoutServer(){
