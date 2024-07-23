@@ -40,7 +40,7 @@ function getGroupTripExist(groupTripId) {
 
 function initGroupTripExist(dataTrip) {
   let dataDogs = dataTrip.trip.dogs[0];
-  createDateTrip(dataTrip.trip);
+  createDateTrip(dataTrip.trip, null);
   existGroupTrip(dataTrip.trip, dataDogs);
 }
 
@@ -66,6 +66,7 @@ function getNewGroupTrip(selectedDogs) {
   console.log(countDogs);
   let dataDogs = [];
   let promises = [];
+  let implementUserName;
   for (let i = 0; i < countDogs; i++) {
     let dogId = listDogsId[i];
     console.log(dogId);
@@ -74,30 +75,57 @@ function getNewGroupTrip(selectedDogs) {
       dataDogs.push(dataDog);
     }));
   }
-  getUser
+  promises.push(getUserName(userId).then((userName) => {
+    implementUserName = userName.data;
+    console.log(implementUserName);
+  }));
   Promise.all(promises).then(() => {
     console.log(dataDogs); 
-    newGroupTrip(listDogsId, dataDogs);
+    newGroupTrip(implementUserName, listDogsId, dataDogs);
+    createDateTrip(null, implementUserName);
     finishTrip();
   });
 }
 
+function createNewTrip(trip) {
+  let tripData = {
+    implementName: trip.implementName,
+    tripType: trip.tripType,
+    date: trip.date,
+    startTime: trip.startTime,
+    endTime: trip.endTime,
+    distance: trip.distance,
+    tripObjData: trip.dogs.map(dog => ({
+      dogId: dog.dogId,
+      heartbeat: dog.heartbeat,
+      steps: dog.steps,
+      avgSpeed: dog.avgSpeed,
+      needPee: dog.needPee,
+      needPoop: dog.needPoop,
+      notes: dog.notes
+    }))
+  };
+  fetch(`https://soulofdog-server.onrender.com/api/trips/addTrip`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tripData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Failed to create new trip:', data.error);
+    } else {
+      console.log('Trip created successfully:', data);
+    }
+  })
+  .catch((error) => {
+    console.error('Error creating new trip:', error);
+  });
+}
+
 let numDogs;
-
-let tripLp = {
-  id: 0,
-  type: "Group",
-  implement: "Idan",
-  dogsId: [],
-  date: "",
-  startTime: "",
-  endTime: "",
-  distance: 0,
-  needsPee: [],
-  needsPoop: [],
-  notes:[]
-};
-
 let newTrip = {
   implementName: "",
   tripType: "",
@@ -107,7 +135,6 @@ let newTrip = {
   distance: 0,
   dogs: []
 };
-
 let dogInTrip = {
       dogId:0,
       heartbeat:0,
@@ -117,45 +144,6 @@ let dogInTrip = {
       needPoop:0,
       notes:null
 };
-
-  //   {
-  //     dogId:0,
-  //     heartbeat:0,
-  //     steps:0,
-  //     avgSpeed:0,
-  //     needPee: 0,
-  //     needPoop:0,
-  //     notes:null
-  //   },
-  //   {
-  //     dogId:0,
-  //     heartbeat:0,
-  //     steps:0,
-  //     avgSpeed:0,
-  //     needPee: 0,
-  //     needPoop:0,
-  //     notes:null
-  //   }
-  // ]
-// };
-
-// function findTrip(dataTrips, tripId) {
-//   for (const trip of dataTrips.trips) {
-//     if (trip.id == tripId) {
-//       return trip;
-//     }
-//   }
-//   return null;
-// }
-
-// function findDog(dataDogs, dogId) {
-//   for (const dog of dataDogs.dogs) {
-//     if (dog.id === dogId) {
-//       return dog;
-//     }
-//   }
-//   return null;
-// }
 
 function existGroupTrip(trip) {
   const finishButton = document.getElementById("finishTripButton");
@@ -169,24 +157,31 @@ function existGroupTrip(trip) {
   createDeatils(trip);
 }
 
-function newGroupTrip(selectedDogs, dataDogs) {
+function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
+  newTrip.implementName = implementUserName;
   const deleteButton = document.getElementById("deleteDogButton");
   deleteButton.style.display = "none";
   numDogs = selectedDogs.length;
+  if(numDogs == 1)
+  {
+    newTrip.tripType = "Single";
+  }
+  else if(numDogs > 0){
+    newTrip.tripType = "Group";
+  }
   for (let i = 0; i< numDogs; i++) {
     let rowDog = dataDogs[i].dog[0];
     let dog = newDogInTrip(rowDog);
-    // console.log(dog);
     newTrip.dogs.push(dog);
     createDogCard(dog, 0, null);
   }
   console.log(newTrip);
   for (let i = 0; i < numDogs; i++) {
-    // console.log(newTrip.dogs[i]);
     newTrip.dogs[i].needPee = false;
     newTrip.dogs[i].needPoop = false;
   }
   createDeatils(null);
+  console.log(newTrip);
 }
 
 function newDogInTrip(rowDog) {
@@ -207,21 +202,22 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function createDateTrip(trip) {
+function createDateTrip(trip, name) {
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   let formattedDate;
   if (trip) {
-    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By Idan</span>`;
+    console.log(trip);
+    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">${trip.implementName}</span>`;
   } else {
-    formattedDate = setCurrentDate();
-    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By Idan</span>`;
+    let formattedDate = setCurrentDate();
+    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">${name}</span>`;
   }
   const ownerTripSpan = document.querySelector(".ownerTrip");
   const editIcon = document.createElement("span");
   editIcon.classList.add("editIconOneTrip");
   ownerTripSpan.appendChild(editIcon);
-  tripLp.date = formattedDate;
+  newTrip.date = setFormatDate();
   tripTitles.appendChild(tripDate);
 }
 
@@ -237,7 +233,7 @@ function checkBoxNeeds() {
 function textInNotes() {
   for (let i = 0; i < numDogs; i++) {
     const textNote = document.getElementsByClassName("textarea-Notes")[i];
-    tripLp.notes[i] = textNote.value;
+    newTrip.dogs[i].notes = textNote.value;
   }
 }
 
@@ -471,6 +467,15 @@ function setCurrentDate() {
   return formattedDate;
 }
 
+function setFormatDate() {
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+}
+
 function calculateTripDuration(hourStart, hourEnd) {
   const hourStartNum = hourStart.textContent;
   const hourEndNum = hourEnd.textContent;
@@ -506,14 +511,11 @@ function totalTime(hourStart, hourEnd) {
   return totalString;
 }
 
-function finishTrip() //not working now
+function finishTrip()
 {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
     finishButton.style.display = "none";
-    // const min = 8;
-    // const max = 100;
-    // tripLp.id = random(min, max);
     const hourStart = document.getElementsByClassName("hourStart");
     newTrip.startTime = hourStart[0].textContent;
     const hourEnd = document.getElementsByClassName("hourEnd");
@@ -527,9 +529,11 @@ function finishTrip() //not working now
     newTrip.distance = distance[0].textContent;
     checkBoxNeeds();
     textInNotes();
-
-    console.log(`POST {domain}/trips/${tripLp.id}`);
-    console.log("Request Body:", tripLp);
+    console.log(newTrip);
+    createNewTrip(newTrip);
+    // console.log(`POST {domain}/trips/${newTrip.id}`);
+    console.log(`POST {domain}/trips/tripId`);
+    console.log("Request Body:", newTrip);
   });
 }
 
