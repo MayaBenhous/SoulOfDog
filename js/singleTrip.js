@@ -1,9 +1,9 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
-  // const dogId = urlParams.get("selectedDogId");
-  
-  getTripData(selectedTripId);
+  const dogId = urlParams.get("selectedDogId");
+
+  getTripData(selectedTripId, dogId);
   // startWithoutServer();
 };
 iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
@@ -23,23 +23,31 @@ function startWithoutServer(){
     });
 }
 
-function getTripData(tripId) {
+function getTripData(tripId, dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${tripId}`)
   .then((response) => response.json())
-  .then((dataTrip) => initSingleTrip(dataTrip));
+  .then((dataTrip) => initSingleTrip(dataTrip, dogId));
 }
 
-function initSingleTrip(dataTrip) {
-  let dataDog = dataTrip.trip.dogs[0];
-  initTrip(dataTrip.trip, dataDog);
+function initSingleTrip(dataTrip, dogId) {
+  let dogData = findDog(dataTrip.trip.dogs, dogId);
+  initTrip(dataTrip.trip, dogData);
+}
+
+function findDog(dogs, dogId) {
+  for(let i = 0; i< dogs.length ; i++) {
+    let dog = dogs[i];
+    if (dog.dogId == dogId) {
+      return dog;
+    }
+  }
+  return null;
 }
 
 function initTrip(dataTrip, dataDog) {
   const contTripMainDetails = document.getElementById("TripMainDetails-container");
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
-  console.log(dataDog)
   handleSingleTripTitle(dataDog);
-  console.log(dataTrip);
   handleSingleDetails(dataTrip);
     titlesArr.forEach((title,index) => {
       handleCreateCard(title, index, dataTrip, dataDog);

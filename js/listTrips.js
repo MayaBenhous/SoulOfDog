@@ -21,7 +21,7 @@ function startWitHhoutServer(){
       console.error("Error fetching data:", error);
     });
 }
-let userId = 2; 
+let userId = 1; 
 
 let i = 0;
 let dataList = {
@@ -142,9 +142,9 @@ function handleDeatilsTrip(trip, cardBody) {
 function handleClickTrip(cardTrip, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
     let countDogs = trip.dogsId.length;
-    let selectedDogId = trip.dogsId;
+    let selectedDogId = trip.dogsId[0];
     let userType = trip.userType;
-    if((countDogs === 1) && (userType !== "dogWalker"))
+    if(countDogs === 1)
     {
         window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
     }
