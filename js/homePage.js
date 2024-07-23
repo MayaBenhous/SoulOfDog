@@ -1,4 +1,4 @@
-let userId = 2;
+let userId = 1;
 
 window.onload = () => {
   getTypeUser(userId);
@@ -250,7 +250,7 @@ function putConnectDWtoDog(userId,dogId,notiId) {
   });
 }
 
-function putUnconnectDWtoDog(dogId) { // do
+function putUnconnectDWtoDog(dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/unconnectDWToDog/${dogId}`, {
     method: "PUT",
     headers: {
