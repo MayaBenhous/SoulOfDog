@@ -1,4 +1,4 @@
-let userId = 1;
+let userId = 2;
 
 window.onload = () => {
   getTypeUser(userId);
@@ -90,8 +90,11 @@ function initDogWalkerHomePage(dataDogs) {
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
       startTripButton.addEventListener("click", () => {
-        const selectedIds = Array.from(selectedDogs).join(",");
-        window.location.href = `groupTrip.html?selectedDogs=${selectedIds}`;
+        const selectedDogs = Array.from(selectedDogs).join(",");
+        console.log(selectedDogs);
+        // window.location.href = `groupTrip.html?groupTripId=null&selectedDogs=null`;     
+        window.location.href = `groupTrip.html?selectedDogs=${selectedDogs}`;
+        // window.location.href = `groupTrip.html?groupTripId=null&selectedDogs=${selectedIds}`;
       });
       deleteDogButton.addEventListener("click", () => {
         let askOnce = true;

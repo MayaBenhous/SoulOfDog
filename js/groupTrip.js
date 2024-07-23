@@ -1,4 +1,4 @@
-const { response } = require("express");
+// const { response } = require("express");
 
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -8,8 +8,9 @@ window.onload = () => {
   {
     getGroupTripExist(groupTripId);
   }
-  else {
-    startNewTrip(selectedDogs);
+  else if(groupTripId === "null"){
+    console.log(selectedDogs);
+    getNewGroupTrip(selectedDogs);
   }
 };
 
@@ -44,23 +45,34 @@ function initGroupTripExist(dataTrip) {
 }
 
 function getDataDog(dogId) {
-  return fetch(`https://soulofdog-server.onrender.com/api/dogs/getTripFromList/${dogId}`)
-  .then((response) => response.json())
+  return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDataDogById/${dogId}`)
+  .then((response) => response.json());
+}
+
+function listFromSelected(input_str) {
+  let items = input_str.split(',').map(item => item.trim());
+  items = items.filter(item => item !== '');
+  return items;
 }
 
 function getNewGroupTrip(selectedDogs) {
-  let countDogs = selectedDogs.length;
+  let listDogsId = listFromSelected(selectedDogs);
+  let countDogs = listDogsId.length;
   console.log(countDogs);
-  let dataDogs;
-  let dogId;
-  for (let i = 0; i< countDogs; i++) {
-    dogId = selectedDogs[i];
-    getDataDog(dogId). then((dataDog) => {
+  let dataDogs = [];
+  let promises = [];
+  for (let i = 0; i < countDogs; i++) {
+    let dogId = listDogsId[i];
+    console.log(dogId);
+    promises.push(getDataDog(dogId).then((dataDog) => {
+      console.log(dataDog);
       dataDogs.push(dataDog);
-    })
+    }));
   }
-  console.log(dataDogs.length);
-  newGroupTrip(selectedDogs, dataDogs);
+  Promise.all(promises).then(() => {
+    console.log(dataDogs); 
+    newGroupTrip(listDogsId, dataDogs);
+  });
 }
 
 let numDogs;
@@ -112,21 +124,16 @@ function existGroupTrip(trip) {
 function newGroupTrip(selectedDogs, dataDogs) {
   const deleteButton = document.getElementById("deleteDogButton");
   deleteButton.style.display = "none";
-  const selectedDogsIdsArray = selectedDogs.split(",").map((id) => id.trim());
-  console.log(selectedDogsIdsArray);
-  numDogs = selectedDogsIdsArray.length;
+  numDogs = selectedDogs.length;
   for (let i = 0; i < numDogs; i++) {
-    tripLp.needspee[i] = false;
+    tripLp.needsPee[i] = false;
     tripLp.needsPoop[i] = false;
   }
-  tripLp.dogsId = selectedDogsIdsArray;
-  for (const s in selectedDogsIdsArray) {
-    const selectDog = selectedDogsIdsArray[s];
-    for (const dog of dataDogs.dogs) {
-      if (dog.id == selectDog) {
-        createDogCard(dog, 0, null);
-      }
-    }
+  tripLp.dogsId = selectedDogs;
+  for (let i = 0; i< numDogs; i++) {
+    let dog = dataDogs[i].dog[0];
+    console.log(dog);
+    createDogCard(dog, 0, null);
   }
   createDeatils(null);
 }
