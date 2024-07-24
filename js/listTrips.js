@@ -3,7 +3,7 @@ window.onload = () => {
   // const selectedTripId = urlParams.get("selectedTripId");
 
   startWithServer(userId);
-  createButtonDelete(); //not work
+  createButtonDelete();
 };
 
 function startWitHoutServer(){
@@ -202,13 +202,12 @@ function handleDeleteIcon(cardTrip, trip)
       });
       console.log(`DELETE {domain}/trips/${selectedTripId}`);
       console.log(`DELETE {domain}/trips/${trip.tripId}`);
-      // deleteTrip(selectedTripId);
     }
   });
   cardTrip.appendChild(deleteIcon);
 }
 
-function deleteSelectedTrip(selectedTripId) //not working now
+function deleteSelectedTrip(selectedTripId) //not working now - check what it is
 {
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
@@ -234,7 +233,7 @@ function newTrip(newTripObj, dataDogs) // not working now
   createTrip(trip, contListTrip, dogsList, dataDogs);
 }
 
-function createButtonDelete() //not working now
+function createButtonDelete()
 {
   document.getElementById("selectButton").addEventListener("click", function () {
     const cards = document.querySelectorAll(".card");
