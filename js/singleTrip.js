@@ -1,10 +1,12 @@
 window.onload = () => {
+  const userId = sessionStorage.getItem('userId');
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTripId = urlParams.get("selectedTripId");
   const dogId = urlParams.get("selectedDogId");
 
   getTripData(selectedTripId, dogId);
   deleteObject(selectedTripId);
+  getDataUser(userId);
 };
 iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
 titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];

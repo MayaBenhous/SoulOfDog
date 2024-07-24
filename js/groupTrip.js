@@ -1,4 +1,5 @@
 window.onload = () => {
+  const userId = sessionStorage.getItem('userId');
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogsIds");
   console.log(selectedDogs);
@@ -12,9 +13,8 @@ window.onload = () => {
     console.log(selectedDogs);
     getNewGroupTrip(selectedDogs);
   }
+  getDataUser(userId);
 };
-
-let userId = 2; 
 
 function getGroupTripExist(groupTripId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)

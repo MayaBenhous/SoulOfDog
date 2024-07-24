@@ -1,7 +1,5 @@
-// let userId =1;
-let userId = 2;
-
 window.onload = () => {
+  const userId = sessionStorage.getItem('userId');
   getTypeUser(userId);
   handleConnectDWtoDog();
   getDataNotifications(userId);
@@ -87,8 +85,6 @@ function initDogWalkerHomePage(dataDogs) {
       startTripButton.addEventListener("click", () => {
         const selectedIds = Array.from(selectedDogs).join(",");
         console.log(selectedIds);
-        // window.location.href = `groupTrip.html?groupTripId=null&selectedDogs=null`;     
-        // window.location.href = `groupTrip.html?selectedDogsIds=${selectedIds}`;
         window.location.href = `groupTrip.html?groupTripId=null&selectedDogsIds=${selectedIds}`;
       });
 

@@ -1,11 +1,11 @@
 window.onload = () => {
+  const userId = sessionStorage.getItem('userId');
   const urlParams = new URLSearchParams(window.location.search);
   // const selectedTripId = urlParams.get("selectedTripId");
   startWithServer(userId);
   createButtonDelete();
+  getDataUser(userId);
 };
-
-let userId = 2; 
 
 let i = 0;
 let dataList = {

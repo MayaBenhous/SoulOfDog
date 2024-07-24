@@ -2,12 +2,8 @@ function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch(`https://soulofdog-server.onrender.com/api/users/login`)
-        .then((response) => response.json())
-        .then((dataDogs) => initOwnerHomePage(dataDogs));
-
     fetch(`https://soulofdog-server.onrender.com/api/users/login`, {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -19,7 +15,8 @@ function login() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '/dashboard';
+                sessionStorage.setItem('userId', data.userId);
+                window.location.href = `index.html`;
             } else {
                 document.getElementById('error-message').innerText = data.message;
             }
