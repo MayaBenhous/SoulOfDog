@@ -59,7 +59,6 @@ function getUserName(userId) {
 
 function deleteTrip(tripId) {
   console.log('Deleting trip with ID:', tripId);
-  
   return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
     method: 'DELETE',
     headers: {
@@ -75,11 +74,11 @@ function deleteTrip(tripId) {
   })
   .then(data => {
     console.log('Trip deleted successfully:', data);
-    return data; // Optionally return data if needed
+    return data;
   })
   .catch((error) => {
     console.error('Error deleting trip:', error);
-    throw error; // Rethrow the error to propagate it further
+    throw error; 
   });
 }
 
