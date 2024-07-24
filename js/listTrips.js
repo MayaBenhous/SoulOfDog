@@ -1,27 +1,11 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   // const selectedTripId = urlParams.get("selectedTripId");
-
   startWithServer(userId);
-  createButtonDelete(); //not work
+  createButtonDelete();
 };
 
-function startWitHhoutServer(){
-  Promise.all([
-    fetch("data/Trips.json").then((response) => response.json()),
-    fetch("data/dogs.json").then((response) => response.json()),
-  ])
-    .then(([dataTrips, dataDogs]) => {
-      initTripsList(dataTrips, dataDogs);
-      if (selectedTripId) {
-        deleteSelectedTrip(selectedTripId);
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}
-let userId = 1; 
+let userId = 2; 
 
 let i = 0;
 let dataList = {
@@ -32,6 +16,31 @@ let dataList = {
 function getDogsUser(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
+}
+
+function deleteTrip(tripId) {
+  console.log('Deleting trip with ID:', tripId);
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log('Response status:', response.status);
+    if (!response.ok) {
+      throw new Error('Failed to delete trip');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Trip deleted successfully:', data);
+    return data;
+  })
+  .catch((error) => {
+    console.error('Error deleting trip:', error);
+    throw error; 
+  });
 }
 
 function startWithServer(userId) {
@@ -143,7 +152,7 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
     let countDogs = trip.dogsId.length;
     let selectedDogId = trip.dogsId[0];
-    let userType = trip.userType;
+    console.log(trip.tripId);
     if(countDogs === 1)
     {
         window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
@@ -151,13 +160,12 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
     else {
         console.log(selectedDogId);
         console.log("group!!");
-        // window.location.href = `groupTrip.html?groupTripId=${trip.tripId}`;     
-      window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogs=null`;     
+      window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogsIds=null`;     
     }
   });
 }
 
-function handleDeleteIcon(cardTrip, trip) //not working now
+function handleDeleteIcon(cardTrip, trip) 
 {
   const deleteIcon = document.createElement("span");
   deleteIcon.classList.add("delete-icon");
@@ -166,14 +174,24 @@ function handleDeleteIcon(cardTrip, trip) //not working now
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
-      console.log(`DELETE {domain}/trips/${trip.id}`);
-      cardTrip.remove();
+      console.log(`DELETE {domain}/trips/${trip.tripId}`);
+      deleteTrip(trip.tripId)
+      .then(() => {
+        console.log('Trip deleted successfully!');
+        cardTrip.remove();
+        window.location.href = `tripsList.html`;
+      })
+      .catch((error) => {
+        console.error('Failed to delete trip:', error);
+      });
+      console.log(`DELETE {domain}/trips/${selectedTripId}`);
+      console.log(`DELETE {domain}/trips/${trip.tripId}`);
     }
   });
   cardTrip.appendChild(deleteIcon);
 }
 
-function deleteSelectedTrip(selectedTripId) //not working now
+function deleteSelectedTrip(selectedTripId) //not working now - check what it is
 {
   const tripCards = document.querySelectorAll(".card");
   tripCards.forEach((card) => {
@@ -199,7 +217,7 @@ function newTrip(newTripObj, dataDogs) // not working now
   createTrip(trip, contListTrip, dogsList, dataDogs);
 }
 
-function createButtonDelete() //not working now
+function createButtonDelete()
 {
   document.getElementById("selectButton").addEventListener("click", function () {
     const cards = document.querySelectorAll(".card");

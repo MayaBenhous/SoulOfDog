@@ -4,29 +4,40 @@ window.onload = () => {
   const dogId = urlParams.get("selectedDogId");
 
   getTripData(selectedTripId, dogId);
-  // startWithoutServer();
+  deleteObject(selectedTripId);
 };
 iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
 titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
-   
-// const selectedTripId = 8;
-// const dogId = 1;
-
-function startWithoutServer(){
-    Promise.all([
-    fetch("data/Trips.json").then((response) => response.json()),
-    fetch("data/dogs.json").then((response) => response.json()),
-  ])
-    .then(([dataTrips, dataDogs]) => {
-      initTrip(dataTrips, dataDogs, dogId, selectedTripId);
-      deleteObject(selectedTripId);
-    });
-}
 
 function getTripData(tripId, dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${tripId}`)
   .then((response) => response.json())
   .then((dataTrip) => initSingleTrip(dataTrip, dogId));
+}
+
+function deleteTrip(tripId) {
+  console.log('Deleting trip with ID:', tripId);
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log('Response status:', response.status);
+    if (!response.ok) {
+      throw new Error('Failed to delete trip');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Trip deleted successfully:', data);
+    return data;
+  })
+  .catch((error) => {
+    console.error('Error deleting trip:', error);
+    throw error; 
+  });
 }
 
 function initSingleTrip(dataTrip, dogId) {
@@ -245,13 +256,21 @@ function convertNumbersToTimeString(hours, minutes) {
   return `${hoursStr}:${minutesStr}`;
 }
 
-function deleteObject(selectedTripId) //not working now
+function deleteObject(selectedTripId) 
 { 
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
-    if(confirm("Are you sure you want to delete this trip?")) {
+    if (confirm("Are you sure you want to delete this trip?")) {
       console.log(`DELETE {domain}/trips/${selectedTripId}`);
-      window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+      deleteTrip(selectedTripId)
+      .then(() => {
+        console.log('Trip deleted successfully!');
+        window.location.href = `tripsList.html`;
+      })
+      .catch((error) => {
+        console.error('Failed to delete trip:', error);
+      });
+      console.log(`DELETE {domain}/trips/${selectedTripId}`);
     }
   });
 }
