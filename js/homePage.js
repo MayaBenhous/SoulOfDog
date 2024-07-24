@@ -4,6 +4,7 @@ window.onload = () => {
   getTypeUser(userId);
   handleConnectDWtoDog();
   getDataNotifications(userId);
+  getDataUser(userId);
 };
 
 function getTypeUser(userId) {

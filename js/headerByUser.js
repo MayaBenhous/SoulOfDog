@@ -1,10 +1,8 @@
-const userData = {
-    firstName: 'Dana',
-    img: './images/logoAndUsers/Dana.png',
-    userType: 'owner'
-};
-
-initUser(userData);
+function getDataUser(userId) {
+    fetch(`https://soulofdog-server.onrender.com/api/users/getUserData/${userId}`)
+    .then((response) => response.json())
+    .then((userData) => initUser(userData));
+}
 
 function initUser(user) {
     document.getElementById('userName').textContent = user.firstName;
