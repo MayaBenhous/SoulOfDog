@@ -5,24 +5,9 @@ window.onload = () => {
 
   getTripData(selectedTripId, dogId);
   deleteObject(selectedTripId);
-  // startWithoutServer();
 };
 iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
 titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
-   
-// const selectedTripId = 8;
-// const dogId = 1;
-
-function startWithoutServer(){
-    Promise.all([
-    fetch("data/Trips.json").then((response) => response.json()),
-    fetch("data/dogs.json").then((response) => response.json()),
-  ])
-    .then(([dataTrips, dataDogs]) => {
-      initTrip(dataTrips, dataDogs, dogId, selectedTripId);
-      deleteObject(selectedTripId);
-    });
-}
 
 function getTripData(tripId, dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${tripId}`)

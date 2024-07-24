@@ -16,24 +16,6 @@ window.onload = () => {
 
 let userId = 2; 
 
-// function startWithoutServer() {
-//   Promise.all([
-//     fetch("data/Trips.json").then((response) => response.json()),
-//     fetch("data/dogs.json").then((response) => response.json()),
-//   ]).then(([dataTrips, dataDogs]) => {
-//     if (groupTripId) {
-//       const groupTrip = findTrip(dataTrips, groupTripId);
-//       createDateTrip(groupTrip);
-//       existGroupTrip(groupTrip, dataDogs);
-//     } else {
-//       createDateTrip(null);
-//       newGroupTrip(selectedDogs, dataDogs);
-//       finishTrip();
-//     }
-//     deleteObject(groupTripId);
-//   });
-// }
-
 function getGroupTripExist(groupTripId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)
   .then((response) => response.json())

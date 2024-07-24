@@ -1,26 +1,10 @@
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   // const selectedTripId = urlParams.get("selectedTripId");
-
   startWithServer(userId);
   createButtonDelete();
 };
 
-function startWitHoutServer(){
-  Promise.all([
-    fetch("data/Trips.json").then((response) => response.json()),
-    fetch("data/dogs.json").then((response) => response.json()),
-  ])
-    .then(([dataTrips, dataDogs]) => {
-      initTripsList(dataTrips, dataDogs);
-      if (selectedTripId) {
-        deleteSelectedTrip(selectedTripId);
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}
 let userId = 2; 
 
 let i = 0;
