@@ -16,7 +16,7 @@ function login() {
         .then(data => {
             if (data.success) {
                 sessionStorage.setItem('userId', data.userId);
-                window.location.href = `index.html`;
+                window.location.href = `homePage.html`;
             } else {
                 document.getElementById('error-message').innerText = data.message;
             }
