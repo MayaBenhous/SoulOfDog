@@ -1,7 +1,7 @@
 window.onload = () => {
   const userId = sessionStorage.getItem('userId');
   getTypeUser(userId);
-  handleConnectDWtoDog();
+  handleConnectDWtoDog(userId);
   getDataNotifications(userId);
   getDataUser(userId);
 };
@@ -148,7 +148,7 @@ function initOwnerHomePage(dataDogs) {
   .catch((error) => console.error('Error fetching last trip data:', error));
 }
 
-function handleConnectDWtoDog() {
+function handleConnectDWtoDog(userId) {
   const modalElement = document.getElementById('addDogModal');
   const modal = new bootstrap.Modal(modalElement);
   const askPermissionButton = document.getElementById("askPermissionButton");
@@ -158,21 +158,12 @@ function handleConnectDWtoDog() {
     if (chipId) {
       fetch (`https://soulofdog-server.onrender.com/api/dogs/getUserIdByChipId/${chipId}`)
       .then((response) => response.json())
-      .then((data) => {
-        if (data.userId) {
-          sendConnectionRequest(data.userId, chipId);
-        } else if (data.error) {
-          console.error('Error:', data.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
+      .then((data) => sendConnectionRequest(data.userId, chipId, userId));
     }
   })
 }
 
-function sendConnectionRequest(ownerId, chipId) {
+function sendConnectionRequest(ownerId, chipId, userId) {
   fetch(`https://soulofdog-server.onrender.com/api/users/postNotification/${ownerId}`, {
     method: 'POST',
     headers: {

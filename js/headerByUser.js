@@ -1,4 +1,3 @@
-// const userId = sessionStorage.getItem('userId');
 function getDataUser(userId) {
     fetch(`https://soulofdog-server.onrender.com/api/users/getUserData/${userId}`)
     .then((response) => response.json())

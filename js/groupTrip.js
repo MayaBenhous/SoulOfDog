@@ -1,5 +1,6 @@
 window.onload = () => {
   const userId = sessionStorage.getItem('userId');
+  // getDataUser(userId);
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogsIds");
   console.log(selectedDogs);
@@ -11,7 +12,7 @@ window.onload = () => {
   }
   else if(groupTripId === "null"){
     console.log(selectedDogs);
-    getNewGroupTrip(selectedDogs);
+    getNewGroupTrip(selectedDogs,userId);
   }
   getDataUser(userId);
 };
@@ -70,7 +71,7 @@ function listFromSelected(input_str) {
   return items;
 }
 
-function getNewGroupTrip(selectedDogs) {
+function getNewGroupTrip(selectedDogs,userId) {
   let listDogsId = listFromSelected(selectedDogs);
   let countDogs = listDogsId.length;
   console.log(countDogs);
