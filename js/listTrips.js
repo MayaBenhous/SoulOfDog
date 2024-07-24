@@ -6,7 +6,7 @@ window.onload = () => {
   createButtonDelete(); //not work
 };
 
-function startWitHhoutServer(){
+function startWitHoutServer(){
   Promise.all([
     fetch("data/Trips.json").then((response) => response.json()),
     fetch("data/dogs.json").then((response) => response.json()),
@@ -32,6 +32,29 @@ let dataList = {
 function getDogsUser(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
+}
+
+function deleteTrip(tripId) {
+  return fetch(`http://localhost:8081/api/trips/deleteTrip/${tripId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to delete trip');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Trip deleted successfully:', data);
+    return data; 
+  })
+  .catch((error) => {
+    console.error('Error deleting trip:', error);
+    throw error;
+  });
 }
 
 function startWithServer(userId) {
@@ -143,7 +166,6 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
     let countDogs = trip.dogsId.length;
     let selectedDogId = trip.dogsId[0];
-    let userType = trip.userType;
     console.log(trip.tripId);
     if(countDogs === 1)
     {
@@ -167,6 +189,7 @@ function handleDeleteIcon(cardTrip, trip) //not working now
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
       console.log(`DELETE {domain}/trips/${trip.id}`);
+      deleteTrip(selectedTripId);
       cardTrip.remove();
     }
   });

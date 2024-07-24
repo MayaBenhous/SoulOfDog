@@ -44,6 +44,7 @@ function initGroupTripExist(dataTrip) {
   let dataDogs = dataTrip.trip.dogs[0];
   createDateTrip(dataTrip.trip, null);
   existGroupTrip(dataTrip.trip, dataDogs);
+  deleteObject(dataTrip.trip.tripId);
 }
 
 function getDataDog(dogId) {
@@ -54,6 +55,32 @@ function getDataDog(dogId) {
 function getUserName(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/users/getUserName/${userId}`)
   .then((response) => response.json());
+}
+
+function deleteTrip(tripId) {
+  console.log('Deleting trip with ID:', tripId);
+  
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log('Response status:', response.status);
+    if (!response.ok) {
+      throw new Error('Failed to delete trip');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Trip deleted successfully:', data);
+    return data; // Optionally return data if needed
+  })
+  .catch((error) => {
+    console.error('Error deleting trip:', error);
+    throw error; // Rethrow the error to propagate it further
+  });
 }
 
 function listFromSelected(input_str) {
@@ -539,13 +566,21 @@ function finishTrip()
   });
 }
 
-function deleteObject(selectedTripId)
+function deleteObject(selectedTripId) 
 {
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this trip?")) {
       console.log(`DELETE {domain}/trips/${selectedTripId}`);
-      window.location.href = `tripsList.html?selectedTripId=${selectedTripId}`;
+      deleteTrip(selectedTripId)
+      .then(() => {
+        console.log('Trip deleted successfully!');
+        window.location.href = `tripsList.html`;
+      })
+      .catch((error) => {
+        console.error('Failed to delete trip:', error);
+      });
+      console.log(`DELETE {domain}/trips/${selectedTripId}`);
     }
   });
 }
