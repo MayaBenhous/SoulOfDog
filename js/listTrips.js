@@ -155,11 +155,10 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
     console.log(trip.tripId);
     if(countDogs === 1)
     {
-        window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
+      window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
     }
     else {
-        console.log(selectedDogId);
-        console.log("group!!");
+      // console.log(selectedDogId);
       window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogsIds=null`;     
     }
   });
