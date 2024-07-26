@@ -18,6 +18,11 @@ function getDogsUser(userId) {
   .then((response) => response.json())
 }
 
+function getTypeUser(userId) {
+  return fetch(`https://soulofdog-server.onrender.com/api/users/userType/${userId}`)
+  .then((response) => response.json())
+}
+
 function deleteTrip(tripId) {
   console.log('Deleting trip with ID:', tripId);
   return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
@@ -61,7 +66,7 @@ function startWithServer(userId) {
       })
   ])
   .then(([dataTripsServer, dataDogsServer]) => {
-    initTripsList(dataTripsServer, dataDogsServer);
+    initTripsList(dataTripsServer, dataDogsServer, userId);
   })
   .catch((error) => {
     console.error('Error fetching data:', error);
@@ -71,11 +76,21 @@ function startWithServer(userId) {
 let selectedTripId;
 let selectedDogId;
 
-function initTripsList(dataTrips, dataDogs) {
+function initTripsList(dataTrips, dataDogs, userId) {
+  console.log(userId);
+  getTypeUser(userId).then((typeUser) => {
+    console.log(typeUser.data);
+    if(typeUser.data === "owner")
+    {
+      console.log("owner");
+      plusButton = document.getElementById("addTrip");
+      plusButton.style.display="block";
+    }
+  });
   const contListTrip = document.getElementById("listTripsCont_id");
-  let length = dataTrips.sortedTrips.length;
+  let length = dataTrips.parsedList.length;
   for (let t = 0; t < length ; t++) {
-    const trip = dataTrips.sortedTrips[t];
+    const trip = dataTrips.parsedList[t];
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
       createTrip(trip, contListTrip, dogsList, dataDogs);
@@ -158,7 +173,6 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
       window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
     }
     else {
-      // console.log(selectedDogId);
       window.location.href = `groupTrip.html?groupTripId=${trip.tripId}&selectedDogsIds=null`;     
     }
   });
