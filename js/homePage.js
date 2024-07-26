@@ -7,7 +7,7 @@ window.onload = () => {
 };
 
 function getTypeUser(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/users/getUserType/${userId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/users/userType/${userId}`)
   .then((response) => response.json())
   .then((userType) => selectedType(userType, userId));
 }
@@ -25,24 +25,24 @@ function selectedType(userType, userId) {
 }
 
 function getDataDogsDW(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
   .then((response) => response.json())
   .then((dataDogs) => initDogWalkerHomePage(dataDogs));
 }
 
 function getDataNotifications(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/users/getNotifications/${userId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/users/notifications/${userId}`)
   .then((response) => response.json())
   .then((dataNoti) => addOwnerNotification(dataNoti));
 }
 
 function getDataLastTrip(dogId) {
-  return fetch(`https://soulofdog-server.onrender.com/api/trips/getLastTrip/${dogId}`)
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/lastTrip/${dogId}`)
   .then((response) => response.json())
 }
 
 function getDataDogsOwner(userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
   .then((response) => response.json())
   .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
@@ -156,7 +156,7 @@ function handleConnectDWtoDog(userId) {
     const chipId = document.getElementById("chipIdInput").value;
     modal.hide();
     if (chipId) {
-      fetch (`https://soulofdog-server.onrender.com/api/dogs/getUserIdByChipId/${chipId}`)
+      fetch (`https://soulofdog-server.onrender.com/api/dogs/userIdByChipId/${chipId}`)
       .then((response) => response.json())
       .then((data) => sendConnectionRequest(data.userId, chipId, userId));
     }
@@ -164,12 +164,13 @@ function handleConnectDWtoDog(userId) {
 }
 
 function sendConnectionRequest(ownerId, chipId, userId) {
-  fetch(`https://soulofdog-server.onrender.com/api/users/postNotification/${ownerId}`, {
+  fetch(`https://soulofdog-server.onrender.com/api/users/newNotification`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
+      ownerId: ownerId,
       notificationType: 'connect',
       senderId: userId,
       chipId: chipId
@@ -259,7 +260,7 @@ function putUnconnectDWtoDog(dogId) {
 }
 
 function deleteNotification(notificationIdId) {
-  fetch(`https://soulofdog-server.onrender.com/api/users/deleteNotification/${notificationIdId}`, {
+  fetch(`https://soulofdog-server.onrender.com/api/users/notification/${notificationIdId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

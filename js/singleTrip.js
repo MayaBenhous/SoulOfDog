@@ -12,14 +12,14 @@ iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/h
 titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
 
 function getTripData(tripId, dogId) {
-  fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${tripId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/trips/tripFromList/${tripId}`)
   .then((response) => response.json())
   .then((dataTrip) => initSingleTrip(dataTrip, dogId));
 }
 
 function deleteTrip(tripId) {
   console.log('Deleting trip with ID:', tripId);
-  return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

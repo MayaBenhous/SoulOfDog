@@ -1,5 +1,5 @@
 function getDataUser(userId) {
-    fetch(`https://soulofdog-server.onrender.com/api/users/getUserData/${userId}`)
+    fetch(`https://soulofdog-server.onrender.com/api/users/userData/${userId}`)
     .then((response) => response.json())
     .then((userData) => initUser(userData));
 }

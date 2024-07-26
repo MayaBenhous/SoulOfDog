@@ -18,7 +18,7 @@ window.onload = () => {
 };
 
 function getGroupTripExist(groupTripId) {
-  fetch(`https://soulofdog-server.onrender.com/api/trips/getTripFromList/${groupTripId}`)
+  fetch(`https://soulofdog-server.onrender.com/api/trips/tripFromList/${groupTripId}`)
   .then((response) => response.json())
   .then((dataTrip) => initGroupTripExist(dataTrip));
 }
@@ -31,18 +31,18 @@ function initGroupTripExist(dataTrip) {
 }
 
 function getDataDog(dogId) {
-  return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDataDogById/${dogId}`)
+  return fetch(`https://soulofdog-server.onrender.com/api/dogs/dataDogById/${dogId}`)
   .then((response) => response.json());
 }
 
 function getUserName(userId) {
-  return fetch(`https://soulofdog-server.onrender.com/api/users/getUserName/${userId}`)
+  return fetch(`https://soulofdog-server.onrender.com/api/users/userName/${userId}`)
   .then((response) => response.json());
 }
 
 function deleteTrip(tripId) {
   console.log('Deleting trip with ID:', tripId);
-  return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+  return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ function createNewTrip(trip) {
       notes: dog.notes
     }))
   };
-  fetch(`https://soulofdog-server.onrender.com/api/trips/addTrip`, {
+  fetch(`https://soulofdog-server.onrender.com/api/trips/newTrip`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -811,10 +811,14 @@ img {
     background-color: #ffe5d0;
   }
 
-  /* #titleLogin {
-    font-size: 60px;
-  } */
+  .login-form {
+    padding: 150px;
+  }
 
+  .input-group input {
+    font-size: 30px;
+  }
+  
   #top-header {
     background-color: #ffe5d0;
     display: flex;
