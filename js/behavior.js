@@ -1,8 +1,16 @@
 window.onload = () => {
     const userId = sessionStorage.getItem('userId');
     getDataUser(userId);
-    init(4);
+    fetch(`https://soulofdog-server.onrender.com/api/dogs/dogId/${userId}`)
+    .then((response) => response.json())
+    .then((dogId) => init(dogId.dogId));
 };
+
+function getDataDogsOwner(userId) {
+    fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
+    .then((response) => response.json())
+    .then((dataDogs) => initOwnerHomePage(dataDogs));
+}
 
 let charts = [];
 
