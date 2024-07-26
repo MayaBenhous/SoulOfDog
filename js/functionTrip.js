@@ -1,6 +1,6 @@
 function deleteTrip(tripId) {
     console.log('Deleting trip with ID:', tripId);
-    return fetch(`https://soulofdog-server.onrender.com/api/trips/deleteTrip/${tripId}`, {
+    return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
