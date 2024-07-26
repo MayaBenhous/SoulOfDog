@@ -17,12 +17,19 @@ function initUser(user) {
         graphsNavItem.classList.add('nav-item');
 
         const graphsIcon = document.createElement('span');
-        graphsIcon.classList.add('graphsIcon'); // add class and icon of behavior
+        graphsIcon.classList.add('icon-behavior');
+        graphsIcon.classList.add('iconNotActive');
 
         const graphsLink = document.createElement('a');
         graphsLink.classList.add('nav-link');
         graphsLink.href = 'behavior.html';
         graphsLink.textContent = 'Behavior';
+
+        if (window.location.pathname.endsWith('behavior.html')) {
+            console.log('hello');
+            graphsLink.classList.add('active');
+            graphsIcon.classList.remove('iconNotActive');
+        }
 
         graphsNavItem.appendChild(graphsIcon);
         graphsNavItem.appendChild(graphsLink);
