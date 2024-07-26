@@ -4,6 +4,7 @@ window.onload = () => {
   // const selectedTripId = urlParams.get("selectedTripId");
   startWithServer(userId);
   createButtonDelete();
+  handleClickPlus(userId);
   getDataUser(userId);
 };
 
@@ -21,31 +22,6 @@ function getDogsUser(userId) {
 function getTypeUser(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/users/userType/${userId}`)
   .then((response) => response.json())
-}
-
-function deleteTrip(tripId) {
-  console.log('Deleting trip with ID:', tripId);
-  return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => {
-    console.log('Response status:', response.status);
-    if (!response.ok) {
-      throw new Error('Failed to delete trip');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Trip deleted successfully:', data);
-    return data;
-  })
-  .catch((error) => {
-    console.error('Error deleting trip:', error);
-    throw error; 
-  });
 }
 
 function startWithServer(userId) {
@@ -71,6 +47,11 @@ function startWithServer(userId) {
   .catch((error) => {
     console.error('Error fetching data:', error);
   });
+}
+
+function getDogIdByUserId(userId) {
+  return fetch(`https://soulofdog-server.onrender.com/api/dogs/dogId/${userId}`)
+  .then((response) => response.json());
 }
 
 let selectedTripId;
@@ -236,5 +217,14 @@ function createButtonDelete()
     const cards = document.querySelectorAll(".card");
     cards.forEach((card) => {
       card.classList.toggle("show-delete");});
+  });
+}
+
+function handleClickPlus(userId) {
+  document.getElementById("addTrip").addEventListener("click", function () {
+    getDogIdByUserId(userId).then((dogId) => {
+      const selectedIds = dogId.dogId;
+      window.location.href = `groupTrip.html?groupTripId=null&selectedDogsIds=${selectedIds}`;
+    });
   });
 }
