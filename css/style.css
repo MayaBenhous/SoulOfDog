@@ -288,18 +288,36 @@ select {
   display: none;
 }
 
-#map {
-  height: 300px;
-  width: 500px;
-  /* width: 100%; */
-  position: relative;
-  /* background-repeat: no-repeat; */
-}
-
 #lastActivity {
   height: 300px;
   justify-content: left;
   width: 400px;
+}
+
+#weather {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 600px;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+}
+.weather-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.temp {
+  font-size: 2em;
+  margin: 10px 0;
+}
+.description {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+.details {
+  margin-top: 10px;
 }
 
 .listTrips-Container {
