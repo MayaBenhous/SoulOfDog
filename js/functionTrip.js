@@ -96,6 +96,22 @@ function calculateTripDuration(hourStart, hourEnd) {
   return { totalHour: Math.abs(totalHour), totalMinutes: Math.abs(remainingMinutes) };
 }
 
+
+function convertNumbersToTimeString(hours, minutes) {
+  const hoursStr = hours.toString().padStart(2, "0");
+  const minutesStr = minutes.toString().padStart(2, "0");
+  return `${hoursStr}:${minutesStr}`;
+}
+
+function totalTime(hourStart, hourEnd) {
+  let calculate = calculateTripDuration(hourStart, hourEnd);
+  const totalString = convertNumbersToTimeString(
+    calculate.totalHour,
+    calculate.totalMinutes
+  );
+  return totalString;
+}
+
 function deleteTrip(tripId) {
     console.log('Deleting trip with ID:', tripId);
     return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {

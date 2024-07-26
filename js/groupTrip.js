@@ -17,6 +17,8 @@ window.onload = () => {
   getDataUser(userId);
 };
 
+let numDogs;
+
 function getGroupTripExist(groupTripId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/tripFromList/${groupTripId}`)
   .then((response) => response.json())
@@ -113,8 +115,6 @@ function createNewTrip(trip) {
     console.error('Error creating new trip:', error);
   });
 }
-
-let numDogs;
 
 function existGroupTrip(trip) {
   const finishButton = document.getElementById("finishTripButton");
@@ -380,21 +380,6 @@ function setFormatDate() {
   const year = currentDate.getFullYear();
   const formattedDate = `${year}-${month}-${day}`;
   return formattedDate;
-}
-
-function convertNumbersToTimeString(hours, minutes) {
-  const hoursStr = hours.toString().padStart(2, "0");
-  const minutesStr = minutes.toString().padStart(2, "0");
-  return `${hoursStr}:${minutesStr}`;
-}
-
-function totalTime(hourStart, hourEnd) {
-  let calculate = calculateTripDuration(hourStart, hourEnd);
-  const totalString = convertNumbersToTimeString(
-    calculate.totalHour,
-    calculate.totalMinutes
-  );
-  return totalString;
 }
 
 function finishTrip(newTrip)

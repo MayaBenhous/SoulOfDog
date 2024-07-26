@@ -61,8 +61,7 @@ function handleTripDuration(detailsPart, trip) {
   total.textContent = `Total`;
   const totalNum = document.createElement("p");
   totalNum.classList.add("value");
-  let calculate = calculateTripDuration(hourStart,hourEnd);
-  const totalString = convertNumbersToTimeString(calculate.totalHour, calculate.totalMinutes);
+  const totalString = totalTime(hourStart, hourEnd);
   totalNum.textContent = totalString;
   start.appendChild(hourStart);
   end.appendChild(hourEnd);
@@ -147,11 +146,6 @@ function handleCreateCard(title, index, trip, dogintrip) {
   singleTripCardsCont.appendChild(card);
 }
 
-function convertNumbersToTimeString(hours, minutes) {
-  const hoursStr = hours.toString().padStart(2, '0');
-  const minutesStr = minutes.toString().padStart(2, '0');
-  return `${hoursStr}:${minutesStr}`;
-}
 
 
 
