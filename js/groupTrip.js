@@ -71,8 +71,23 @@ function listFromSelected(input_str) {
   return items;
 }
 
+// function listFromSelected(input_str) {
+  //   if (typeof input_str !== 'string') {
+  //     throw new TypeError('Input must be a string');
+  //   }
+  //   return input_str
+  //     .split(',')
+  //     .map(item => item.trim())
+  //     .filter(item => item.length > 0)
+  //     .map(item => Number(item))
+  //     .sort((a, b) => a - b)
+  //     .map(item => item.toString());
+  // }  
+
 function getNewGroupTrip(selectedDogs,userId) {
+  console.log(selectedDogs);
   let listDogsId = listFromSelected(selectedDogs);
+  console.log(listDogsId);
   let countDogs = listDogsId.length;
   console.log(countDogs);
   let dataDogs = [];
@@ -93,6 +108,7 @@ function getNewGroupTrip(selectedDogs,userId) {
   Promise.all(promises).then(() => {
     console.log(dataDogs); 
     newGroupTrip(implementUserName, listDogsId, dataDogs);
+    // console.log(implementUserName);
     createDateTrip(null, implementUserName);
   });
 }
@@ -115,6 +131,7 @@ function createNewTrip(trip) {
       notes: dog.notes
     }))
   };
+  console.log(tripData);
   fetch(`https://soulofdog-server.onrender.com/api/trips/addTrip`, {
     method: 'POST',
     headers: {
@@ -168,10 +185,11 @@ function existGroupTrip(trip) {
 }
 
 function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
+  console.log(dataDogs);
   let newTrip = {
     implementName: "",
     tripType: "",
-    date: "",
+    date: null,
     startTime: "",
     endTime: "",
     distance: 0,
@@ -222,7 +240,10 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function createDateTrip(newTrip, trip, name) {
+function createDateTrip(trip, name) {
+  // let formattedDate = setCurrentDate();
+  // console.log(name);
+  // console.log(formattedDate);
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   // let formattedDate;
@@ -230,6 +251,7 @@ function createDateTrip(newTrip, trip, name) {
     console.log(trip);
     tripDate.innerHTML = `${trip.date} <span class="ownerTrip">${trip.implementName}</span>`;
   } else {
+    // console.log("here");
     let formattedDate = setCurrentDate();
     tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">${name}</span>`;
   }
@@ -237,7 +259,7 @@ function createDateTrip(newTrip, trip, name) {
   const editIcon = document.createElement("span");
   editIcon.classList.add("editIconOneTrip");
   ownerTripSpan.appendChild(editIcon);
-  newTrip.date = setFormatDate();
+  // newTrip.date = setFormatDate();
   tripTitles.appendChild(tripDate);
 }
 
@@ -549,6 +571,7 @@ function finishTrip(newTrip)
     console.log(newTrip.distance);
     checkBoxNeeds(newTrip);
     textInNotes(newTrip);
+    newTrip.date = setFormatDate();
     console.log(newTrip);
     createNewTrip(newTrip);
     // console.log(`POST {domain}/trips/${newTrip.id}`);
