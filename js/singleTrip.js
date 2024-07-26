@@ -90,13 +90,70 @@ function handleSingleTripTitle(dog) {
   contTripMainDetails.appendChild(imgWrapper);
 }
 
-function handleSingleDetails(trip){
+// function handleSingleDetails(trip){
+//   const tripDate = document.getElementById("dateTrip");
+//   tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By ${trip.implementName}</span>`;
+//   const ownerTripSpan = document.querySelector('.ownerTrip');
+//   const editIcon = document.createElement('span');
+//   editIcon.classList.add("editIconOneTrip");
+//   ownerTripSpan.appendChild(editIcon);
+// }
+
+function handleSingleDetails(trip) {
   const tripDate = document.getElementById("dateTrip");
-  tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By ${trip.implementName}</span>`;
+  tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By<span class="implementName">-${trip.implementName}</span></span>`;
+
   const ownerTripSpan = document.querySelector('.ownerTrip');
+  const implementNameSpan = document.querySelector('.implementName');
+  
   const editIcon = document.createElement('span');
-  editIcon.classList.add("editIconOneTrip");
+  editIcon.classList.add('editIconOneTrip');
   ownerTripSpan.appendChild(editIcon);
+
+  editIcon.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = implementNameSpan.innerText;
+    implementNameSpan.innerHTML = '';
+    implementNameSpan.appendChild(input);
+    input.focus();
+
+    editIcon.classList.add('saveIcon');
+    editIcon.classList.remove('editIconOneTrip');
+
+    editIcon.addEventListener('click', () => {
+      const newName = input.value.trim();
+      if (newName) {
+        trip.implementName = newName;
+        implementNameSpan.innerText = newName;
+        editIcon.classList.add('editIconOneTrip');
+        editIcon.classList.remove('saveIcon');
+        updateImplementTrip(trip.tripId, newName);
+      }
+    });
+  });
+}
+
+function updateImplementTrip(tripId, implementName) {
+  console.log(tripId);
+  fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      implementName: implementName
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Failed to send connection request');
+    }
+  })
+  .catch((error) => {
+    console.error('Error sending connection request:', error);
+  });
 }
 
 function handleCreateCard(title, index, trip, dogintrip) {
