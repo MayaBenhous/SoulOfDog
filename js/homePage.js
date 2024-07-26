@@ -4,7 +4,6 @@ window.onload = () => {
   handleConnectDWtoDog(userId);
   getDataNotifications(userId);
   getDataUser(userId);
-  getWeather(userId);
 };
 
 function getTypeUser(userId) {
@@ -45,7 +44,7 @@ function getDataLastTrip(dogId) {
 function getDataDogsOwner(userId) {
   fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
   .then((response) => response.json())
-  .then((dataDogs) => initOwnerHomePage(dataDogs));
+  .then((dataDogs) => initOwnerHomePage(dataDogs, userId));
 }
 
 function createWrapperDataDog(dog,imgWrapper) {
@@ -119,7 +118,7 @@ function initDogWalkerHomePage(dataDogs) {
     }
 }
 
-function initOwnerHomePage(dataDogs) {
+function initOwnerHomePage(dataDogs,userId) {
   const imgsCont = document.getElementById("dogsImgs-Container");
   for (const dog of dataDogs.dogs) {
     const imgWrapper = document.createElement("div");
@@ -147,6 +146,7 @@ function initOwnerHomePage(dataDogs) {
       lastActBody.appendChild(sectNeeds);
   })
   .catch((error) => console.error('Error fetching last trip data:', error));
+  getWeather(userId);
 }
 
 async function getWeather(userId) {
