@@ -101,7 +101,7 @@ function handleSingleTripTitle(dog) {
 
 function handleSingleDetails(trip) {
   const tripDate = document.getElementById("dateTrip");
-  tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By<span class="implementName">-${trip.implementName}</span></span>`;
+  tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By-<span class="implementName">${trip.implementName}</span></span>`;
 
   const ownerTripSpan = document.querySelector('.ownerTrip');
   const implementNameSpan = document.querySelector('.implementName');
