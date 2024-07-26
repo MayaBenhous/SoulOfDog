@@ -4,7 +4,7 @@ window.onload = () => {
   handleConnectDWtoDog(userId);
   getDataNotifications(userId);
   getDataUser(userId);
-  initMap();
+  getWeather(userId);
 };
 
 function getTypeUser(userId) {
@@ -149,25 +149,37 @@ function initOwnerHomePage(dataDogs) {
   .catch((error) => console.error('Error fetching last trip data:', error));
 }
 
-// async function initMap() {
-//   try {
-//     const response = await axios.get('http://localhost:8081/api/dogs/location/4');
-//     const location = response.data;
-//     const map = L.map('map').setView([location.lat, location.lon], 13);
-
-//     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-//       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-//       maxZoom: 19
-//   }).addTo(map);
-  
-//     L.marker([location.lat, location.lon]).addTo(map)
-//         .bindPopup('Location found.')
-//         .openPopup();
-//   } catch (error) {
-//       console.error('Error initializing map:', error);
-//       // alert('Could not load map data.');
-//   }
-// }
+async function getWeather(userId) {
+    try {
+      const response = await fetch(`https://soulofdog-server.onrender.com/api/dogs/weather/${userId}`);
+      // console.log(response);
+      if (response.ok) {
+          const data = await response.json();
+          const weatherDiv = document.getElementById('weather');
+          
+          if (data.weather) {
+              const weatherIcon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+              weatherDiv.innerHTML = `
+                  <h2>${data.name}</h2>
+                  <img src="${weatherIcon}" alt="${data.weather[0].description}" class="weather-icon">
+                  <div class="temp">${Math.round(data.main.temp - 273.15)}&deg;C</div>
+                  <div class="description">${data.weather[0].description}</div>
+                  <div class="details">
+                      <p>Humidity: ${data.main.humidity}%</p>
+                      <p>Wind Speed: ${data.wind.speed} m/s</p>
+                  </div>
+              `;
+          } else {
+              weatherDiv.innerHTML = 'No weather data available';
+          }
+      } else {
+          document.getElementById('weather').innerHTML = 'Error fetching weather data';
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('weather').innerHTML = 'Error fetching weather data';
+  }
+}
 
 function handleConnectDWtoDog(userId) {
   const modalElement = document.getElementById('addDogModal');

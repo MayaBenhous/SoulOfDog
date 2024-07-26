@@ -288,18 +288,38 @@ select {
   display: none;
 }
 
-#map {
-  height: 300px;
-  width: 500px;
-  /* width: 100%; */
-  position: relative;
-  /* background-repeat: no-repeat; */
-}
-
 #lastActivity {
   height: 300px;
   justify-content: left;
   width: 400px;
+}
+
+#weather {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 600px;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.temp {
+  font-size: 2em;
+  margin: 10px 0;
+}
+.description {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+.details {
+  margin-top: 10px;
 }
 
 .listTrips-Container {
@@ -505,6 +525,17 @@ main {
   cursor: pointer;
 }
 
+.saveIcon {
+  background-image: url('../images/icons/heartbeat.svg');
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
 #singleTripCrads-container {
   display: flex;
   flex-direction: column;
@@ -620,7 +651,8 @@ main {
 .titleAndIcons-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: end;
   align-items: center;
   padding: 10px;
   margin-bottom: 20px;
@@ -696,16 +728,20 @@ main {
 #selectGraphCont {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin-left: 100px;
 }
 
-.checkboxGraph {
+.checkboxGraphCont {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
   justify-content: center;
+  align-items: center;
 }
 
 .checkbox-label {
+  width: 200px;
   display: block;
   font-size: 18px;
   color: #333;
@@ -719,20 +755,13 @@ main {
   cursor: pointer;
 }
 
+.chart-container {
+  margin-bottom: 50px;
+}
 .bottomPage {
   /* justify-content: space-between; */
   justify-content: end;
 }
-
-/* #SaveUpdatesButton { */
-  /* display: block; */
-  /* justify-content: center; */
-/* } */
-
-
-/* #myChart {
-
-} */
 
 .subTitlesHp {
   margin: 0;
