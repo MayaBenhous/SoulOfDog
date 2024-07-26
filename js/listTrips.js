@@ -52,7 +52,7 @@ function startWithServer(userId) {
         }
         return response.json();
       }),
-    fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+    fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -73,9 +73,9 @@ let selectedDogId;
 
 function initTripsList(dataTrips, dataDogs) {
   const contListTrip = document.getElementById("listTripsCont_id");
-  let length = dataTrips.listTrips.length;
-  for (let t = length - 1; t >= 0; t--) {
-    const trip = dataTrips.listTrips[t];
+  let length = dataTrips.sortedTrips.length;
+  for (let t = 0; t < length ; t++) {
+    const trip = dataTrips.sortedTrips[t];
     if (trip.type != "empty") {
       const dogsList = listDogs(trip, dataDogs, 0);
       createTrip(trip, contListTrip, dogsList, dataDogs);
