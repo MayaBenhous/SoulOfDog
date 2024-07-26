@@ -62,17 +62,28 @@
                 <h1 id="behaviorTitle" class="title">My Behaviors</h1>
             </section>
             <section id="selectGraphCont">
-                <div class="checkboxGraph">
-                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="line" checked> Steps Graph</label>
-                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="bar"> Range Graph</label>
+                <div class="checkboxGraphCont">
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="Steps" checked> Steps Graph</label>
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="Range" checked> Range Graph</label>
                 </div>
-                <div class="checkboxGraph">
-                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="pie"> HeartBeat Graph</label>
-                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="pie"> Speed Graph</label>
+                <div class="checkboxGraphCont">
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="avgHeartBeat" checked> HeartBeat Graph</label>
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="avgSpeed" checked> Speed Graph</label>
                 </div>
             </section>
-            <section id="graphCont">
-                <canvas id="myChart"></canvas>
+            <section id="graphsCont">
+                <div class="chart-container">
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart2"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart3"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart4"></canvas>
+                </div>
             </section>
         </main>
     <script src="js/behavior.js"></script>

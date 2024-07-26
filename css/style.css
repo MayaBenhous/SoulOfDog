@@ -700,16 +700,20 @@ main {
 #selectGraphCont {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin-left: 100px;
 }
 
-.checkboxGraph {
+.checkboxGraphCont {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
   justify-content: center;
+  align-items: center;
 }
 
 .checkbox-label {
+  width: 200px;
   display: block;
   font-size: 18px;
   color: #333;
@@ -723,9 +727,9 @@ main {
   cursor: pointer;
 }
 
-/* #myChart {
-
-} */
+.chart-container {
+  margin-bottom: 50px;
+}
 
 .subTitlesHp {
   margin: 0;
