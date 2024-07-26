@@ -52,7 +52,7 @@ function startWithServer(userId) {
         }
         return response.json();
       }),
-    fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
+    fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

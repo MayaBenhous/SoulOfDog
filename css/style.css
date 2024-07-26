@@ -288,9 +288,12 @@ select {
   display: none;
 }
 
-#bodyMap {
+#map {
   height: 300px;
-  width: 400px;
+  width: 500px;
+  /* width: 100%; */
+  position: relative;
+  /* background-repeat: no-repeat; */
 }
 
 #lastActivity {
@@ -689,6 +692,40 @@ main {
   margin: 0;
   margin-left: 150px;
 }
+
+#behaviorTitle {
+  margin-left: 0;
+}
+
+#selectGraphCont {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkboxGraph {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.checkbox-label {
+  display: block;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+  margin-right: 100px;
+}
+
+.checkbox-label input {
+  margin-right: 10px;
+  accent-color: #b7b5b5;
+  cursor: pointer;
+}
+
+/* #myChart {
+
+} */
 
 .subTitlesHp {
   margin: 0;

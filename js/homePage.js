@@ -4,6 +4,7 @@ window.onload = () => {
   handleConnectDWtoDog(userId);
   getDataNotifications(userId);
   getDataUser(userId);
+  initMap();
 };
 
 function getTypeUser(userId) {
@@ -137,16 +138,36 @@ function initOwnerHomePage(dataDogs) {
     .then((dataTrip) => {
       const lastActivity = document.createElement("p");
       lastActivity.classList.add("message");
-      lastActivity.textContent = `Last trip was at ${dataTrip.lastTrip.time}`;
+      lastActivity.textContent = `Last trip was at ${dataTrip.time}`;
       const sectNeeds = document.createElement("section");
       sectNeeds.classList.add("sectNeedsG_trip");
-      handleSecPeeSelect(dataTrip.lastTrip.pee, sectNeeds);
-      handleSecPoopSelect(dataTrip.lastTrip.poop, sectNeeds)
+      handleSecPeeSelect(dataTrip.pee, sectNeeds);
+      handleSecPoopSelect(dataTrip.poop, sectNeeds)
       lastActBody.appendChild(lastActivity);
       lastActBody.appendChild(sectNeeds);
   })
   .catch((error) => console.error('Error fetching last trip data:', error));
 }
+
+// async function initMap() {
+//   try {
+//     const response = await axios.get('http://localhost:8081/api/dogs/location/4');
+//     const location = response.data;
+//     const map = L.map('map').setView([location.lat, location.lon], 13);
+
+//     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+//       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+//       maxZoom: 19
+//   }).addTo(map);
+  
+//     L.marker([location.lat, location.lon]).addTo(map)
+//         .bindPopup('Location found.')
+//         .openPopup();
+//   } catch (error) {
+//       console.error('Error initializing map:', error);
+//       // alert('Could not load map data.');
+//   }
+// }
 
 function handleConnectDWtoDog(userId) {
   const modalElement = document.getElementById('addDogModal');

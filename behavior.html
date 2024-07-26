@@ -57,66 +57,26 @@
       </section>
     </header>
     <div id="wrapper">
-      <main>
-        <section class="titleAndIcons-container">
-          <h1 class="title">My Dogs</h1>
-          <button id= "addDog" type="button" class="icon icon-plus" data-bs-toggle="modal" data-bs-target="#addDogModal"></button>
-          <span class="icon icon-sort"></span>
-          <span class="icon icon-search"></span>
-        </section>
-        <section id="dogsImgs-Container"></section>
-        <section class="buttons">
-          <button id="deleteDogButton" class="btn btn-primary">Delete</button>
-          <button id="startTripButton" class="btn btn-primary">New Trip</button>
-        </section>
-        <section id="notifications-Container">
-          <div class="card card-list">
-            <div id="bodyNoti" class = "card-body">
-              <h1 class="subTitlesHp" class="title">Notifications</h1>
-            </div>
-          </div>
-        </section>
-        <section id="hpDogDetailsCont">
-          <section id="mapContainer">
-            <div class="card card-list">
-              <div class="card-body">
-                <div id="map"></div>
-              </div>
-            </div>
-          </section>
-          <section id="lastActivityContainer">
-            <div class="card card-list">
-              <div id="lastActivity" class="card-body">
-                <h1 class="subTitlesHp" class="title">Last Activity</h1>
-              </div>
-            </div>
-          </section>
-        </section>
-        <div class="modal fade" id="addDogModal" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Connect to a dog</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="chipIdForm">
-                  <div class="mb-3">
-                    <label for="chipIdInput" class="form-label">Chip ID</label>
-                    <input type="text" class="form-control" id="chipIdInput" required>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="askPermissionButton">Ask for permission</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-    <script src="js/homePage.js"></script>
+        <main>
+            <section class="titleAndIcons-container">
+                <h1 id="behaviorTitle" class="title">My Behaviors</h1>
+            </section>
+            <section id="selectGraphCont">
+                <div class="checkboxGraph">
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="line" checked> Steps Graph</label>
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="bar"> Range Graph</label>
+                </div>
+                <div class="checkboxGraph">
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="pie"> HeartBeat Graph</label>
+                    <label class="checkbox-label"><input type="checkbox" name="chartType" value="pie"> Speed Graph</label>
+                </div>
+            </section>
+            <section id="graphCont">
+                <canvas id="myChart"></canvas>
+            </section>
+        </main>
+    <script src="js/behavior.js"></script>
     <script src="js/headerByUser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
