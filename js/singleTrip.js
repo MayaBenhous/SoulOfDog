@@ -126,7 +126,7 @@ function handleSingleDetails(trip) {
       if (newName) {
         trip.implementName = newName;
         implementNameSpan.innerText = newName;
-        editIcon.classList.add('editIconOneTrip');
+        editIcon.classList.add('savedIcon');
         editIcon.classList.remove('saveIcon');
         updateImplementTrip(trip.tripId, newName);
       }

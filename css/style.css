@@ -526,13 +526,24 @@ main {
 }
 
 .saveIcon {
-  background-image: url('../images/icons/heartbeat.svg');
+  background-image: url('../images/icons/save.svg');
   background-size: cover;
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   flex-shrink: 0;
   margin-left: 10px;
-  margin-top: 5px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.savedIcon {
+  background-image: url('../images/icons/saved.svg');
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  margin-top: 3px;
   cursor: pointer;
 }
 
