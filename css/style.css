@@ -537,7 +537,8 @@ main {
 }
 
 .savedIcon {
-  background-image: url('../images/icons/saved.svg');
+  /* background-image: url('../images/icons/saved.svg'); */
+  background-image: url('../images/icons/check.svg');
   background-size: cover;
   width: 35px;
   height: 35px;
@@ -593,6 +594,16 @@ main {
 
 .card.show-delete .delete-icon {
   display: inline;
+}
+
+.icon-save {
+  background-image: url("../images/icons/save.svg");
+  margin-left: 15px;
+  margin-top: 5px;
+  width: 50px;
+  height: 50px;
+  border-width: 0;
+  background-color: #ffffff;
 }
 
 .titleCard {

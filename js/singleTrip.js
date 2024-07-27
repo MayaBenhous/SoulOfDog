@@ -37,9 +37,12 @@ function initTrip(dataTrip, dataDog) {
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
   handleSingleTripTitle(dataDog);
   handleSingleDetails(dataTrip);
-    titlesArr.forEach((title,index) => {
-      handleCreateCard(title, index, dataTrip, dataDog);
-    });
+  const tripId = dataTrip.tripId;
+  console.log(tripId);
+  titlesArr.forEach((title,index) => {
+    handleCreateCard(title, index, dataTrip, dataDog);
+  });
+  handleSaveUpdates(tripId);
         
 }
 

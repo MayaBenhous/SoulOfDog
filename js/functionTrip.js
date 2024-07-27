@@ -1,3 +1,5 @@
+// const { normalize } = require("path");
+
 function updateImplementTrip(tripId, implementName) {
   console.log(tripId);
   fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
@@ -206,3 +208,105 @@ function deleteObject(selectedTripId)
     }
   });
 }
+
+// function updateDetailsTrip(tripId, dog){
+//   console.log(tripId);
+//   console.log(dog);
+//   console.log(dog.dogId);
+//   fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       tripId: tripId,
+//       dog: {
+//         dogId: dogId,
+//         needPee: needPee, //checkbox
+//         needPoop: needPoop, //checkbox
+//         notes: notes //area-text
+//       }
+//     })
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     if (data.error) {
+//       console.error('Failed to send connection request');
+//     }
+//   })
+//   .catch((error) => {
+//     console.error('Error sending connection request:', error);
+//   }); 
+// }
+
+function getCurrentDogState() {
+  return Array.from(document.querySelectorAll('.dog-detail')).map(dogDiv => {
+      const dogId = dogDiv.querySelector('h3').textContent.replace('Dog ', '');
+      return {
+          dogId: dogId,
+          needPee: document.getElementById(`needPee_${dogId}`).checked,
+          needPoop: document.getElementById(`needPoop_${dogId}`).checked,
+          notes: document.getElementById(`notes_${dogId}`).value
+      };
+  });
+}
+
+function updateDetailsTrip(tripId, dogs) {
+  const currentDogs = getCurrentDogState();
+  const currentDataMap = new Map(currentDogs.map(dog => [dog.dogId, dog]));
+  const originalDataMap = new Map(dogs.map(dog => [dog.dogId, dog]));
+  const changedDogs = currentDogs.filter(dog => {
+    const original = originalDataMap.get(dog.dogId);
+    return !original ||
+            original.needPee !== dog.needPee ||
+            original.needPoop !== dog.needPoop ||
+            original.notes !== dog.notes;
+  });
+  if (changedDogs.length > 0) {
+      fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              tripId: tripId,
+              tripObjData: changedDogs
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.error) {
+              console.error('Failed to update trip details');
+          } else {
+              console.log('Trip details updated successfully');
+              originalState = currentDogs;
+          }
+      })
+      .catch(error => console.error('Error updating trip details:', error));
+  } else {
+      console.log('No changes detected');
+  }
+}
+
+function loadInitialData(tripId) {
+  let originalState;
+  fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`)
+      .then(response => response.json())
+      .then(data => {
+          renderDogDetails(data.tripObjData);
+          originalState = data.tripObjData;
+      })
+      .catch(error => console.error('Error loading initial data:', error));
+  return originalState;
+}
+
+function handleSaveUpdates(updateTripId) {
+  document.getElementById('updateTripButton').addEventListener('click', function() {
+    const tripId = updateTripId; 
+    // const tripId = 123; 
+    let originalState = loadInitialData(tripId);
+    updateDetailsTrip(tripId, originalState);
+    // loadInitialData(123); // Replace with the actual tripId
+  });  
+}
+

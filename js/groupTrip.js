@@ -29,6 +29,9 @@ function initGroupTripExist(dataTrip) {
   createDateTrip(dataTrip.trip, null);
   existGroupTrip(dataTrip.trip, dataDogs);
   deleteObject(dataTrip.trip.tripId);
+  const tripId = dataTrip.trip.tripId;
+  console.log(tripId);
+  handleSaveUpdates(tripId);
 }
 
 function getDataDog(dogId) {
