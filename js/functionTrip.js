@@ -1,3 +1,55 @@
+function updateImplementTrip(tripId, implementName) {
+  console.log(tripId);
+  fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      implementName: implementName
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Failed to send connection request');
+    }
+  })
+  .catch((error) => {
+    console.error('Error sending connection request:', error);
+  });
+}
+
+function handleEditImplement(userTripSpan, implementNameSpan, trip)
+{
+  console.log(implementNameSpan);
+  const editIcon = document.createElement('span');
+  editIcon.classList.add('editIconOneTrip');
+  userTripSpan.appendChild(editIcon);
+  editIcon.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    console.log(implementNameSpan);
+    console.log(implementNameSpan.innerText);
+    input.value = implementNameSpan.innerText;
+    implementNameSpan.innerHTML = '';
+    implementNameSpan.appendChild(input);
+    input.focus();
+    editIcon.classList.add('saveIcon');
+    editIcon.classList.remove('editIconOneTrip');
+    editIcon.addEventListener('click', () => {
+      const newName = input.value.trim();
+      if (newName) {
+        trip.implementName = newName;
+        implementNameSpan.innerText = newName;
+        editIcon.classList.add('savedIcon');
+        editIcon.classList.remove('saveIcon');
+        updateImplementTrip(trip.tripId, newName);
+      }
+    });
+  });
+}
+
 function handleSecNeeds(dog, type, cardBody) {
   const sectNeeds = document.createElement("section");
   sectNeeds.classList.add("sectNeedsG_trip");
@@ -95,7 +147,6 @@ function calculateTripDuration(hourStart, hourEnd) {
   const remainingMinutes = totalMinutes % 60;
   return { totalHour: Math.abs(totalHour), totalMinutes: Math.abs(remainingMinutes) };
 }
-
 
 function convertNumbersToTimeString(hours, minutes) {
   const hoursStr = hours.toString().padStart(2, "0");

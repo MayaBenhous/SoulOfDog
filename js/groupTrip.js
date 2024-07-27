@@ -1,6 +1,5 @@
 window.onload = () => {
   const userId = sessionStorage.getItem('userId');
-  // getDataUser(userId);
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogsIds");
   console.log(selectedDogs);
@@ -189,15 +188,15 @@ function createDateTrip(trip, name) {
   const tripDate = document.getElementById("dateTrip");
   if (trip) {
     console.log(trip);
-    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">${trip.implementName}</span>`;
+    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By-<span class="implementName">${trip.implementName}</span></span>`;
   } else {
     let formattedDate = setCurrentDate();
-    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">${name}</span>`;
+    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By-<span class="implementName">${name}</span></span>`;
   }
   const ownerTripSpan = document.querySelector(".ownerTrip");
-  const editIcon = document.createElement("span");
-  editIcon.classList.add("editIconOneTrip");
-  ownerTripSpan.appendChild(editIcon);
+  const implementNameSpan = document.querySelector('.implementName');
+  console.log(implementNameSpan);
+  handleEditImplement(ownerTripSpan, implementNameSpan, trip);
   tripTitles.appendChild(tripDate);
 }
 
