@@ -189,7 +189,6 @@ function createDateTrip(trip, name) {
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   if (trip) {
-  // const tripDate = document.getElementById("dateTrip");
     tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By-<span class="implementName">${trip.implementName}</span></span>`;
   } else {
     let formattedDate = setCurrentDate();
