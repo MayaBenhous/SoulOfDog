@@ -185,32 +185,6 @@ function handleDeleteIcon(cardTrip, trip)
   cardTrip.appendChild(deleteIcon);
 }
 
-function deleteSelectedTrip(selectedTripId) //not working now - check what it is
-{
-  const tripCards = document.querySelectorAll(".card");
-  tripCards.forEach((card) => {
-    if (card.querySelector("p").textContent.includes(selectedTripId))
-      card.remove();
-  });
-  console.log(`DELETE {domain}/trips/${selectedTripId}`);
-}
-
-function newTrip(newTripObj, dataDogs) // not working now
-{
-  const contListTrip = document.getElementById("listTripsCont_id");
-  const trip = newTripObj;
-  if (Array.isArray(trip.dogs_id)) {
-    arrayDogsId = trip.dogs_id.map(Number);
-  } else if (typeof trip.dogs_id === "string") {
-    arrayDogsId = trip.dogs_id.split(",").map(Number);
-  } else {
-    console.error("Invalid dogs_id:", trip.dogs_id);
-  }
-  trip.dogs_id = arrayDogsId;
-  const dogsList = listDogs(trip, dataDogs, 0);
-  createTrip(trip, contListTrip, dogsList, dataDogs);
-}
-
 function createButtonDelete()
 {
   document.getElementById("selectButton").addEventListener("click", function () {
@@ -228,3 +202,29 @@ function handleClickPlus(userId) {
     });
   });
 }
+
+
+// function deleteSelectedTrip(selectedTripId) //not neccecry func
+// {
+//   const tripCards = document.querySelectorAll(".card");
+//   tripCards.forEach((card) => {
+//     if (card.querySelector("p").textContent.includes(selectedTripId))
+//       card.remove();
+//   });
+//   console.log(`DELETE {domain}/trips/${selectedTripId}`);
+// }
+// function newTrip(newTripObj, dataDogs) // not working now
+// {
+//   const contListTrip = document.getElementById("listTripsCont_id");
+//   const trip = newTripObj;
+//   if (Array.isArray(trip.dogs_id)) {
+//     arrayDogsId = trip.dogs_id.map(Number);
+//   } else if (typeof trip.dogs_id === "string") {
+//     arrayDogsId = trip.dogs_id.split(",").map(Number);
+//   } else {
+//     console.error("Invalid dogs_id:", trip.dogs_id);
+//   }
+//   trip.dogs_id = arrayDogsId;
+//   const dogsList = listDogs(trip, dataDogs, 0);
+//   createTrip(trip, contListTrip, dogsList, dataDogs);
+// }
