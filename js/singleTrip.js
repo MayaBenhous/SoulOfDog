@@ -42,8 +42,7 @@ function initTrip(dataTrip, dataDog) {
   titlesArr.forEach((title,index) => {
     handleCreateCard(title, index, dataTrip, dataDog);
   });
-  handleSaveUpdates(tripId);
-        
+  handleSaveUpdates(tripId, "Single");
 }
 
 function handleTripDuration(detailsPart, trip) {
@@ -82,6 +81,7 @@ function handleSingleTripTitle(dog) {
   tripTitle.textContent = `Trip with ${dog.dogName}`;
   const imgWrapper = document.createElement("div");
   imgWrapper.classList.add("imgWrapperOneTrip");
+  imgWrapper.setAttribute("dogId", dog.dogId);
   const img = document.createElement("img");
   img.src = dog.img;
   img.alt = dog.dogName;
