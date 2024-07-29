@@ -1,17 +1,16 @@
 window.onload = () => {
   const userId = sessionStorage.getItem('userId');
-  // getDataUser(userId);
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogsIds");
-  console.log(selectedDogs);
+  // console.log(selectedDogs);
   const groupTripId = urlParams.get("groupTripId");
   if(selectedDogs === "null")
   {
-    console.log(groupTripId); 
+    // console.log(groupTripId); 
     getGroupTripExist(groupTripId);
   }
   else if(groupTripId === "null"){
-    console.log(selectedDogs);
+    // console.log(selectedDogs);
     getNewGroupTrip(selectedDogs,userId);
   }
   getDataUser(userId);
@@ -30,6 +29,9 @@ function initGroupTripExist(dataTrip) {
   createDateTrip(dataTrip.trip, null);
   existGroupTrip(dataTrip.trip, dataDogs);
   deleteObject(dataTrip.trip.tripId);
+  const tripId = dataTrip.trip.tripId;
+  console.log(tripId);
+  handleSaveUpdates(tripId, "Group");
 }
 
 function getDataDog(dogId) {
@@ -72,7 +74,6 @@ function getNewGroupTrip(selectedDogs,userId) {
   Promise.all(promises).then(() => {
     console.log(dataDogs); 
     newGroupTrip(implementUserName, listDogsId, dataDogs);
-    // console.log(implementUserName);
     createDateTrip(null, implementUserName);
   });
 }
@@ -188,17 +189,32 @@ function createDateTrip(trip, name) {
   const tripTitles = document.getElementById("tripTitles");
   const tripDate = document.getElementById("dateTrip");
   if (trip) {
-    console.log(trip);
-    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">${trip.implementName}</span>`;
+    tripDate.innerHTML = `${trip.date} <span class="ownerTrip">By-<span class="implementName">${trip.implementName}</span></span>`;
   } else {
     let formattedDate = setCurrentDate();
-    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">${name}</span>`;
+    tripDate.innerHTML = `${formattedDate} <span class="ownerTrip">By-<span class="implementName">${name}</span></span>`;
   }
   const ownerTripSpan = document.querySelector(".ownerTrip");
-  const editIcon = document.createElement("span");
-  editIcon.classList.add("editIconOneTrip");
-  ownerTripSpan.appendChild(editIcon);
+  const implementNameSpan = document.querySelector('.implementName');
+  handleEditImplement(ownerTripSpan, implementNameSpan, trip);
   tripTitles.appendChild(tripDate);
+}
+
+function createDeatils(trip) {
+  const secDetailsTrip = document.getElementById("secDetailsTrip");
+  createSecTime(secDetailsTrip, trip);
+  createSecDistance(secDetailsTrip, trip);
+}
+
+function createSecTime(secDetailsTrip, trip) {
+  const cardTime = document.createElement("div");
+  cardTime.classList.add("cardsSingleTrip");
+  handleNameImgTime(cardTime);
+  const detailsPart = document.createElement("div");
+  detailsPart.classList.add("detailsPart");
+  handleDeatilsTime(detailsPart, trip);
+  cardTime.appendChild(detailsPart);
+  secDetailsTrip.appendChild(cardTime, trip);
 }
 
 function checkBoxNeeds(newTrip) {
@@ -218,12 +234,15 @@ function textInNotes(newTrip) {
 }
 
 function createDogCard(dog, type) {
-  const secDogsGroup = document.getElementById("dogs_cards");
+  const secDogsGroup = document.getElementById("dogscards");
   const cardDog = document.createElement("div");
   cardDog.classList.add("card");
   const cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
   cardBody.classList.add("cardGroup_trip");
+  // console.log(dog.dogId);
+  cardBody.setAttribute("dogId", dog.dogId);
+  // console.log(cardBody.getAttribute("dogId"));
   handleSecNotes(dog, cardBody, "Group");
   handleSecNeeds(dog, type, cardBody);
   handleSecNameImg(dog, cardBody);
@@ -245,23 +264,6 @@ function handleSecNameImg(dog, cardBody) {
   sectImgName.appendChild(imgDog);
   sectImgName.appendChild(dogName);
   cardBody.appendChild(sectImgName);
-}
-
-function createDeatils(trip) {
-  const secDetailsTrip = document.getElementById("secDetailsTrip");
-  createSecTime(secDetailsTrip, trip);
-  createSecDistance(secDetailsTrip, trip);
-}
-
-function createSecTime(secDetailsTrip, trip) {
-  const cardTime = document.createElement("div");
-  cardTime.classList.add("cardsSingleTrip");
-  handleNameImgTime(cardTime);
-  const detailsPart = document.createElement("div");
-  detailsPart.classList.add("detailsPart");
-  handleDeatilsTime(detailsPart, trip);
-  cardTime.appendChild(detailsPart);
-  secDetailsTrip.appendChild(cardTime, trip);
 }
 
 function handleNameImgTime(cardTime, trip) {

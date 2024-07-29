@@ -1,3 +1,54 @@
+function updateImplementTrip(tripId, implementName) {
+  console.log(tripId);
+  fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      implementName: implementName
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Failed to send connection request');
+    }
+  })
+  .catch((error) => {
+    console.error('Error sending connection request:', error);
+  });
+}
+
+function handleEditImplement(userTripSpan, implementNameSpan, trip)
+{
+  const editIcon = document.createElement('span');
+  editIcon.classList.add('editIconOneTrip');
+  userTripSpan.appendChild(editIcon);
+  editIcon.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    console.log(implementNameSpan);
+    console.log(implementNameSpan.innerText);
+    input.value = implementNameSpan.innerText;
+    implementNameSpan.innerHTML = '';
+    implementNameSpan.appendChild(input);
+    input.focus();
+    editIcon.classList.add('saveIcon');
+    editIcon.classList.remove('editIconOneTrip');
+    editIcon.addEventListener('click', () => {
+      const newName = input.value.trim();
+      if (newName) {
+        trip.implementName = newName;
+        implementNameSpan.innerText = newName;
+        editIcon.classList.add('savedIcon');
+        editIcon.classList.remove('saveIcon');
+        updateImplementTrip(trip.tripId, newName);
+      }
+    });
+  });
+}
+
 function handleSecNeeds(dog, type, cardBody) {
   const sectNeeds = document.createElement("section");
   sectNeeds.classList.add("sectNeedsG_trip");
@@ -8,7 +59,7 @@ function handleSecNeeds(dog, type, cardBody) {
 
 function handleSecPeeSelect(dog, type, sectNeeds) {
   const sectPee = document.createElement("section");
-  sectPee.classList.add("sectPeeG_trip");
+  sectPee.classList.add("sectPee");
   const needsPeeCheckbox = document.createElement("input");
   needsPeeCheckbox.type = "checkbox";
   needsPeeCheckbox.classList.add("needsPeeCheckbox");
@@ -96,7 +147,6 @@ function calculateTripDuration(hourStart, hourEnd) {
   return { totalHour: Math.abs(totalHour), totalMinutes: Math.abs(remainingMinutes) };
 }
 
-
 function convertNumbersToTimeString(hours, minutes) {
   const hoursStr = hours.toString().padStart(2, "0");
   const minutesStr = minutes.toString().padStart(2, "0");
@@ -155,3 +205,78 @@ function deleteObject(selectedTripId)
     }
   });
 }
+
+function updateDetailsTrip(trip) {
+  const tripId = trip.tripId;
+  console.log(tripId);
+  fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(trip)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Failed to send connection request');
+    } else {
+      console.log('Trip updated successfully', data);
+    }
+  })
+  .catch((error) => {
+    console.error('Error sending connection request:', error);
+  }); 
+}
+
+function checkForChanges(selectedTripId, type) {
+  const tripId = selectedTripId;
+  const implementName = document.getElementsByClassName("implementName")[0].textContent; 
+  console.log(implementName);
+  let dogCards;
+  if(type === "Single")
+  {
+    dogCards = document.getElementsByClassName("imgWrapperOneTrip");
+  }
+  else if(type === "Group")
+  {
+    dogCards = document.getElementsByClassName("cardGroup_trip");
+  }
+  const peeSects = document.getElementsByClassName("needsPeeCheckbox");
+  const poopSects = document.getElementsByClassName("needsPoopCheckbox");
+  const noteSects = document.getElementsByClassName("textarea-Notes");
+  const dogs = [];
+  // const countDogs = dogCards.length;
+  for (let i = 0; i < dogCards.length; i++) {
+    let card = dogCards[i];
+    const dogId = card.getAttribute("dogId");
+    const needPee = peeSects[i].checked;
+    const needPoop = poopSects[i].checked;
+    const notes = noteSects[i].value;
+    let dog = {
+      dogId: dogId,
+      needPee: needPee,
+      needPoop: needPoop,
+      notes: notes
+    };
+
+    dogs.push(dog);
+  }
+  const trip = {
+    tripId: tripId,
+    implementName: implementName,
+    dogs: dogs
+  };
+  // console.log(tripId);
+  console.log(trip);
+  updateDetailsTrip(trip);
+  // updateDetailsTrip(tripId, trip);
+}
+
+function handleSaveUpdates(tripId, type) {
+  const saveUpdateButton = document.getElementById("updateTripButton");
+  saveUpdateButton.addEventListener("click", () => {
+  checkForChanges(tripId, type);
+  });
+}
+
