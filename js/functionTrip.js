@@ -1,5 +1,4 @@
 function updateImplementTrip(tripId, implementName) {
-  console.log(tripId);
   fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
     method: 'PUT',
     headers: {
@@ -28,8 +27,6 @@ function handleEditImplement(userTripSpan, implementNameSpan, trip)
   editIcon.addEventListener('click', () => {
     const input = document.createElement('input');
     input.type = 'text';
-    console.log(implementNameSpan);
-    console.log(implementNameSpan.innerText);
     input.value = implementNameSpan.innerText;
     implementNameSpan.innerHTML = '';
     implementNameSpan.appendChild(input);
@@ -163,7 +160,6 @@ function totalTime(hourStart, hourEnd) {
 }
 
 function deleteTrip(tripId) {
-    console.log('Deleting trip with ID:', tripId);
     return fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
       method: 'DELETE',
       headers: {
@@ -171,14 +167,12 @@ function deleteTrip(tripId) {
       }
     })
     .then(response => {
-      console.log('Response status:', response.status);
       if (!response.ok) {
         throw new Error('Failed to delete trip');
       }
       return response.json();
     })
     .then(data => {
-      console.log('Trip deleted successfully:', data);
       return data;
     })
     .catch((error) => {
@@ -192,23 +186,19 @@ function deleteObject(selectedTripId)
   const deleteDogButton = document.getElementById("deleteDogButton");
   deleteDogButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this trip?")) {
-      console.log(`DELETE {domain}/trips/${selectedTripId}`);
       deleteTrip(selectedTripId)
       .then(() => {
-        console.log('Trip deleted successfully!');
         window.location.href = `tripsList.html`;
       })
       .catch((error) => {
         console.error('Failed to delete trip:', error);
       });
-      console.log(`DELETE {domain}/trips/${selectedTripId}`);
     }
   });
 }
 
 function updateDetailsTrip(trip) {
   const tripId = trip.tripId;
-  console.log(tripId);
   fetch(`https://soulofdog-server.onrender.com/api/trips/trip/${tripId}`, {
     method: 'PUT',
     headers: {
@@ -220,8 +210,6 @@ function updateDetailsTrip(trip) {
   .then(data => {
     if (data.error) {
       console.error('Failed to send connection request');
-    } else {
-      console.log('Trip updated successfully', data);
     }
   })
   .catch((error) => {
@@ -232,7 +220,6 @@ function updateDetailsTrip(trip) {
 function checkForChanges(selectedTripId, type) {
   const tripId = selectedTripId;
   const implementName = document.getElementsByClassName("implementName")[0].textContent; 
-  console.log(implementName);
   let dogCards;
   if(type === "Single")
   {
@@ -246,7 +233,6 @@ function checkForChanges(selectedTripId, type) {
   const poopSects = document.getElementsByClassName("needsPoopCheckbox");
   const noteSects = document.getElementsByClassName("textarea-Notes");
   const dogs = [];
-  // const countDogs = dogCards.length;
   for (let i = 0; i < dogCards.length; i++) {
     let card = dogCards[i];
     const dogId = card.getAttribute("dogId");
@@ -267,10 +253,7 @@ function checkForChanges(selectedTripId, type) {
     implementName: implementName,
     dogs: dogs
   };
-  // console.log(tripId);
-  console.log(trip);
   updateDetailsTrip(trip);
-  // updateDetailsTrip(tripId, trip);
 }
 
 function handleSaveUpdates(tripId, type) {

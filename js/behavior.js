@@ -12,8 +12,6 @@ function getDataDogsOwner(userId) {
     .then((dataDogs) => initOwnerHomePage(dataDogs));
 }
 
-let charts = [];
-
 async function getGraphsData(dogId) {
     try {
         const response = await fetch(`https://soulofdog-server.onrender.com/api/dogs/dataForGraphs/${dogId}`);
@@ -87,15 +85,14 @@ function getOptions() {
 }
 
 async function createCharts(dogId) {
+    let charts = [];
     const data = await getGraphsData(dogId);
     if (!data.labels.length) {
         console.error('No data available for chart creation.');
         return;
     }
-
     const checkedTypes = Array.from(document.querySelectorAll('input[name="chartType"]:checked')).map(checkbox => checkbox.value);
     console.log(checkedTypes);
-    
     const chartTypes = {
         'Steps': 'bar',
         'Range': 'bar',
@@ -105,7 +102,6 @@ async function createCharts(dogId) {
     data.datasets.forEach((dataset, index) => {
         const canvas = document.getElementById(`chart${index + 1}`);
         console.log(dataset.label);
-
         if (checkedTypes.includes(dataset.label)) {
             if (charts[index]) {
                 charts[index].destroy();

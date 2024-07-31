@@ -8,8 +8,6 @@ window.onload = () => {
   deleteObject(selectedTripId);
   getDataUser(userId);
 };
-iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
-titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
 
 function getTripData(tripId, dogId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/tripFromList/${tripId}`)
@@ -33,12 +31,12 @@ function findDog(dogs, dogId) {
 }
 
 function initTrip(dataTrip, dataDog) {
+  titlesArr = ['Trip Duration', 'distance', 'heartbeat','steps', 'avg_speed', 'Needs', 'Notes'];
   const contTripMainDetails = document.getElementById("TripMainDetails-container");
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
   handleSingleTripTitle(dataDog);
   handleSingleDetails(dataTrip);
   const tripId = dataTrip.tripId;
-  console.log(tripId);
   titlesArr.forEach((title,index) => {
     handleCreateCard(title, index, dataTrip, dataDog);
   });
@@ -102,6 +100,7 @@ function handleSingleDetails(trip) {
 }
 
 function handleCreateCard(title, index, trip, dogintrip) {
+  iconsArr = ['images/icons/clock.svg','images/icons/distance.svg','images/icons/heartbeat.svg','images/icons/steps.svg','images/icons/avgSpeed.svg','images/icons/needs.svg','images/icons/notes.svg'];
   const singleTripCardsCont = document.getElementById("singleTripCrads-container");
   const url = iconsArr[index];
   const card = document.createElement("div");
