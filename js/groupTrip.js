@@ -405,7 +405,6 @@ function finishTrip(newTrip)
     newTrip.date = setFormatDate();
     console.log(newTrip);
     createNewTrip(newTrip);
-    // console.log(`POST {domain}/trips/${newTrip.id}`);
     console.log(`POST {domain}/trips/tripId`);
     console.log("Request Body:", newTrip);
   });
