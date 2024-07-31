@@ -179,15 +179,38 @@ function handleConnectDWtoDog(userId) {
   const modalElement = document.getElementById('addDogModal');
   const modal = new bootstrap.Modal(modalElement);
   const askPermissionButton = document.getElementById("askPermissionButton");
+  const errorMessageElement = document.createElement('div');
+  errorMessageElement.id = 'errorMessage';
+  errorMessageElement.style.display = 'none';
+  errorMessageElement.style.color = 'red';
+  const modalBody = modalElement.querySelector('.modal-body');
+  modalBody.insertBefore(errorMessageElement, modalBody.firstChild);
+
   askPermissionButton.addEventListener('click', () => {
     const chipId = document.getElementById("chipIdInput").value;
-    modal.hide();
     if (chipId) {
       fetch (`https://soulofdog-server.onrender.com/api/dogs/userIdByChipId/${chipId}`)
       .then((response) => response.json())
-      .then((data) => sendConnectionRequest(data.userId, chipId, userId));
+      .then((data) => { 
+        if (data.error) {
+          errorMessageElement.style.display = 'block';
+          errorMessageElement.textContent = data.error;
+          console.error('Failed to send connection request', data.error);
+        } else {
+          modal.hide();
+          sendConnectionRequest(data.userId, chipId, userId);
+        }
+      })
+      .catch((error) => {
+        errorMessageElement.style.display = 'block';
+        errorMessageElement.textContent = data.error;
+        console.error('Error sending connection request:', error);
+      });
     }
-  })
+  });
+  modalElement.addEventListener('hidden.bs.modal', () => {
+    errorMessageElement.style.display = 'none';
+  });
 }
 
 function sendConnectionRequest(ownerId, chipId, userId) {
