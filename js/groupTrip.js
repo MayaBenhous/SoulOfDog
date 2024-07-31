@@ -135,7 +135,7 @@ function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
     newTrip.tripType = "Group";
   }
   for (let i = 0; i< numDogs; i++) {
-    let rowDog = dataDogs[i].dog[0];
+    let rowDog = dataDogs[i].dog;
     let dog = newDogInTrip(rowDog);
     newTrip.dogs.push(dog);
     createDogCard(dog, 0, null);
