@@ -94,8 +94,6 @@ async function createCharts(dogId) {
     }
 
     const checkedTypes = Array.from(document.querySelectorAll('input[name="chartType"]:checked')).map(checkbox => checkbox.value);
-    console.log(checkedTypes);
-    
     const chartTypes = {
         'Steps': 'bar',
         'Range': 'bar',
@@ -104,8 +102,6 @@ async function createCharts(dogId) {
     };
     data.datasets.forEach((dataset, index) => {
         const canvas = document.getElementById(`chart${index + 1}`);
-        console.log(dataset.label);
-
         if (checkedTypes.includes(dataset.label)) {
             if (charts[index]) {
                 charts[index].destroy();
@@ -124,8 +120,7 @@ async function createCharts(dogId) {
             if (charts[index]) {
                 charts[index].destroy();
             }
-            console.log('else');
-            canvas.style.display = 'none'; // Hide the canvas
+            canvas.style.display = 'none';
         }
     });
 }

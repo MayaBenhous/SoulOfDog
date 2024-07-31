@@ -84,7 +84,6 @@ function initDogWalkerHomePage(dataDogs) {
 
       startTripButton.addEventListener("click", () => {
         const selectedIds = Array.from(selectedDogs).join(",");
-        console.log(selectedIds);
         window.location.href = `groupTrip.html?groupTripId=null&selectedDogsIds=${selectedIds}`;
       });
 
@@ -152,7 +151,6 @@ function initOwnerHomePage(dataDogs,userId) {
 async function getWeather(userId) {
     try {
       const response = await fetch(`https://soulofdog-server.onrender.com/api/dogs/weather/${userId}`);
-      // console.log(response);
       if (response.ok) {
           const data = await response.json();
           const weatherDiv = document.getElementById('weather');

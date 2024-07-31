@@ -34,7 +34,6 @@ function initUser(user) {
         graphsLink.textContent = 'Behavior';
 
         if (window.location.pathname.endsWith('behavior.html')) {
-            console.log('hello');
             graphsLink.classList.add('active');
             graphsIcon.classList.remove('iconNotActive');
         }
