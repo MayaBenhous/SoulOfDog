@@ -6,6 +6,8 @@ window.onload = () => {
     .then((dogId) => init(dogId.dogId));
 };
 
+let charts = [];
+
 function getDataDogsOwner(userId) {
     fetch(`https://soulofdog-server.onrender.com/api/dogs/dogDataByUserId/${userId}`)
     .then((response) => response.json())
@@ -85,7 +87,6 @@ function getOptions() {
 }
 
 async function createCharts(dogId) {
-    let charts = [];
     const data = await getGraphsData(dogId);
     if (!data.labels.length) {
         console.error('No data available for chart creation.');
@@ -100,6 +101,8 @@ async function createCharts(dogId) {
     };
     data.datasets.forEach((dataset, index) => {
         const canvas = document.getElementById(`chart${index + 1}`);
+        const chartType = chartTypes[dataset.label];
+
         if (checkedTypes.includes(dataset.label)) {
             if (charts[index]) {
                 charts[index].destroy();
@@ -107,7 +110,7 @@ async function createCharts(dogId) {
             canvas.style.display = 'block';
             const ctx = canvas.getContext('2d');
             charts[index] = new Chart(ctx, {
-                type: chartTypes[dataset.label],
+                type: chartType,
                 data: {
                     labels: data.labels,
                     datasets: [dataset]
