@@ -146,7 +146,7 @@ function initOwnerHomePage(dataDogs,userId) {
 
 async function getWeather(userId) {
     try {
-      const response = await fetch(`https://soulofdog-server.onrender.com/api/dogs/weather/${userId}`);
+      const response = await fetch(`https://soulofdog-server.onrender.com/api/users/weather/${userId}`);
       if (response.ok) {
           const data = await response.json();
           const weatherDiv = document.getElementById('weather');
