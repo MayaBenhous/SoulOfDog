@@ -10,6 +10,14 @@ function initUser(user) {
     userImg.src = user.img;
     userImg.alt = user.firstName;
 
+    document.getElementById('userSelect').addEventListener('change', function() {
+        const selectedValue = this.value;
+        if (selectedValue === 'logout') {
+            sessionStorage.removeItem('userId');
+            window.location.href = 'index.html';
+        }
+    });
+
     if (user.userType === 'owner') {
         const navItems = document.getElementById('navItems');
 
