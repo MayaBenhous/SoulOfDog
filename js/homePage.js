@@ -81,12 +81,10 @@ function initDogWalkerHomePage(dataDogs) {
         }
         updateButtonsVisibility(selectedDogs, startTripButton, deleteDogButton);
       });
-
       startTripButton.addEventListener("click", () => {
         const selectedIds = Array.from(selectedDogs).join(",");
         window.location.href = `groupTrip.html?groupTripId=null&selectedDogsIds=${selectedIds}`;
       });
-
       deleteDogButton.addEventListener("click", () => {
         let askOnce = true;
         let userConfirm = false;
@@ -125,13 +123,11 @@ function initOwnerHomePage(dataDogs,userId) {
     createWrapperDataDog(dog,imgWrapper);
     imgsCont.appendChild(imgWrapper);
   }
-
   const notificationsCont = document.getElementById("notifications-Container");
   const hpDogDetailsCont = document.getElementById("hpDogDetailsCont");
   const lastActBody = document.getElementById("lastActivity");
   notificationsCont.style.display = "block";
   hpDogDetailsCont.style.display = "flex";
-
   getDataLastTrip(dataDogs.dogs[0].dogId)
     .then((dataTrip) => {
       const lastActivity = document.createElement("p");

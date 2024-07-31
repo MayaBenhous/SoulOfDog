@@ -1,18 +1,19 @@
 window.onload = () => {
   const userId = sessionStorage.getItem('userId');
   const urlParams = new URLSearchParams(window.location.search);
-  // const selectedTripId = urlParams.get("selectedTripId");
   startWithServer(userId);
   createButtonDelete();
   handleClickPlus(userId);
   getDataUser(userId);
 };
 
-let i = 0;
-let dataList = {
-  dataTrips: null,
-  dataDogs: null
-};
+// let i = 0;
+// let dataList = {
+//   dataTrips: null,
+//   dataDogs: null
+// };
+// let selectedTripId;
+// let selectedDogId;
 
 function getDogsUser(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
@@ -54,16 +55,10 @@ function getDogIdByUserId(userId) {
   .then((response) => response.json());
 }
 
-let selectedTripId;
-let selectedDogId;
-
 function initTripsList(dataTrips, dataDogs, userId) {
-  console.log(userId);
   getTypeUser(userId).then((typeUser) => {
-    console.log(typeUser.data);
     if(typeUser.data === "owner")
     {
-      console.log("owner");
       plusButton = document.getElementById("addTrip");
       plusButton.style.display="block";
     }
@@ -148,7 +143,6 @@ function handleClickTrip(cardTrip, trip, dataDogs) {
   cardTrip.addEventListener("click", function () {
     let countDogs = trip.dogsId.length;
     let selectedDogId = trip.dogsId[0];
-    console.log(trip.tripId);
     if(countDogs === 1)
     {
       window.location.href = `singleTrip.html?selectedTripId=${trip.tripId}&selectedDogId=${selectedDogId}&dataDogs=${dataDogs}`;
@@ -168,18 +162,14 @@ function handleDeleteIcon(cardTrip, trip)
   deleteIcon.addEventListener("click", function (event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this trip?")) {
-      console.log(`DELETE {domain}/trips/${trip.tripId}`);
       deleteTrip(trip.tripId)
       .then(() => {
-        console.log('Trip deleted successfully!');
         cardTrip.remove();
         window.location.href = `tripsList.html`;
       })
       .catch((error) => {
         console.error('Failed to delete trip:', error);
       });
-      console.log(`DELETE {domain}/trips/${selectedTripId}`);
-      console.log(`DELETE {domain}/trips/${trip.tripId}`);
     }
   });
   cardTrip.appendChild(deleteIcon);
@@ -202,29 +192,3 @@ function handleClickPlus(userId) {
     });
   });
 }
-
-
-// function deleteSelectedTrip(selectedTripId) //not neccecry func
-// {
-//   const tripCards = document.querySelectorAll(".card");
-//   tripCards.forEach((card) => {
-//     if (card.querySelector("p").textContent.includes(selectedTripId))
-//       card.remove();
-//   });
-//   console.log(`DELETE {domain}/trips/${selectedTripId}`);
-// }
-// function newTrip(newTripObj, dataDogs) // not working now
-// {
-//   const contListTrip = document.getElementById("listTripsCont_id");
-//   const trip = newTripObj;
-//   if (Array.isArray(trip.dogs_id)) {
-//     arrayDogsId = trip.dogs_id.map(Number);
-//   } else if (typeof trip.dogs_id === "string") {
-//     arrayDogsId = trip.dogs_id.split(",").map(Number);
-//   } else {
-//     console.error("Invalid dogs_id:", trip.dogs_id);
-//   }
-//   trip.dogs_id = arrayDogsId;
-//   const dogsList = listDogs(trip, dataDogs, 0);
-//   createTrip(trip, contListTrip, dogsList, dataDogs);
-// }

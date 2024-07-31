@@ -2,21 +2,16 @@ window.onload = () => {
   const userId = sessionStorage.getItem('userId');
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDogs = urlParams.get("selectedDogsIds");
-  // console.log(selectedDogs);
   const groupTripId = urlParams.get("groupTripId");
   if(selectedDogs === "null")
   {
-    // console.log(groupTripId); 
     getGroupTripExist(groupTripId);
   }
   else if(groupTripId === "null"){
-    // console.log(selectedDogs);
     getNewGroupTrip(selectedDogs,userId);
   }
   getDataUser(userId);
 };
-
-let numDogs;
 
 function getGroupTripExist(groupTripId) {
   fetch(`https://soulofdog-server.onrender.com/api/trips/tripFromList/${groupTripId}`)
@@ -30,7 +25,6 @@ function initGroupTripExist(dataTrip) {
   existGroupTrip(dataTrip.trip, dataDogs);
   deleteObject(dataTrip.trip.tripId);
   const tripId = dataTrip.trip.tripId;
-  console.log(tripId);
   handleSaveUpdates(tripId, "Group");
 }
 
@@ -44,35 +38,28 @@ function getUserName(userId) {
   .then((response) => response.json());
 }
 
-function listFromSelected(input_str) {
-  let items = input_str.split(',').map(item => item.trim());
+function listFromSelected(inputStr) {
+  let items = inputStr.split(',').map(item => item.trim());
   items = items.filter(item => item !== '');
   return items;
 }
 
 function getNewGroupTrip(selectedDogs,userId) {
-  console.log(selectedDogs);
   let listDogsId = listFromSelected(selectedDogs);
-  console.log(listDogsId);
   let countDogs = listDogsId.length;
-  console.log(countDogs);
   let dataDogs = [];
   let promises = [];
   let implementUserName;
   for (let i = 0; i < countDogs; i++) {
     let dogId = listDogsId[i];
-    console.log(dogId);
     promises.push(getDataDog(dogId).then((dataDog) => {
-      console.log(dataDog);
       dataDogs.push(dataDog);
     }));
   }
   promises.push(getUserName(userId).then((userName) => {
     implementUserName = userName.data;
-    console.log(implementUserName);
   }));
   Promise.all(promises).then(() => {
-    console.log(dataDogs); 
     newGroupTrip(implementUserName, listDogsId, dataDogs);
     createDateTrip(null, implementUserName);
   });
@@ -96,7 +83,6 @@ function createNewTrip(trip) {
       notes: dog.notes
     }))
   };
-  console.log(tripData);
   fetch(`https://soulofdog-server.onrender.com/api/trips/newTrip`, {
     method: 'POST',
     headers: {
@@ -108,8 +94,6 @@ function createNewTrip(trip) {
   .then(data => {
     if (data.error) {
       console.error('Failed to create new trip:', data.error);
-    } else {
-      console.log('Trip created successfully:', data);
     }
   })
   .catch((error) => {
@@ -130,7 +114,6 @@ function existGroupTrip(trip) {
 }
 
 function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
-  console.log(dataDogs);
   let newTrip = {
     implementName: "",
     tripType: "",
@@ -143,7 +126,7 @@ function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
   newTrip.implementName = implementUserName;
   const deleteButton = document.getElementById("deleteDogButton");
   deleteButton.style.display = "none";
-  numDogs = selectedDogs.length;
+  let numDogs = selectedDogs.length;
   if(numDogs == 1)
   {
     newTrip.tripType = "Single";
@@ -157,14 +140,12 @@ function newGroupTrip(implementUserName, selectedDogs, dataDogs) {
     newTrip.dogs.push(dog);
     createDogCard(dog, 0, null);
   }
-  console.log(newTrip);
   for (let i = 0; i < numDogs; i++) {
     newTrip.dogs[i].needPee = false;
     newTrip.dogs[i].needPoop = false;
   }
   createDeatils(null);
-  console.log(newTrip);
-  finishTrip(newTrip);
+  finishTrip(newTrip, numDogs);
 }
 
 function newDogInTrip(rowDog) {
@@ -217,7 +198,7 @@ function createSecTime(secDetailsTrip, trip) {
   secDetailsTrip.appendChild(cardTime, trip);
 }
 
-function checkBoxNeeds(newTrip) {
+function checkBoxNeeds(newTrip, numDogs) {
   for (let i = 0; i < numDogs; i++) {
     const checkboxPee = document.getElementsByClassName("needsPeeCheckbox")[i];
     const checkboxPoop = document.getElementsByClassName("needsPoopCheckbox")[i];
@@ -226,7 +207,7 @@ function checkBoxNeeds(newTrip) {
   }
 }
 
-function textInNotes(newTrip) {
+function textInNotes(newTrip, numDogs) {
   for (let i = 0; i < numDogs; i++) {
     const textNote = document.getElementsByClassName("textarea-Notes")[i];
     newTrip.dogs[i].notes = textNote.value;
@@ -240,9 +221,7 @@ function createDogCard(dog, type) {
   const cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
   cardBody.classList.add("cardGroup_trip");
-  // console.log(dog.dogId);
   cardBody.setAttribute("dogId", dog.dogId);
-  // console.log(cardBody.getAttribute("dogId"));
   handleSecNotes(dog, cardBody, "Group");
   handleSecNeeds(dog, type, cardBody);
   handleSecNameImg(dog, cardBody);
@@ -384,7 +363,7 @@ function setFormatDate() {
   return formattedDate;
 }
 
-function finishTrip(newTrip)
+function finishTrip(newTrip, numDogs)
 {
   const finishButton = document.getElementById("finishTripButton");
   finishButton.addEventListener("click", () => {
@@ -399,14 +378,9 @@ function finishTrip(newTrip)
     const distance = document.getElementsByClassName("disValue");
     distance[0].textContent = random(0.5, 7.0) + "km";
     newTrip.distance = distance[0].textContent;
-    console.log(newTrip.distance);
-    checkBoxNeeds(newTrip);
-    textInNotes(newTrip);
+    checkBoxNeeds(newTrip, numDogs);
+    textInNotes(newTrip, numDogs);
     newTrip.date = setFormatDate();
-    console.log(newTrip);
     createNewTrip(newTrip);
-    // console.log(`POST {domain}/trips/${newTrip.id}`);
-    console.log(`POST {domain}/trips/tripId`);
-    console.log("Request Body:", newTrip);
   });
 }
