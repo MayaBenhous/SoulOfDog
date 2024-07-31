@@ -7,14 +7,6 @@ window.onload = () => {
   getDataUser(userId);
 };
 
-// let i = 0;
-// let dataList = {
-//   dataTrips: null,
-//   dataDogs: null
-// };
-// let selectedTripId;
-// let selectedDogId;
-
 function getDogsUser(userId) {
   return fetch(`https://soulofdog-server.onrender.com/api/dogs/getDogData/${userId}`)
   .then((response) => response.json())
